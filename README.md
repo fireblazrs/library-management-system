@@ -1,6 +1,5 @@
 
-## Library Management System
-___________________
+# Library Management System
 
 This is a Library Management System built with Spring Boot.
 
