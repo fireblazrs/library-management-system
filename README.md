@@ -17,7 +17,12 @@ ELSE restart the container
 docker container start MySqlDatabase
 ```             
      
+THEN execute
 
+```
+docker build -t library-system .
+docker run --network="host" -p 8080:8080 library-system
+```   
 
 
 ______________________________________________________________________________________________________________________________________________________________________________       
