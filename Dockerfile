@@ -1,5 +1,8 @@
+FROM maven:3.8.4-openjdk-17-slim as build
+COPY ./ /src
+RUN mvn -f /src/pom.xml clean package
+
 FROM openjdk:17
-COPY ./target/library-system-0.0.1-SNAPSHOT.jar /src/
-WORKDIR /src/
+COPY --from=build /src/target/library-system-0.0.1-SNAPSHOT.jar /src/
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "library-system-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "src/library-system-0.0.1-SNAPSHOT.jar"]
