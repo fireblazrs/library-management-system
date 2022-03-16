@@ -20,12 +20,11 @@ class RoleEntityTest {
     @Test
     void getRoleShouldReturnTheSetRol() {
         RoleEntity roleEntity = new RoleEntity();
-        String role = "ROLE_USER";
-        roleEntity.setRole(role);
+        roleEntity.setRole("ROLE_USER");
 
         String result = roleEntity.getRole();
 
-        assertThat(result).isEqualTo(role);
+        assertThat(result).isEqualTo("ROLE_USER");
     }
 
     @Test
