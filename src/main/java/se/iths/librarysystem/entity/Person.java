@@ -21,7 +21,7 @@ public class Person {
     @NotBlank(message = "Lastname is a required field")
     private String lastname;
 
-    @NotBlank(message = "Date of birth is a required field")
+    @NotBlank(message = "Social security number is a required field")
     private String ssn;
 
     @Email(message = "Email address must be valid")
