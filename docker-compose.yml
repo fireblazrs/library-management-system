@@ -1,0 +1,21 @@
+version: "2.1"
+services:
+  mysql:
+    image: mysql:8.0.28
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+  server:
+    build: .
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
