@@ -25,6 +25,7 @@ public class Person {
     private String ssn;
 
     @Email(message = "Email address must be valid")
+    @NotBlank(message = "Email address is a required field")
     private String email;
 
     private String phoneNumber;
