@@ -59,9 +59,9 @@ class PersonTest {
     @Test
     void getDobShouldReturnSetDob() {
         Person person = new Person();
-        person.setDob("1978-12-21");
+        person.setSsn("1978-12-21");
 
-        String result = person.getDob();
+        String result = person.getSsn();
 
         assertThat(result).isEqualTo("1978-12-21");
     }

@@ -22,7 +22,7 @@ public class Person {
     private String lastname;
 
     @NotBlank(message = "Date of birth is a required field")
-    private String dob;
+    private String ssn;
 
     @Email(message = "Email address must be valid")
     private String email;
@@ -37,7 +37,7 @@ public class Person {
                   String phoneNumber, String email, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.dob = dob;
+        this.ssn = dob;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
@@ -79,12 +79,12 @@ public class Person {
         this.lastname = lastname;
     }
 
-    public String getDob() {
-        return dob;
+    public String getSsn() {
+        return ssn;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setSsn(String dob) {
+        this.ssn = dob;
     }
 
     public String getPhoneNumber() {
@@ -116,11 +116,11 @@ public class Person {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
         return Objects.equals(firstname, person.firstname) && Objects.equals(lastname, person.lastname)
-               && Objects.equals(dob, person.dob);
+               && Objects.equals(ssn, person.ssn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstname, lastname, dob);
+        return Objects.hash(firstname, lastname, ssn);
     }
 }
