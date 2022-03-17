@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
@@ -13,11 +15,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Firstname is a required field")
     private String firstname;
+
+    @NotBlank(message = "Lastname is a required field")
     private String lastname;
+
+    @NotBlank(message = "Date of birth is a required field")
     private String dob;
-    private String phoneNumber;
+
+    @Email(message = "Email address must be valid")
     private String email;
+
+    private String phoneNumber;
     private String address;
 
     public Person() {
