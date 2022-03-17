@@ -18,7 +18,7 @@ class RoleEntityTest {
     }
 
     @Test
-    void getRoleShouldReturnTheSetRol() {
+    void getRoleShouldReturnTheSetRole() {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRole("ROLE_USER");
 
