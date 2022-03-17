@@ -34,26 +34,22 @@ public class Person {
     public Person() {
     }
 
-    public Person(String firstname, String lastname, String dob,
-                  String phoneNumber, String email, String address) {
+    public Person(String firstname, String lastname, String ssn,
+                  String email, String phoneNumber,  String address) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.ssn = dob;
-        this.phoneNumber = phoneNumber;
+        this.ssn = ssn;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.address = address;
     }
 
-    public Person(String firstname, String lastname, String dob, String phoneNumber, String email) {
-        this(firstname, lastname, dob, phoneNumber, email, "");
+    public Person(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
+        this(firstname, lastname, ssn, email, phoneNumber, "");
     }
 
-    public Person(String firstname, String lastname, String dob, String phoneNumber) {
-        this(firstname, lastname, dob, phoneNumber, "", "");
-    }
-
-    public Person(String firstname, String lastname, String dob) {
-        this(firstname, lastname, dob, "", "", "");
+    public Person(String firstname, String lastname, String ssn, String email) {
+        this(firstname, lastname, ssn, email, "", "");
     }
 
     public Long getId() {

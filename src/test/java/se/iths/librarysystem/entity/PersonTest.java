@@ -8,7 +8,7 @@ class PersonTest {
 
     @Test
     void getIdShouldReturnSetId() {
-        Person person = new Person("Stacey", "Thomas", "1992-05-23", "0723456789", "stacey@themail.com");
+        Person person = new Person("Stacey", "Thomas", "19920523-1234", "stacey@themail.com", "0723456789");
         person.setId(21L);
 
         Long result = person.getId();
@@ -18,7 +18,7 @@ class PersonTest {
 
     @Test
     void getEmailShouldReturnSetEmail() {
-        Person person = new Person("Stacey", "Thomas", "1992-05-23", "0723456789");
+        Person person = new Person("Stacey", "Thomas", "19920523-1234", "stacey@themail.com");
         person.setEmail("stacey@themail.com");
 
         String result = person.getEmail();
@@ -28,7 +28,7 @@ class PersonTest {
 
     @Test
     void getPhoneNumberShouldReturnSetPhoneNumber() {
-        Person person = new Person("Stacey", "Thomas", "1992-05-23");
+        Person person = new Person();
         person.setPhoneNumber("0723456789");
 
         String result = person.getPhoneNumber();
