@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
-public class Person {
+public class PersonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,11 @@ public class Person {
     private String phoneNumber;
     private String address;
 
-    public Person() {
+    public PersonEntity() {
     }
 
-    public Person(String firstname, String lastname, String ssn,
-                  String email, String phoneNumber,  String address) {
+    public PersonEntity(String firstname, String lastname, String ssn,
+                        String email, String phoneNumber, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
@@ -44,11 +44,11 @@ public class Person {
         this.address = address;
     }
 
-    public Person(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
+    public PersonEntity(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
         this(firstname, lastname, ssn, email, phoneNumber, "");
     }
 
-    public Person(String firstname, String lastname, String ssn, String email) {
+    public PersonEntity(String firstname, String lastname, String ssn, String email) {
         this(firstname, lastname, ssn, email, "", "");
     }
 
@@ -111,9 +111,9 @@ public class Person {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Person person)) return false;
-        return Objects.equals(firstname, person.firstname) && Objects.equals(lastname, person.lastname)
-               && Objects.equals(ssn, person.ssn);
+        if (!(o instanceof PersonEntity personEntity)) return false;
+        return Objects.equals(firstname, personEntity.firstname) && Objects.equals(lastname, personEntity.lastname)
+               && Objects.equals(ssn, personEntity.ssn);
     }
 
     @Override
