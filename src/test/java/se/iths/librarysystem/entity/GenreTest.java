@@ -27,9 +27,9 @@ class GenreTest {
     @Test
     void isNonFictionShouldReturnTrue(){
         Genre genre = new Genre();
-        genre.setNonFiction(true);
+        genre.setFiction(true);
 
-        assertTrue(genre.isNonFiction());
+        assertTrue(genre.isFiction());
     }
 
     @Test

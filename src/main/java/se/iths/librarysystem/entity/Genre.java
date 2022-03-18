@@ -13,15 +13,15 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String genreName;
-    private boolean nonFiction;
+    private boolean fiction;
 
 
     public Genre(){
     }
 
-    public Genre(String genreName, boolean nonFiction) {
+    public Genre(String genreName, boolean fiction) {
         this.genreName = genreName;
-        this.nonFiction = nonFiction;
+        this.fiction = fiction;
     }
 
     public Long getId() {
@@ -42,12 +42,12 @@ public class Genre {
         return this;
     }
 
-    public boolean isNonFiction() {
-        return nonFiction;
+    public boolean isFiction() {
+        return fiction;
     }
 
-    public Genre setNonFiction(boolean nonFiction) {
-        this.nonFiction = nonFiction;
+    public Genre setFiction(boolean nonFiction) {
+        this.fiction = nonFiction;
         return this;
     }
 
@@ -56,12 +56,11 @@ public class Genre {
         if (this == o) return true;
         if (!(o instanceof Genre)) return false;
         Genre genre = (Genre) o;
-        return nonFiction == genre.nonFiction &&
-            Objects.equals(genreName, genre.genreName);
+        return fiction == genre.fiction && Objects.equals(genreName, genre.genreName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(genreName, nonFiction);
+        return Objects.hash(genreName, fiction);
     }
 }
