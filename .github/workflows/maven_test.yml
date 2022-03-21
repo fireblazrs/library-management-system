@@ -24,8 +24,11 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B surefire-report:report --file pom.xml
+    - name: Get Date-Timestamp
+      id: timestamp
+      run: echo "::set-output name=now::$(date +'%Y%m%dT%H%M%S')"
     - name: Archive test report
       uses: actions/upload-artifact@v3
       with:
-          name: maven_surefire_report-$(date + '%Y%m%dT%H%M%S')
+          name: maven_surefire_report-${{ steps.timestamp.outputs.now }}
           path: target/site/surefire-report.html
