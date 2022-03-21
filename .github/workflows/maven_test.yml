@@ -26,7 +26,7 @@ jobs:
       run: mvn -B surefire-report:report --file pom.xml
     - name: Get Date-Timestamp
       id: timestamp
-      run: echo "::set-output name=now::$(date +'%Y%m%dT%H%M%SA')"
+      run: echo "::set-output name=now::$(date +'%Y%m%dT%H%M%S')"
     - name: Archive test report
       uses: actions/upload-artifact@v3
       with:
