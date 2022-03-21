@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: test-report
-          path: artifacts/target/surefire-reports/TEST-*.xml
+          path: /target/site/surefire-report.html
