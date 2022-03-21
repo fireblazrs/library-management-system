@@ -27,5 +27,5 @@ jobs:
     - name: Archive test report
       uses: actions/upload-artifact@v3
       with:
-          name: test-report
+          name: maven_surefire_report-$(date + '%Y%m%dT%H%M%S')
           path: target/site/surefire-report.html
