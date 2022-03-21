@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Genre {
+public class GenreEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +16,10 @@ public class Genre {
     private boolean fiction;
 
 
-    public Genre(){
+    public GenreEntity(){
     }
 
-    public Genre(String genreName, boolean fiction) {
+    public GenreEntity(String genreName, boolean fiction) {
         this.genreName = genreName;
         this.fiction = fiction;
     }
@@ -28,7 +28,7 @@ public class Genre {
         return id;
     }
 
-    public Genre setId(Long id) {
+    public GenreEntity setId(Long id) {
         this.id = id;
         return this;
     }
@@ -37,7 +37,7 @@ public class Genre {
         return genreName;
     }
 
-    public Genre setGenreName(String genre) {
+    public GenreEntity setGenreName(String genre) {
         this.genreName = genre;
         return this;
     }
@@ -46,7 +46,7 @@ public class Genre {
         return fiction;
     }
 
-    public Genre setFiction(boolean nonFiction) {
+    public GenreEntity setFiction(boolean nonFiction) {
         this.fiction = nonFiction;
         return this;
     }
@@ -54,8 +54,8 @@ public class Genre {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Genre)) return false;
-        Genre genre = (Genre) o;
+        if (!(o instanceof GenreEntity)) return false;
+        GenreEntity genre = (GenreEntity) o;
         return fiction == genre.fiction && Objects.equals(genreName, genre.genreName);
     }
 
