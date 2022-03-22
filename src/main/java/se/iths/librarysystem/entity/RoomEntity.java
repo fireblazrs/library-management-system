@@ -19,6 +19,20 @@ private boolean internetAccess;
 private boolean wheelchairAccess;
 private boolean hasProjector;
 
+public RoomEntity(){
+
+}
+
+    public RoomEntity(String name, int groupSize, boolean internetAccess, boolean wheelchairAccess, boolean hasProjector) {
+        this.name = name;
+        this.groupSize = groupSize;
+        this.internetAccess = internetAccess;
+        this.wheelchairAccess = wheelchairAccess;
+        this.hasProjector = hasProjector;
+    }
+
+
+
     public Long getId() {
         return id;
     }
