@@ -18,7 +18,6 @@ public class PersonEntity {
     @NotBlank(message = "Lastname is a required field")
     private String lastname;
 
-    @Column(unique = true)
     @NotBlank(message = "Social security number is a required field")
     private String ssn;
 
