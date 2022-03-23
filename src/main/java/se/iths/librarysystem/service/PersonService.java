@@ -11,6 +11,7 @@ import se.iths.librarysystem.repository.RoleRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -46,6 +47,19 @@ public class PersonService {
     public Person findById(Long id) {
         PersonEntity personEntity = personRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         return modelMapper.map(personEntity, Person.class);
+    }
+
+    public Person updatePerson(Person person) {
+        Long id =
+                Optional.ofNullable(person.getId()).orElseThrow(() -> new IllegalArgumentException ("Id is " + person.getId()));
+        //InvalidValueException
+        PersonEntity foundEntity =
+                personRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+
+        PersonEntity personEntity = modelMapper.map(person, PersonEntity.class);
+        PersonEntity updatedEntity = personRepository.save(personEntity);
+
+        return modelMapper.map(updatedEntity, Person.class);
     }
 
 

@@ -36,4 +36,14 @@ public class PersonController {
         Person person = personService.findById(id);
         return new ResponseEntity<>(person, HttpStatus.OK);
     }
+
+    @PutMapping()
+    public ResponseEntity<Person> updateUser(@RequestBody Person person) {
+        Person updatedPerson = personService.updatePerson(person);
+        return new ResponseEntity<>(updatedPerson, HttpStatus.OK);
+    }
+
+//    @DeleteMapping("{id}")
+//    public ResponseEntity<Void> deleteUserById()
+
 }
