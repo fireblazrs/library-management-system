@@ -29,6 +29,9 @@ public class PersonEntity {
     private String phoneNumber;
     private String address;
 
+    @ManyToOne
+    private RoleEntity role;
+
     public PersonEntity() {
     }
 
@@ -104,6 +107,14 @@ public class PersonEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEntity role) {
+        this.role = role;
     }
 
     @Override
