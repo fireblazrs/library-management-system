@@ -30,4 +30,10 @@ public class PersonController {
         List<Person> users = personService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Person> findUserById(@PathVariable Long id) {
+        Person person = personService.findById(id);
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
 }
