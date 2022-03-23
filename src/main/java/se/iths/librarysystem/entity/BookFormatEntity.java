@@ -12,13 +12,32 @@ public class BookFormatEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String format;
+    private String formatName;
+    private boolean digital;
+    private int pageCount;
+    private String length;
+
 
     public BookFormatEntity(){
     }
 
-    public BookFormatEntity(String format) {
-        this.format = format;
+    public BookFormatEntity(String formatName, boolean digital) {
+        this(formatName,digital,0,"");
+    }
+
+    public BookFormatEntity(String formatName, boolean digital, int pageCount) {
+        this(formatName,digital,pageCount,"");
+    }
+
+    public BookFormatEntity(String formatName, boolean digital, String length) {
+        this(formatName,digital,0,length);
+    }
+
+    public BookFormatEntity(String formatName, boolean digital, int pageCount, String length) {
+        this.formatName = formatName;
+        this.digital = digital;
+        this.pageCount = pageCount;
+        this.length = length;
     }
 
     public void setId(Long id) {
@@ -29,12 +48,39 @@ public class BookFormatEntity {
         return id;
     }
 
-    public String getFormat() {
-        return format;
+    public String getFormatName() {
+        return formatName;
     }
 
-    public BookFormatEntity setFormat(String format) {
-        this.format = format;
+    public BookFormatEntity setFormatName(String format) {
+        this.formatName = format;
+        return this;
+    }
+
+    public boolean isDigital() {
+        return digital;
+    }
+
+    public BookFormatEntity setDigital(boolean digital) {
+        this.digital = digital;
+        return this;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public BookFormatEntity setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+        return this;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public BookFormatEntity setLength(String length) {
+        this.length = length;
         return this;
     }
 
@@ -42,11 +88,13 @@ public class BookFormatEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BookFormatEntity that)) return false;
-        return Objects.equals(format, that.format);
+        return digital == that.digital && pageCount == that.pageCount &&
+            Objects.equals(formatName, that.formatName) &&
+            Objects.equals(length, that.length);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(format);
+        return Objects.hash(formatName, digital, pageCount, length);
     }
 }
