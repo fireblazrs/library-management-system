@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import se.iths.librarysystem.dto.Person;
 import se.iths.librarysystem.entity.PersonEntity;
 import se.iths.librarysystem.entity.RoleEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.PersonRepository;
 import se.iths.librarysystem.repository.RoleRepository;
 
@@ -43,9 +44,7 @@ public class PersonService {
     }
 
     public Person findById(Long id) {
-        PersonEntity personEntity = personRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("id " + id + " not found"));
-        //IdNotFoundException("user", id));
+        PersonEntity personEntity = personRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         return modelMapper.map(personEntity, Person.class);
     }
 
