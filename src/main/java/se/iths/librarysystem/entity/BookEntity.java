@@ -1,9 +1,6 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -21,16 +18,20 @@ public class BookEntity {
     private String edition;
     @NotNull(message = "Print-date is a required field")
     private Date printed;
+    @Column(unique = true)
+    @NotBlank(message = "ISBN is a required field")
+    private String isbn;
 
 
     public BookEntity() {
     }
 
-    public BookEntity(String title, String subtitle, String edition, Date printed) {
+    public BookEntity(String title, String subtitle, String edition, Date printed, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
         this.edition = edition;
         this.printed = printed;
+        this.isbn = isbn;
     }
 
     public Long getId() {
@@ -73,16 +74,24 @@ public class BookEntity {
         this.printed = printed;
     }
 
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookEntity that = (BookEntity) o;
-        return id.equals(that.id);
+        return id.equals(that.id) && isbn.equals(that.isbn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, isbn);
     }
 }
