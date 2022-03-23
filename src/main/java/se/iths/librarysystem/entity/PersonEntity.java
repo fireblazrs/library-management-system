@@ -1,9 +1,6 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -21,6 +18,7 @@ public class PersonEntity {
     @NotBlank(message = "Lastname is a required field")
     private String lastname;
 
+    @Column(unique = true)
     @NotBlank(message = "Social security number is a required field")
     private String ssn;
 
