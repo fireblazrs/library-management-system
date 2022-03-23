@@ -34,3 +34,6 @@ build/
 
 ### Logs ###
 logs/
+
+### Custom Development Properties ###
+src/main/resources/application-dev.properties
