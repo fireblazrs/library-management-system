@@ -29,7 +29,7 @@ public class PersonEntity {
     private String phoneNumber;
     private String address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private RoleEntity role;
 
     public PersonEntity() {
