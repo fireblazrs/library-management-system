@@ -1,16 +1,11 @@
 package se.iths.librarysystem.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import se.iths.librarysystem.dto.Person;
 import se.iths.librarysystem.entity.PersonEntity;
 import se.iths.librarysystem.entity.RoleEntity;
-import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.PersonRepository;
 import se.iths.librarysystem.repository.RoleRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,49 +13,33 @@ public class PersonService {
 
     private final PersonRepository personRepository;
     private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
     private final String DEFAULT_ROLE = "ROLE_USER";
 
-    public PersonService(PersonRepository repository, RoleRepository roleRepository, ModelMapper modelMapper) {
+    public PersonService(PersonRepository repository, RoleRepository roleRepository) {
         this.personRepository = repository;
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
     }
 
-    public Person createPerson(Person person) {
-        PersonEntity personEntity = modelMapper.map(person, PersonEntity.class);
-
+    public PersonEntity createPerson(PersonEntity personEntity) {
         RoleEntity defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         personEntity.setRole(defaultRole);
-        PersonEntity savedPersonEntity = personRepository.save(personEntity);
-
-        return modelMapper.map(savedPersonEntity, Person.class);
+        return personRepository.save(personEntity);
     }
 
-    public List<Person> getAllUsers() {
-        Iterable<PersonEntity> personEntities = personRepository.findAll();
-        List<Person> users = new ArrayList<>();
-        personEntities.forEach(user -> users.add(modelMapper.map(user, Person.class)));
-        return users;
+    public Iterable<PersonEntity> getAllPersons() {
+        return personRepository.findAll();
     }
 
-    public Person findById(Long id) {
-        PersonEntity personEntity = personRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        return modelMapper.map(personEntity, Person.class);
+    public Optional<PersonEntity> findById(Long id) {
+        return personRepository.findById(id);
     }
 
-    public Person updatePerson(Person person) {
-        Long id =
-                Optional.ofNullable(person.getId()).orElseThrow(() -> new IllegalArgumentException ("Id is " + person.getId()));
-        //InvalidValueException
-        PersonEntity foundEntity =
-                personRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-
-        PersonEntity personEntity = modelMapper.map(person, PersonEntity.class);
-        PersonEntity updatedEntity = personRepository.save(personEntity);
-
-        return modelMapper.map(updatedEntity, Person.class);
+    public PersonEntity updatePerson(PersonEntity personEntity) {
+        return personRepository.save(personEntity);
     }
 
+    public void deletePerson(Long id) {
+        personRepository.deleteById(id);
+    }
 
 }
