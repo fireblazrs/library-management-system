@@ -10,6 +10,7 @@ import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.PersonService;
 import se.iths.librarysystem.validatorservice.PersonValidator;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +29,8 @@ public class PersonController {
     }
 
     @PostMapping()
-    public ResponseEntity<Person> createUser(@RequestBody Person person) {
+    public ResponseEntity<Person> createUser(@Valid @RequestBody Person person) {
         PersonEntity personEntity = modelMapper.map(person, PersonEntity.class);
-        // todo: validate PersonEntity OR throw Invalid details
-
         PersonEntity createdEntity = personService.createPerson(personEntity);
         Person createdPerson = modelMapper.map(createdEntity, Person.class);
         return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
@@ -56,7 +55,7 @@ public class PersonController {
     }
 
     @PutMapping()
-    public ResponseEntity<Person> updateUser(@RequestBody Person person) {
+    public ResponseEntity<Person> updateUser(@Valid @RequestBody Person person) {
         validator.validId(person.getId());
         validator.idExists(person.getId());
 
