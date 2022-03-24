@@ -16,4 +16,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> idNotFoundException(IdNotFoundException exception) {
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), exception.getPath()));
     }
+
+    @ExceptionHandler({InvalidValueException.class})
+    public ResponseEntity<Object> invalidValueException(InvalidValueException exception) {
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getPath()));
+    }
 }
