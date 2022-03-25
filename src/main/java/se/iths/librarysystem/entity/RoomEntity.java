@@ -7,23 +7,23 @@ import java.util.Objects;
 @Entity
 public class RoomEntity {
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
-private String name;
-private int groupSize;
-private boolean internetAccess;
-private boolean wheelchairAccess;
-private boolean hasProjector;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
+    private int groupSize;
+    private boolean internetAccess;
+    private boolean wheelchairAccess;
+    private boolean hasProjector;
 
-@OneToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "person_id", referencedColumnName = "id")
-private PersonEntity person;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private PersonEntity person;
 
 
-public RoomEntity(){
+    public RoomEntity() {
 
-}
+    }
 
     public RoomEntity(String name, int groupSize, boolean internetAccess, boolean wheelchairAccess, boolean hasProjector) {
         this.name = name;
@@ -32,7 +32,6 @@ public RoomEntity(){
         this.wheelchairAccess = wheelchairAccess;
         this.hasProjector = hasProjector;
     }
-
 
 
     public Long getId() {
