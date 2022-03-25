@@ -79,11 +79,7 @@ public class PersonController {
     @GetMapping("{id}/role")
     public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
         validator.validId(id);
-
         PersonEntity personEntity = personService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-
-        // TODO:  MapperConfig, (optional) custom mapping for role below
-        //String name = personEntity.getRole().getRole().substring(personEntity.getRole().getRole().indexOf("_") + 1).toLowerCase();
         Role role = modelMapper.map(personEntity.getRole(), Role.class);
 
         return new ResponseEntity<>(role, HttpStatus.OK);
