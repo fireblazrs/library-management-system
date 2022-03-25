@@ -1,10 +1,7 @@
 package se.iths.librarysystem.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +15,11 @@ private int groupSize;
 private boolean internetAccess;
 private boolean wheelchairAccess;
 private boolean hasProjector;
+
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "person_id", referencedColumnName = "id")
+private PersonEntity person;
+
 
 public RoomEntity(){
 
@@ -81,6 +83,14 @@ public RoomEntity(){
         this.hasProjector = hasProjector;
     }
 
+    public PersonEntity getPerson() {
+        return person;
+    }
+
+    public RoomEntity setPerson(PersonEntity person) {
+        this.person = person;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
