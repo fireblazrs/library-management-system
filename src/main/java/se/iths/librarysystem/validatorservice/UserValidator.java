@@ -2,14 +2,14 @@ package se.iths.librarysystem.validatorservice;
 
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.InvalidValueException;
-import se.iths.librarysystem.service.PersonService;
+import se.iths.librarysystem.service.UserService;
 
-public class PersonValidator extends LibraryValidator {
+public class UserValidator extends LibraryValidator {
 
-    PersonService personService;
+    UserService userService;
 
-    public PersonValidator(PersonService personService) {
-        this.personService = personService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class PersonValidator extends LibraryValidator {
 
     @Override
     public void idExists(Long id) {
-        personService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
     }
 }

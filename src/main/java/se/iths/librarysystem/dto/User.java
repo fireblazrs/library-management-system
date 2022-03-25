@@ -1,6 +1,6 @@
 package se.iths.librarysystem.dto;
 
-public class Person {
+public class User {
 
     private Long id;
     private String firstname;
@@ -10,11 +10,11 @@ public class Person {
     private String phoneNumber;
     private String address;
 
-    public Person() {
+    public User() {
     }
 
-    public Person(String firstname, String lastname, String ssn,
-                  String email, String phoneNumber, String address) {
+    public User(String firstname, String lastname, String ssn,
+                String email, String phoneNumber, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
@@ -23,11 +23,11 @@ public class Person {
         this.address = address;
     }
 
-    public Person(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
+    public User(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
         this(firstname, lastname, ssn, email, phoneNumber, "");
     }
 
-    public Person(String firstname, String lastname, String ssn, String email) {
+    public User(String firstname, String lastname, String ssn, String email) {
         this(firstname, lastname, ssn, email, "", "");
     }
 
