@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.librarysystem.dto.Person;
+import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.entity.PersonEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.PersonService;
@@ -72,6 +73,20 @@ public class PersonController {
         validator.idExists(id);
         personService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @GetMapping("{id}/role")
+    public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
+        validator.validId(id);
+
+        PersonEntity personEntity = personService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+
+        // TODO:  MapperConfig, (optional) custom mapping for role below
+        //String name = personEntity.getRole().getRole().substring(personEntity.getRole().getRole().indexOf("_") + 1).toLowerCase();
+        Role role = modelMapper.map(personEntity.getRole(), Role.class);
+
+        return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
 }
