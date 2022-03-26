@@ -69,7 +69,8 @@ public class UserController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         validator.validId(id);
-        validator.idExists(id);
+        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        userEntity.removeRole();
         userService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -31,7 +31,7 @@ public class UserEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private RoleEntity role;
 
-    UserEntity() {
+    public UserEntity() {
     }
 
     public UserEntity(String firstname, String lastname, String ssn,
@@ -114,6 +114,11 @@ public class UserEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public void removeRole() {
+        this.role.removePerson(this);
+        this.role = null;
     }
 
     @Override
