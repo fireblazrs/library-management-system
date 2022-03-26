@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.dto.User;
+import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.UserService;
@@ -73,6 +75,15 @@ public class UserController {
         userEntity.removeRole();
         userService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("{id}/role")
+    public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
+        validator.validId(id);
+        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        RoleEntity roleEntity = userEntity.getRole();
+        Role role = modelMapper.map(roleEntity, Role.class);
+        return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
 }
