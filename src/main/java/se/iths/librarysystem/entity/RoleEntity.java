@@ -15,7 +15,7 @@ public class RoleEntity {
     private String role;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private final List<PersonEntity> personList = new ArrayList<>();
+    private final List<UserEntity> users = new ArrayList<>();
 
     public RoleEntity() {
     }
@@ -40,16 +40,16 @@ public class RoleEntity {
         this.role = role;
     }
 
-    public List<PersonEntity> getPersonList() {
-        return Collections.unmodifiableList(personList);
+    public List<UserEntity> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 
-    public void addPerson(PersonEntity person) {
-        personList.add(person);
+    public void addUser(UserEntity user) {
+        users.add(user);
     }
 
-    public void removePerson(PersonEntity person) {
-        personList.remove(person);
+    public void removeUser(UserEntity user) {
+        users.remove(user);
     }
 
     @Override
