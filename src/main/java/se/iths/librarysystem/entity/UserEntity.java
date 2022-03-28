@@ -1,12 +1,15 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
-public class PersonEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +31,11 @@ public class PersonEntity {
     private String phoneNumber;
     private String address;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person", fetch = FetchType.LAZY)
-    private RoomEntity room;
-
-
-    public PersonEntity() {
+    public UserEntity() {
     }
 
-    public PersonEntity(String firstname, String lastname, String ssn,
-                        String email, String phoneNumber, String address) {
+    public UserEntity(String firstname, String lastname, String ssn,
+                      String email, String phoneNumber, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
@@ -45,11 +44,11 @@ public class PersonEntity {
         this.address = address;
     }
 
-    public PersonEntity(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
+    public UserEntity(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
         this(firstname, lastname, ssn, email, phoneNumber, "");
     }
 
-    public PersonEntity(String firstname, String lastname, String ssn, String email) {
+    public UserEntity(String firstname, String lastname, String ssn, String email) {
         this(firstname, lastname, ssn, email, "", "");
     }
 
@@ -109,21 +108,12 @@ public class PersonEntity {
         this.address = address;
     }
 
-    public RoomEntity getRoom() {
-        return room;
-    }
-
-    public PersonEntity setRoom(RoomEntity room) {
-        this.room = room;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersonEntity personEntity)) return false;
-        return Objects.equals(firstname, personEntity.firstname) && Objects.equals(lastname, personEntity.lastname)
-               && Objects.equals(ssn, personEntity.ssn);
+        if (!(o instanceof UserEntity userEntity)) return false;
+        return Objects.equals(firstname, userEntity.firstname) && Objects.equals(lastname, userEntity.lastname)
+               && Objects.equals(ssn, userEntity.ssn);
     }
 
     @Override
