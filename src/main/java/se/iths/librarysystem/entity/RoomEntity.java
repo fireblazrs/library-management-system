@@ -17,8 +17,7 @@ public class RoomEntity {
     private boolean hasProjector;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private PersonEntity person;
+    private UserEntity user;
 
 
     public RoomEntity() {
@@ -82,12 +81,12 @@ public class RoomEntity {
         this.hasProjector = hasProjector;
     }
 
-    public PersonEntity getPerson() {
-        return person;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public RoomEntity setPerson(PersonEntity person) {
-        this.person = person;
+    public RoomEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 

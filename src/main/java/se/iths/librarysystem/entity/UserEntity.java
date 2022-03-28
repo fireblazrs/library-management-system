@@ -1,9 +1,6 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -30,6 +27,9 @@ public class UserEntity {
 
     private String phoneNumber;
     private String address;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private RoomEntity room;
 
     public UserEntity() {
     }
@@ -106,6 +106,15 @@ public class UserEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public RoomEntity getRoom() {
+        return room;
+    }
+
+    public UserEntity setRoom(RoomEntity room) {
+        this.room = room;
+        return this;
     }
 
     @Override
