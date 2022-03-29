@@ -27,10 +27,13 @@ public class UserEntity {
 
     private String phoneNumber;
     private String address;
-
+    
     @ManyToOne(cascade = CascadeType.ALL)
     private RoleEntity role;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private RoomEntity room;
+    
     public UserEntity() {
     }
 
@@ -107,7 +110,7 @@ public class UserEntity {
     public void setAddress(String address) {
         this.address = address;
     }
-
+    
     public RoleEntity getRole() {
         return role;
     }
@@ -120,7 +123,15 @@ public class UserEntity {
         this.role.removePerson(this);
         this.role = null;
     }
+    
+    public RoomEntity getRoom() {
+        return room;
+    }
 
+    public void setRoom(RoomEntity room) {
+        this.room = room;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
