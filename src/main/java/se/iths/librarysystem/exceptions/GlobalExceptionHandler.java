@@ -26,6 +26,11 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getPath()));
     }
 
+    @ExceptionHandler({ValueNotFoundException.class})
+    public ResponseEntity<Object> valueNotFoundException(ValueNotFoundException exception) {
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), exception.getPath()));
+    }
+
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> constraintViolationException(ConstraintViolationException exception) {
         Map<String,String> errors = new HashMap<>();

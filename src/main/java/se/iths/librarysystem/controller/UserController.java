@@ -9,12 +9,14 @@ import se.iths.librarysystem.dto.User;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
+import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.service.UserService;
 import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
@@ -32,8 +34,8 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        UserEntity UserEntity = modelMapper.map(user, UserEntity.class);
-        UserEntity createdEntity = userService.createPerson(UserEntity);
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        UserEntity createdEntity = userService.createPerson(userEntity);
         User createdUser = modelMapper.map(createdEntity, User.class);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
@@ -81,7 +83,8 @@ public class UserController {
     public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
         validator.validId(id);
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        RoleEntity roleEntity = userEntity.getRole();
+        RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
+                .orElseThrow(() -> new ValueNotFoundException("role", "/users/" + id + "/role"));
         Role role = modelMapper.map(roleEntity, Role.class);
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
