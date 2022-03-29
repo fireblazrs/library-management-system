@@ -21,8 +21,8 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), exception.getPath()));
     }
 
-    @ExceptionHandler({InvalidValueException.class})
-    public ResponseEntity<Object> invalidValueException(InvalidValueException exception) {
+    @ExceptionHandler({InvalidInputException.class})
+    public ResponseEntity<Object> invalidInputException(InvalidInputException exception) {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getPath()));
     }
 

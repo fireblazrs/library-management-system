@@ -1,7 +1,7 @@
 package se.iths.librarysystem.validatorservice;
 
 import se.iths.librarysystem.exceptions.IdNotFoundException;
-import se.iths.librarysystem.exceptions.InvalidValueException;
+import se.iths.librarysystem.exceptions.InvalidInputException;
 import se.iths.librarysystem.service.UserService;
 
 public class UserValidator extends LibraryValidator {
@@ -15,7 +15,7 @@ public class UserValidator extends LibraryValidator {
     @Override
     public void validId(Long id) {
         if(id == null || id < 1L)
-            throw new InvalidValueException(id + " is an invalid id.", "/users/");
+            throw new InvalidInputException(id + " is an invalid id.", "/users/");
     }
 
     @Override
