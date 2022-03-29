@@ -32,8 +32,8 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        UserEntity UserEntity = modelMapper.map(user, UserEntity.class);
-        UserEntity createdEntity = userService.createPerson(UserEntity);
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        UserEntity createdEntity = userService.createPerson(userEntity);
         User createdUser = modelMapper.map(createdEntity, User.class);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
