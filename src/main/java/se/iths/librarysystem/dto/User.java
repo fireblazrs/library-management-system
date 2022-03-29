@@ -1,5 +1,7 @@
 package se.iths.librarysystem.dto;
 
+import se.iths.librarysystem.entity.RoleEntity;
+
 public class User {
 
     private Long id;
@@ -9,26 +11,33 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
+    private String role;
 
     public User() {
     }
 
     public User(String firstname, String lastname, String ssn,
-                String email, String phoneNumber, String address) {
+                String email, String role, String phoneNumber, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.role = role;
     }
 
-    public User(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
-        this(firstname, lastname, ssn, email, phoneNumber, "");
+    public User(String firstname, String lastname, String ssn, String email, String role, String  phoneNumber) {
+        this(firstname, lastname, ssn, email, role, phoneNumber, "");
     }
+
+    public User(String firstname, String lastname, String ssn, String email, String role) {
+        this(firstname, lastname, ssn, email, role, "", "");
+    }
+
 
     public User(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email, "", "");
+        this(firstname, lastname, ssn, email,"", "", "");
     }
 
     public Long getId() {
@@ -87,4 +96,11 @@ public class User {
         this.address = address;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

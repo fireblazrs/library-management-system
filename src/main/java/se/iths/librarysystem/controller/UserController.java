@@ -91,14 +91,14 @@ public class UserController {
     }
 
     @PatchMapping("{userId}/role/{roleId}")
-    public ResponseEntity<Role> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
+    public ResponseEntity<User> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
         userValidator.validId(userId);
         roleValidator.validId(roleId);
 
-        RoleEntity roleEntity = userService.addRoleToUser(userId, roleId);
-        Role role = modelMapper.map(roleEntity, Role.class);
+        UserEntity userEntity = userService.addRoleToUser(userId, roleId);
+        User user = modelMapper.map(userEntity, User.class);
 
-        return new ResponseEntity<>(role, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

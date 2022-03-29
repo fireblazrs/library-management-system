@@ -45,10 +45,10 @@ public class UserService {
     }
 
     @Transactional
-    public RoleEntity addRoleToUser(Long userId, Long roleId) {
+    public UserEntity addRoleToUser(Long userId, Long roleId) {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(() -> new IdNotFoundException("role", roleId));
         user.setRole(role);
-        return role;
+        return user;
     }
 }
