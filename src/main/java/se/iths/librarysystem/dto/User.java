@@ -1,7 +1,5 @@
 package se.iths.librarysystem.dto;
 
-import se.iths.librarysystem.entity.RoleEntity;
-
 public class User {
 
     private Long id;
