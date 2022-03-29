@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.dto.User;
+import se.iths.librarysystem.dto.UserWithRole;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
@@ -91,12 +92,12 @@ public class UserController {
     }
 
     @PatchMapping("{userId}/role/{roleId}")
-    public ResponseEntity<User> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
+    public ResponseEntity<UserWithRole> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
         userValidator.validId(userId);
         roleValidator.validId(roleId);
 
         UserEntity userEntity = userService.addRoleToUser(userId, roleId);
-        User user = modelMapper.map(userEntity, User.class);
+        UserWithRole user = modelMapper.map(userEntity, UserWithRole.class);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
