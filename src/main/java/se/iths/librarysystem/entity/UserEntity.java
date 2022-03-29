@@ -30,6 +30,9 @@ public class UserEntity {
 
     @ManyToOne
     private RoleEntity role;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private RoomEntity room;
 
     public UserEntity() {
 
@@ -115,6 +118,15 @@ public class UserEntity {
 
     public void setRole(RoleEntity role) {
         this.role = role;
+    }
+
+    public RoomEntity getRoom() {
+        return room;
+    }
+
+    public UserEntity setRoom(RoomEntity room) {
+        this.room = room;
+        return this;
     }
 
     @Override
