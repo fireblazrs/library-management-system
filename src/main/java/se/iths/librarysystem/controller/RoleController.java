@@ -10,6 +10,7 @@ import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.RoleService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class RoleController {
     }
 
     @PostMapping
-    public ResponseEntity<Role> createRole(@RequestBody Role role) {
+    public ResponseEntity<Role> createRole(@Valid @RequestBody Role role) {
         RoleEntity roleEntity = modelMapper.map(role, RoleEntity.class);
         RoleEntity savedRoleEntity = roleService.createRole(roleEntity);
         Role savedRole = modelMapper.map(savedRoleEntity, Role.class);
