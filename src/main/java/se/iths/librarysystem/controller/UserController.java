@@ -12,7 +12,9 @@ import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
+import se.iths.librarysystem.service.BookService;
 import se.iths.librarysystem.service.UserService;
+import se.iths.librarysystem.validatorservice.BookValidator;
 import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
@@ -27,12 +29,17 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final UserValidator validator;
+    private final UserValidator userValidator;
+    private final BookValidator bookValidator;
+    private final BookService bookService;
 
-    public UserController(UserService userService, ModelMapper modelMapper, UserValidator validator) {
+    public UserController(UserService userService, ModelMapper modelMapper, UserValidator userValidator,
+                          BookValidator bookValidator, BookService bookService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.validator = validator;
+        this.userValidator = userValidator;
+        this.bookValidator = bookValidator;
+        this.bookService = bookService;
     }
 
     @PostMapping()
@@ -55,7 +62,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
-        validator.validId(id);
+        userValidator.validId(id);
 
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         User user = modelMapper.map(userEntity, User.class);
@@ -65,8 +72,8 @@ public class UserController {
 
     @PutMapping()
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
-        validator.validId(user.getId());
-        validator.idExists(user.getId());
+        userValidator.validId(user.getId());
+        userValidator.idExists(user.getId());
 
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         UserEntity updatedUserEntity = userService.updatePerson(userEntity);
@@ -77,7 +84,7 @@ public class UserController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        validator.validId(id);
+        userValidator.validId(id);
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         userEntity.removeRole();
         userService.deletePerson(id);
@@ -86,7 +93,7 @@ public class UserController {
 
     @GetMapping("{id}/role")
     public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
-        validator.validId(id);
+        userValidator.validId(id);
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
                 .orElseThrow(() -> new ValueNotFoundException("role", "/users/" + id + "/role"));
@@ -96,7 +103,7 @@ public class UserController {
 
     @GetMapping("{id}/books")
     public ResponseEntity<List<Book>> getAUsersBooks(@PathVariable Long id) {
-        validator.validId(id);
+        userValidator.validId(id);
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         List<Book> books = userEntity.getBooks().stream()
                 .map(book -> modelMapper.map(book, Book.class))
