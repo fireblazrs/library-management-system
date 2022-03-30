@@ -28,7 +28,10 @@ public class BookValidator extends LibraryValidator {
     }
 
     public void hasUser(BookEntity book, UserEntity user) {
-        if (book.getBorrower() == null || !book.getBorrower().equals(user))
-            throw new ValueNotFoundException("book", "/users/" + user.getId() + "/books/" + book.getId());
+        if (book.getBorrower() == null || !book.getBorrower().equals(user)) {
+            String message = "User Id " + user.getId() + " does not have a book with Id " + book.getId();
+            String path = "/users/" + user.getId() + "/books/" + book.getId();
+            throw new ValueNotFoundException(message, path);
+        }
     }
 }

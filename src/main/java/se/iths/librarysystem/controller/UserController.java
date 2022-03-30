@@ -97,7 +97,7 @@ public class UserController {
         userValidator.validId(id);
         UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
-                .orElseThrow(() -> new ValueNotFoundException("role", "/users/" + id + "/role"));
+            .orElseThrow(() -> new ValueNotFoundException("User Id "+ id + " does not have a role.", "/users/" + id + "/role"));
         Role role = modelMapper.map(roleEntity, Role.class);
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
