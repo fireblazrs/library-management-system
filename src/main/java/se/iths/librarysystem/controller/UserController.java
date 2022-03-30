@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.dto.User;
 import se.iths.librarysystem.entity.RoleEntity;
@@ -91,6 +92,17 @@ public class UserController {
                 .orElseThrow(() -> new ValueNotFoundException("role", "/users/" + id + "/role"));
         Role role = modelMapper.map(roleEntity, Role.class);
         return new ResponseEntity<>(role, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/books")
+    public ResponseEntity<List<Book>> getAUsersBooks(@PathVariable Long id) {
+        validator.validId(id);
+        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        List<Book> books = userEntity.getBooks().stream()
+                .map(book -> modelMapper.map(book, Book.class))
+                .toList();
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
 }
