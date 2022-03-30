@@ -2,7 +2,7 @@ package se.iths.librarysystem.exceptions;
 
 public class IdNotFoundException extends RuntimeException {
 
-    private String path;
+    private final String path;
 
     public IdNotFoundException(String entity, Long id) {
         super(entity + " with Id " + id + " not found.");
@@ -13,7 +13,4 @@ public class IdNotFoundException extends RuntimeException {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
 }

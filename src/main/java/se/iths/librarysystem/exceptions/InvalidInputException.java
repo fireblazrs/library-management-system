@@ -2,7 +2,7 @@ package se.iths.librarysystem.exceptions;
 
 public class InvalidInputException extends RuntimeException {
 
-    private String path;
+    private final String path;
 
     public InvalidInputException(String message, String path) {
         super(message);
@@ -13,7 +13,4 @@ public class InvalidInputException extends RuntimeException {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
 }
