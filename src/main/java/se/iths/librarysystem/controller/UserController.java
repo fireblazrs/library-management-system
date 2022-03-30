@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.dto.User;
+import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
@@ -110,6 +111,17 @@ public class UserController {
                 .toList();
 
         return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{userId}/books/{bookId}")
+    public ResponseEntity<Void> removeBookUserConnection(@PathVariable Long userId, @PathVariable Long bookId) {
+        userValidator.validId(userId);
+        bookValidator.validId(bookId);
+        UserEntity user = userService.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
+        BookEntity book = bookService.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
+        bookValidator.hasUser(book, user);
+        book.removeBorrower();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
