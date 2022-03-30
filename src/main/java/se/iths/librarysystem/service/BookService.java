@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.repository.BookRepository;
 
+import java.util.Optional;
+
 @Service
 public class BookService {
 
@@ -23,5 +25,9 @@ public class BookService {
 
     public Iterable<BookEntity> getBooksByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
+    }
+
+    public Optional<BookEntity> findById(Long id) {
+        return bookRepository.findById(id);
     }
 }
