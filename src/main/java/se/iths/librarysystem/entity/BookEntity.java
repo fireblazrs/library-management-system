@@ -18,7 +18,7 @@ public class BookEntity {
     private String edition;
     @NotNull(message = "Print-date is a required field")
     private Date printed;
-    @Column(unique = true)
+
     @NotBlank(message = "ISBN is a required field")
     private String isbn;
 
