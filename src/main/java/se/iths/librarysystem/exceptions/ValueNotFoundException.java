@@ -1,11 +1,11 @@
 package se.iths.librarysystem.exceptions;
 
-public class InvalidValueException extends RuntimeException {
+public class ValueNotFoundException extends RuntimeException {
 
     private String path;
 
-    public InvalidValueException(String message, String path) {
-        super(message);
+    public ValueNotFoundException(String entity, String path) {
+        super(entity + " is null and requires a value!");
         this.path = path;
     }
 
@@ -16,4 +16,5 @@ public class InvalidValueException extends RuntimeException {
     public void setPath(String path) {
         this.path = path;
     }
+
 }
