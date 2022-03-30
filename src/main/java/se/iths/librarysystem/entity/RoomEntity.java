@@ -1,27 +1,28 @@
 package se.iths.librarysystem.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class RoomEntity {
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
-private Long id;
-private String name;
-private int groupSize;
-private boolean internetAccess;
-private boolean wheelchairAccess;
-private boolean hasProjector;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
+    private int groupSize;
+    private boolean internetAccess;
+    private boolean wheelchairAccess;
+    private boolean hasProjector;
 
-public RoomEntity(){
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserEntity user;
 
-}
+
+    public RoomEntity() {
+
+    }
 
     public RoomEntity(String name, int groupSize, boolean internetAccess, boolean wheelchairAccess, boolean hasProjector) {
         this.name = name;
@@ -30,7 +31,6 @@ public RoomEntity(){
         this.wheelchairAccess = wheelchairAccess;
         this.hasProjector = hasProjector;
     }
-
 
 
     public Long getId() {
@@ -81,6 +81,14 @@ public RoomEntity(){
         this.hasProjector = hasProjector;
     }
 
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public RoomEntity setUser(UserEntity user) {
+        this.user = user;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
