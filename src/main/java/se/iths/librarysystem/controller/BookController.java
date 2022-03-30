@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("books")
@@ -47,5 +48,20 @@ public class BookController {
                 .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedEntity.getId()))
                 .body(savedBook);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id){
+
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Optional<BookEntity>> findBookByID(@PathVariable Long id) {
+        Optional<BookEntity> foundBook = bookService.findBookById(id);
+        return new ResponseEntity<>(foundBook, HttpStatus.OK);
+
+    }
+
 
 }

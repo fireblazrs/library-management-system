@@ -8,13 +8,13 @@ public class Book {
     private String title;
     private String subtitle;
     private String edition;
-    private Date printed;
+    private String printed;
     private String isbn;
 
     public Book() {
     }
 
-    public Book(String title, String subtitle, String edition, Date printed, String isbn) {
+    public Book(String title, String subtitle, String edition, String printed, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
         this.edition = edition;
@@ -54,11 +54,11 @@ public class Book {
         this.edition = edition;
     }
 
-    public Date getPrinted() {
+    public String getPrinted() {
         return printed;
     }
 
-    public void setPrinted(Date printed) {
+    public void setPrinted(String printed) {
         this.printed = printed;
     }
 

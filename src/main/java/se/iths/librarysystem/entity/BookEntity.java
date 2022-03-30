@@ -17,7 +17,7 @@ public class BookEntity {
     @NotBlank(message = "Edition is a required field")
     private String edition;
     @NotNull(message = "Print-date is a required field")
-    private Date printed;
+    private String printed;
 
     @NotBlank(message = "ISBN is a required field")
     private String isbn;
@@ -29,7 +29,7 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String title, String subtitle, String edition, Date printed, String isbn) {
+    public BookEntity(String title, String subtitle, String edition, String printed, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
         this.edition = edition;
@@ -69,11 +69,11 @@ public class BookEntity {
         this.edition = edition;
     }
 
-    public Date getPrinted() {
+    public String  getPrinted() {
         return printed;
     }
 
-    public void setPrinted(Date printed) {
+    public void setPrinted(String printed) {
         this.printed = printed;
     }
 
