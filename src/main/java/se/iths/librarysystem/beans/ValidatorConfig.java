@@ -1,18 +1,19 @@
 package se.iths.librarysystem.beans;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-
+import se.iths.librarysystem.service.UserService;
+import se.iths.librarysystem.validatorservice.UserValidator;
 
 @Configuration
-public class ModelMapperConfig {
+public class ValidatorConfig {
 
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-    public static ModelMapper createModelMapper() {
-        return new ModelMapper();
+    public static UserValidator createPersonValidator(UserService userService) {
+        return new UserValidator(userService);
     }
+
 }

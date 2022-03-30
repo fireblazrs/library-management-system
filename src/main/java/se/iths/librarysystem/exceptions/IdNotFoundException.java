@@ -16,5 +16,4 @@ public class IdNotFoundException extends RuntimeException {
     public void setPath(String path) {
         this.path = path;
     }
-
 }
