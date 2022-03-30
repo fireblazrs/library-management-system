@@ -1,9 +1,9 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +13,9 @@ public class RoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String role;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private final List<UserEntity> personList = new ArrayList<>();
 
     public RoleEntity() {
     }
@@ -35,6 +38,18 @@ public class RoleEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<UserEntity> getPersonList() {
+        return Collections.unmodifiableList(personList);
+    }
+
+    public void addPerson(UserEntity person) {
+        personList.add(person);
+    }
+
+    public void removePerson(UserEntity person) {
+        personList.remove(person);
     }
 
     @Override

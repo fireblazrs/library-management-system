@@ -88,5 +88,38 @@ class UserEntityTest {
         assertEquals(userEntity.getRoom(), roomEntity);
     }
 
+    @Test
+    void getBooksShouldReturnAddedBooks() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(21L);
+        BookEntity geography = new BookEntity();
+        BookEntity science = new BookEntity();
+        geography.setId(1L);
+        science.setId(2L);
+        userEntity.addBook(geography);
+        userEntity.addBook(science);
+
+        var result = userEntity.getBooks();
+
+        assertThat(result).hasSize(2).contains(geography, science);
+    }
+
+    @Test
+    void removeBooksShouldRemoveBooksFromUser() {
+        UserEntity user = new UserEntity();
+        BookEntity book = new BookEntity();
+        user.setId(21L);
+        book.setId(22L);
+        user.addBook(book);
+        book.setBorrower(user);
+
+        book.removeBorrower();
+
+        UserEntity result = book.getBorrower();
+        var userBooks = user.getBooks();
+
+        assertThat(result).isNull();
+        assertThat(userBooks).isEmpty();
+    }
 
 }

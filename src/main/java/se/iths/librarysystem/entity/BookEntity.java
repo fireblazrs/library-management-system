@@ -18,9 +18,12 @@ public class BookEntity {
     private String edition;
     @NotNull(message = "Print-date is a required field")
     private Date printed;
-    @Column(unique = true)
+
     @NotBlank(message = "ISBN is a required field")
     private String isbn;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private UserEntity borrower;
 
 
     public BookEntity() {
@@ -80,6 +83,19 @@ public class BookEntity {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public UserEntity getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(UserEntity borrower) {
+        this.borrower = borrower;
+    }
+
+    public void removeBorrower() {
+        borrower.removeBook(this);
+        borrower = null;
     }
 
     @Override
