@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.dto.User;
 import se.iths.librarysystem.entity.RoleEntity;
@@ -14,6 +15,7 @@ import se.iths.librarysystem.service.UserService;
 import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +39,9 @@ public class UserController {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         UserEntity createdEntity = userService.createPerson(userEntity);
         User createdUser = modelMapper.map(createdEntity, User.class);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        return ResponseEntity
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + createdEntity.getId()))
+                .body(createdUser);
     }
 
     @GetMapping()
