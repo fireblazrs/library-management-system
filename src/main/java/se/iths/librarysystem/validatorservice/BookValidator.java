@@ -20,6 +20,7 @@ public class BookValidator extends LibraryValidator {
 
     @Override
     public void idExists(Long id) {
+        validId(id);
         bookService.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
     }
 }
