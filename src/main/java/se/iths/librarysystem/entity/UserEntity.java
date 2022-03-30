@@ -3,6 +3,9 @@ package se.iths.librarysystem.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,14 +31,16 @@ public class UserEntity {
     private String phoneNumber;
     private String address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private RoleEntity role;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private RoomEntity room;
 
-    public UserEntity() {
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
+    private final List<BookEntity> books = new ArrayList<>();
 
+    public UserEntity() {
     }
 
     public UserEntity(String firstname, String lastname, String ssn,
@@ -48,7 +53,7 @@ public class UserEntity {
         this.address = address;
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
+    public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber) {
         this(firstname, lastname, ssn, email, phoneNumber, "");
     }
 
@@ -120,14 +125,31 @@ public class UserEntity {
         this.role = role;
     }
 
+    public void removeRole() {
+        this.role.removeUser(this);
+        this.role = null;
+    }
+
     public RoomEntity getRoom() {
         return room;
     }
 
-    public UserEntity setRoom(RoomEntity room) {
+    public void setRoom(RoomEntity room) {
         this.room = room;
-        return this;
     }
+
+    public List<BookEntity> getBooks() {
+        return Collections.unmodifiableList(books);
+    }
+
+    public void addBook(BookEntity book) {
+        books.add(book);
+    }
+
+    public void removeBook(BookEntity book) {
+        books.remove(book);
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -40,6 +40,7 @@ public class RoleEntity {
         this.role = role;
     }
 
+
     public List<UserEntity> getUsers() {
         return Collections.unmodifiableList(users);
     }
