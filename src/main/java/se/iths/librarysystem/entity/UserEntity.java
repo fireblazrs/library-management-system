@@ -3,6 +3,9 @@ package se.iths.librarysystem.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +36,9 @@ public class UserEntity {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private RoomEntity room;
+
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
+    private final List<BookEntity> books = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -130,6 +136,18 @@ public class UserEntity {
 
     public void setRoom(RoomEntity room) {
         this.room = room;
+    }
+
+    public List<BookEntity> getBooks() {
+        return Collections.unmodifiableList(books);
+    }
+
+    public void addBook(BookEntity book) {
+        books.add(book);
+    }
+
+    public void removeBook(BookEntity book) {
+        books.remove(book);
     }
 
     @Override
