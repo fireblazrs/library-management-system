@@ -1,5 +1,6 @@
 package se.iths.librarysystem.validatorservice;
 
+import se.iths.librarysystem.dto.Isbn;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
@@ -34,4 +35,15 @@ public class BookValidator extends LibraryValidator {
             throw new ValueNotFoundException(message, path);
         }
     }
+
+    public void isbnExists(Isbn isbn) {
+        Iterable<BookEntity> books = bookService.getBooksByIsbn(isbn.getValue());
+
+        if(!books.iterator().hasNext()) {
+            String message = "Book with ISBN " + isbn.getValue() + " does not exist.";
+            String path = "/books?isbn=" + isbn.getValue();
+            throw new InvalidInputException(message, path);
+        }
+    }
+
 }
