@@ -1,6 +1,11 @@
 package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +17,9 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
+    @NotBlank(message = "Role is a required field")
     private String role;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)

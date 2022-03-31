@@ -36,7 +36,6 @@ public class GlobalExceptionHandler {
         Map<String,String> errors = new HashMap<>();
         exception.getConstraintViolations().forEach(violation ->
                 errors.put(violation.getPropertyPath().toString(), violation.getMessage()));
-
         return new ResponseEntity<>(new ApiErrors(HttpStatus.BAD_REQUEST, errors, ""), HttpStatus.BAD_REQUEST);
     }
 
