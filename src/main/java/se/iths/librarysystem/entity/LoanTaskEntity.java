@@ -1,14 +1,12 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class LoanTaskEntity {
+public class LoanTaskEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +18,19 @@ public class LoanTaskEntity {
     private LocalDateTime registered;
 
     public LoanTaskEntity() {
-        registered = LocalDateTime.now();
-        status ="pending";
+
     }
 
     public LoanTaskEntity(String isbn, Long userId) {
         super();
         this.isbn = isbn;
         this.userId = userId;
+    }
+
+    @PrePersist
+    private void setTimeAndStatus() {
+        registered = LocalDateTime.now();
+        status ="pending";
     }
 
 
