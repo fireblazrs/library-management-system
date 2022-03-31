@@ -22,8 +22,8 @@ public class RoleEntity {
     @NotBlank(message = "Role is a required field")
     private String role;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private final List<UserEntity> personList = new ArrayList<>();
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final List<UserEntity> users = new ArrayList<>();
 
     public RoleEntity() {
     }
@@ -48,16 +48,17 @@ public class RoleEntity {
         this.role = role;
     }
 
-    public List<UserEntity> getPersonList() {
-        return Collections.unmodifiableList(personList);
+
+    public List<UserEntity> getUsers() {
+        return Collections.unmodifiableList(users);
     }
 
-    public void addPerson(UserEntity person) {
-        personList.add(person);
+    public void addUser(UserEntity user) {
+        users.add(user);
     }
 
-    public void removePerson(UserEntity person) {
-        personList.remove(person);
+    public void removeUser(UserEntity user) {
+        users.remove(user);
     }
 
     @Override
