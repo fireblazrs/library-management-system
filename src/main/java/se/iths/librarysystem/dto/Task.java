@@ -7,32 +7,26 @@ import java.time.LocalDateTime;
 public class Task {
 
     private Long id;
-    private String url;
+    private String path;
     private String status;
     private boolean success;
+    private boolean completed;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime registered;
 
     public Task() {
     }
 
-    public Task(String path) {
-        this.url = path;
-    }
-
-    public Task(Long id, String url, String status, boolean success, LocalDateTime registered) {
-        this.id = id;
-        this.url = url;
+    public Task(String path, String status, boolean success, boolean completed, LocalDateTime registered) {
+        this.path = path;
         this.status = status;
         this.success = success;
+        this.completed = completed;
         this.registered = registered;
     }
 
-    public Task(Long id, String status, boolean success, LocalDateTime registered) {
-        this.id = id;
-        this.status = status;
-        this.success = success;
-        this.registered = registered;
+    public Task(String status, boolean success, boolean completed, LocalDateTime registered) {
+        this("", status, success, completed, registered);
     }
 
     public Long getId() {
@@ -43,12 +37,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getStatus() {
@@ -73,5 +67,13 @@ public class Task {
 
     public void setRegistered(LocalDateTime registered) {
         this.registered = registered;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

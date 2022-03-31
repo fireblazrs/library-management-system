@@ -15,6 +15,7 @@ public class LoanTaskEntity implements Serializable {
     private Long userId;
     private String status;
     private boolean success;
+    private boolean completed;
     private LocalDateTime registered;
 
     public LoanTaskEntity() {
@@ -88,6 +89,14 @@ public class LoanTaskEntity implements Serializable {
 
     public void setSuccess(boolean complete) {
         this.success = complete;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     @Override

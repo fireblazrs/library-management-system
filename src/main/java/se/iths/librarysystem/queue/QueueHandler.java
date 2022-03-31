@@ -19,7 +19,7 @@ public class QueueHandler {
     public Task sendToQueue(LoanTaskEntity loanTask) {
         template.convertAndSend(QUEUE_NAME, loanTask);
         Task task = modelMapper.map(loanTask, Task.class);
-        task.setUrl("/tasks/" + task.getId());
+        task.setPath("/tasks/" + task.getId());
         return task;
     }
 }
