@@ -37,11 +37,11 @@ public class BookValidator extends LibraryValidator {
     }
 
     public void isbnExists(Isbn isbn) {
-        Iterable<BookEntity> books = bookService.getBooksByIsbn(isbn.getValue());
+        Iterable<BookEntity> books = bookService.getBooksByIsbn(isbn.getIsbn());
 
         if(!books.iterator().hasNext()) {
-            String message = "Book with ISBN " + isbn.getValue() + " does not exist.";
-            String path = "/books?isbn=" + isbn.getValue();
+            String message = "Book with ISBN " + isbn.getIsbn() + " does not exist.";
+            String path = "/books?isbn=" + isbn.getIsbn();
             throw new InvalidInputException(message, path);
         }
     }

@@ -2,20 +2,20 @@ package se.iths.librarysystem.dto;
 
 public class Isbn {
 
-    private String value;
+    private String isbn;
 
     public Isbn() {
     }
 
-    public Isbn(String value) {
-        this.value = value;
+    public Isbn(String isbn) {
+        this.isbn = isbn;
     }
 
-    public String getValue() {
-        return value;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 }
