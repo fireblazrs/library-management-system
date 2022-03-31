@@ -8,7 +8,7 @@ import java.util.Objects;
 public class RoomEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int groupSize;
