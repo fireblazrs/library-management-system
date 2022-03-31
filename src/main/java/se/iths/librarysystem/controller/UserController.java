@@ -5,15 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import se.iths.librarysystem.dto.Book;
-import se.iths.librarysystem.dto.Role;
-import se.iths.librarysystem.dto.User;
+import se.iths.librarysystem.dto.*;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.entity.LoanTaskEntity;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
+import se.iths.librarysystem.queue.QueueHandler;
 import se.iths.librarysystem.service.BookService;
+import se.iths.librarysystem.service.LoanTaskService;
 import se.iths.librarysystem.service.UserService;
 import se.iths.librarysystem.validatorservice.BookValidator;
 import se.iths.librarysystem.validatorservice.UserValidator;
@@ -33,14 +34,18 @@ public class UserController {
     private final UserValidator userValidator;
     private final BookValidator bookValidator;
     private final BookService bookService;
+    private final LoanTaskService loanTaskService;
+    private final QueueHandler queueHandler;
 
     public UserController(UserService userService, ModelMapper modelMapper, UserValidator userValidator,
-                          BookValidator bookValidator, BookService bookService) {
+                          BookValidator bookValidator, BookService bookService, LoanTaskService loanTaskService, QueueHandler queueHandler) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.userValidator = userValidator;
         this.bookValidator = bookValidator;
         this.bookService = bookService;
+        this.loanTaskService = loanTaskService;
+        this.queueHandler = queueHandler;
     }
 
     @PostMapping()
@@ -122,6 +127,19 @@ public class UserController {
         bookValidator.hasUser(book, user);
         book.removeBorrower();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("{id}/books")
+    public ResponseEntity<Task> addBookToUser(@PathVariable Long id, @RequestBody Isbn isbn) {
+        userValidator.validId(id);
+        userValidator.idExists(id);
+        bookValidator.isbnExists(isbn);
+
+        LoanTaskEntity loanTask = new LoanTaskEntity(isbn.getIsbn(), id);
+        LoanTaskEntity savedTask = loanTaskService.createTask(loanTask);
+        Task task = queueHandler.sendToQueue(savedTask);
+
+        return new ResponseEntity<>(task, HttpStatus.ACCEPTED);
     }
 
 }
