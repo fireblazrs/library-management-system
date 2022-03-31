@@ -4,6 +4,9 @@ public class Isbn {
 
     private String value;
 
+    public Isbn() {
+    }
+
     public Isbn(String value) {
         this.value = value;
     }
