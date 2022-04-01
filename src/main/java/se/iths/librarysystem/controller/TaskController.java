@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import se.iths.librarysystem.dto.Task;
-import se.iths.librarysystem.service.LoanTaskService;
+import se.iths.librarysystem.service.TaskService;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import java.util.List;
 @RequestMapping("tasks")
 public class TaskController {
 
-    private final LoanTaskService taskService;
+    private final TaskService taskService;
 
-    public TaskController(LoanTaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 

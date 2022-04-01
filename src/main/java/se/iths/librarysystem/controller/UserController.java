@@ -14,7 +14,7 @@ import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.queue.QueueHandler;
 import se.iths.librarysystem.service.BookService;
-import se.iths.librarysystem.service.LoanTaskService;
+import se.iths.librarysystem.service.TaskService;
 import se.iths.librarysystem.service.UserService;
 import se.iths.librarysystem.validatorservice.BookValidator;
 import se.iths.librarysystem.validatorservice.UserValidator;
@@ -34,17 +34,17 @@ public class UserController {
     private final UserValidator userValidator;
     private final BookValidator bookValidator;
     private final BookService bookService;
-    private final LoanTaskService loanTaskService;
+    private final TaskService taskService;
     private final QueueHandler queueHandler;
 
     public UserController(UserService userService, ModelMapper modelMapper, UserValidator userValidator,
-                          BookValidator bookValidator, BookService bookService, LoanTaskService loanTaskService, QueueHandler queueHandler) {
+                          BookValidator bookValidator, BookService bookService, TaskService taskService, QueueHandler queueHandler) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.userValidator = userValidator;
         this.bookValidator = bookValidator;
         this.bookService = bookService;
-        this.loanTaskService = loanTaskService;
+        this.taskService = taskService;
         this.queueHandler = queueHandler;
     }
 
@@ -136,7 +136,7 @@ public class UserController {
         bookValidator.isbnExists(isbn);
 
         TaskEntity loanTask = new TaskEntity(isbn.getIsbn(), id);
-        TaskEntity savedTask = loanTaskService.createTask(loanTask);
+        TaskEntity savedTask = taskService.createTask(loanTask);
         Task task = queueHandler.sendToQueue(savedTask);
 
         return new ResponseEntity<>(task, HttpStatus.ACCEPTED);

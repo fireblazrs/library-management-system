@@ -4,7 +4,7 @@ import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.service.BookService;
-import se.iths.librarysystem.service.LoanTaskService;
+import se.iths.librarysystem.service.TaskService;
 import se.iths.librarysystem.service.UserService;
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ public class ReceiverHandler {
 
     private final BookService bookService;
     private final UserService userService;
-    private final LoanTaskService loanTaskService;
+    private final TaskService taskService;
 
-    public ReceiverHandler(BookService bookService, UserService userService, LoanTaskService loanTaskService) {
+    public ReceiverHandler(BookService bookService, UserService userService, TaskService taskService) {
         this.bookService = bookService;
         this.userService = userService;
-        this.loanTaskService = loanTaskService;
+        this.taskService = taskService;
     }
 
     public void loanBook(TaskEntity loanTask) {
@@ -41,7 +41,7 @@ public class ReceiverHandler {
             updateEntities(loanTask, availableBook.get(), user.get());
         }
         loanTask.taskComplete();
-        loanTaskService.updateTask(loanTask);
+        taskService.updateTask(loanTask);
     }
 
     private void updateEntities(TaskEntity loanTask, BookEntity book, UserEntity user) {
