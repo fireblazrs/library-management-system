@@ -17,6 +17,7 @@ public class LoanTaskEntity implements Serializable {
     private boolean success;
     private boolean completed;
     private LocalDateTime registered;
+    private String message;
 
     public LoanTaskEntity() {
 
@@ -29,9 +30,10 @@ public class LoanTaskEntity implements Serializable {
     }
 
     @PrePersist
-    private void setTimeAndStatus() {
+    private void setInitialValues() {
         registered = LocalDateTime.now();
-        status ="pending";
+        status = "pending";
+        message = "";
     }
 
 
@@ -81,6 +83,7 @@ public class LoanTaskEntity implements Serializable {
 
     public void taskComplete() {
         setStatus("complete");
+        setCompleted(true);
     }
 
     public boolean isSuccess() {
@@ -97,6 +100,14 @@ public class LoanTaskEntity implements Serializable {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
