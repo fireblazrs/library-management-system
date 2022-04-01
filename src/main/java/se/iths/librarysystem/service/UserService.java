@@ -8,6 +8,8 @@ import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.RoleRepository;
 import se.iths.librarysystem.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +30,11 @@ public class UserService {
         return userRepository.save(userEntity);
     }
 
-    public Iterable<UserEntity> getAllPersons() {
-        return userRepository.findAll();
+    public List<UserEntity> getAllPersons() {
+        Iterable<UserEntity> userEntities = userRepository.findAll();
+        List<UserEntity> userEntityList = new ArrayList<>();
+        userEntities.forEach(userEntityList::add);
+        return userEntityList;
     }
 
     public Optional<UserEntity> findById(Long id) {

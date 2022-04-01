@@ -65,9 +65,8 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<List<User>> getAllUsers() {
-        Iterable<UserEntity> userEntities = userService.getAllPersons();
-        List<User> users = new ArrayList<>();
-        userEntities.forEach(userEntity -> users.add(modelMapper.map(userEntity, User.class)));
+        List<UserEntity> userEntities = userService.getAllPersons();
+        List<User> users = userEntities.stream().map(userEntity -> modelMapper.map(userEntity, User.class)).toList();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
