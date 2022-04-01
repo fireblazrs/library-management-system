@@ -37,7 +37,7 @@ public class UserEntity {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private RoomEntity room;
 
-    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<BookEntity> books = new ArrayList<>();
 
     public UserEntity() {
