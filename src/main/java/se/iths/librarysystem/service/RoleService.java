@@ -8,13 +8,16 @@ import java.util.Optional;
 
 @Service
 public class RoleService {
-
+    
     private final RoleRepository roleRepository;
 
     public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
+    public Optional<RoleEntity> findById(Long id) {
+        return roleRepository.findById(id);
+    }
 
     public Iterable<RoleEntity> getAllRoles() {
         return roleRepository.findAll();
@@ -27,4 +30,5 @@ public class RoleService {
     public RoleEntity createRole(RoleEntity newRoleEntity) {
         return roleRepository.save(newRoleEntity);
     }
+
 }
