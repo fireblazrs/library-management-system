@@ -17,4 +17,7 @@ public class LoanTaskService {
         return taskRepository.save(loanTask);
     }
 
+    public void updateTask(LoanTaskEntity loanTask) {
+        taskRepository.save(loanTask);
+    }
 }
