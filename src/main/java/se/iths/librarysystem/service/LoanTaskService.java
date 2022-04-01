@@ -36,8 +36,8 @@ public class LoanTaskService {
 
     public List<Task> getAllTasks() {
         Iterable<LoanTaskEntity> taskEntities = taskRepository.findAll();
-        List<Task> tasks = new ArrayList<>();
-        taskEntities.forEach(taskEntity -> tasks.add(modelMapper.map(taskEntities, Task.class)));
-        return tasks;
+        List<LoanTaskEntity> taskEntityList = new ArrayList<>();
+        taskEntities.forEach(taskEntityList::add);
+        return taskEntityList.stream().map(task -> modelMapper.map(task, Task.class)).toList();
     }
 }
