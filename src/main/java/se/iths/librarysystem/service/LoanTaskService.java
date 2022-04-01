@@ -3,7 +3,7 @@ package se.iths.librarysystem.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import se.iths.librarysystem.dto.Task;
-import se.iths.librarysystem.entity.LoanTaskEntity;
+import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.LoanTaskRepository;
 
@@ -21,22 +21,22 @@ public class LoanTaskService {
         this.modelMapper = modelMapper;
     }
 
-    public LoanTaskEntity createTask(LoanTaskEntity loanTask) {
+    public TaskEntity createTask(TaskEntity loanTask) {
         return taskRepository.save(loanTask);
     }
 
-    public void updateTask(LoanTaskEntity loanTask) {
+    public void updateTask(TaskEntity loanTask) {
         taskRepository.save(loanTask);
     }
 
     public Task getById(Long id) {
-        LoanTaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new IdNotFoundException("task", id));
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new IdNotFoundException("task", id));
         return modelMapper.map(taskEntity, Task.class);
     }
 
     public List<Task> getAllTasks() {
-        Iterable<LoanTaskEntity> taskEntities = taskRepository.findAll();
-        List<LoanTaskEntity> taskEntityList = new ArrayList<>();
+        Iterable<TaskEntity> taskEntities = taskRepository.findAll();
+        List<TaskEntity> taskEntityList = new ArrayList<>();
         taskEntities.forEach(taskEntityList::add);
         return taskEntityList.stream().map(task -> modelMapper.map(task, Task.class)).toList();
     }

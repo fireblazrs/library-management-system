@@ -1,7 +1,7 @@
 package se.iths.librarysystem.queue;
 
 import se.iths.librarysystem.entity.BookEntity;
-import se.iths.librarysystem.entity.LoanTaskEntity;
+import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.service.BookService;
 import se.iths.librarysystem.service.LoanTaskService;
@@ -23,7 +23,7 @@ public class ReceiverHandler {
         this.loanTaskService = loanTaskService;
     }
 
-    public void loanBook(LoanTaskEntity loanTask) {
+    public void loanBook(TaskEntity loanTask) {
         Iterable<BookEntity> books = bookService.getBooksByIsbn(loanTask.getIsbn());
         List<BookEntity> bookList = new ArrayList<>();
         books.forEach(bookList::add);
@@ -44,7 +44,7 @@ public class ReceiverHandler {
         loanTaskService.updateTask(loanTask);
     }
 
-    private void updateEntities(LoanTaskEntity loanTask, BookEntity book, UserEntity user) {
+    private void updateEntities(TaskEntity loanTask, BookEntity book, UserEntity user) {
         loanTask.setSuccess(true);
         bookService.updateBook(book);
         userService.updatePerson(user);

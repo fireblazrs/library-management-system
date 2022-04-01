@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class LoanTaskEntity implements Serializable {
+public class TaskEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +19,11 @@ public class LoanTaskEntity implements Serializable {
     private LocalDateTime registered;
     private String message;
 
-    public LoanTaskEntity() {
+    public TaskEntity() {
 
     }
 
-    public LoanTaskEntity(String isbn, Long userId) {
+    public TaskEntity(String isbn, Long userId) {
         super();
         this.isbn = isbn;
         this.userId = userId;
@@ -113,7 +113,7 @@ public class LoanTaskEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof LoanTaskEntity that)) return false;
+        if (!(o instanceof TaskEntity that)) return false;
         return Objects.equals(id, that.id) && Objects.equals(isbn, that.isbn)
                && Objects.equals(userId, that.userId);
     }

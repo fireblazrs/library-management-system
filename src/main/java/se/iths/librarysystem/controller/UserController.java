@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.*;
 import se.iths.librarysystem.entity.BookEntity;
-import se.iths.librarysystem.entity.LoanTaskEntity;
 import se.iths.librarysystem.entity.RoleEntity;
+import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
@@ -135,8 +135,8 @@ public class UserController {
         userValidator.idExists(id);
         bookValidator.isbnExists(isbn);
 
-        LoanTaskEntity loanTask = new LoanTaskEntity(isbn.getIsbn(), id);
-        LoanTaskEntity savedTask = loanTaskService.createTask(loanTask);
+        TaskEntity loanTask = new TaskEntity(isbn.getIsbn(), id);
+        TaskEntity savedTask = loanTaskService.createTask(loanTask);
         Task task = queueHandler.sendToQueue(savedTask);
 
         return new ResponseEntity<>(task, HttpStatus.ACCEPTED);
