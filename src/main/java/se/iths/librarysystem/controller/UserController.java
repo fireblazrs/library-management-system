@@ -68,7 +68,6 @@ public class UserController {
 
     @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
-        userValidator.validId(id);
         User user = userService.findUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -83,7 +82,6 @@ public class UserController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        userValidator.validId(id);
         UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         userEntity.removeRole();
         userService.deletePerson(id);
@@ -92,7 +90,6 @@ public class UserController {
 
     @GetMapping("{id}/role")
     public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
-        userValidator.validId(id);
         UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
             .orElseThrow(() -> new ValueNotFoundException("User Id "+ id + " does not have a role.", "/users/" + id + "/role"));
@@ -102,7 +99,6 @@ public class UserController {
 
     @GetMapping("{id}/books")
     public ResponseEntity<List<Book>> getAUsersBooks(@PathVariable Long id) {
-        userValidator.validId(id);
         UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         List<Book> books = userEntity.getBooks().stream()
                 .map(book -> modelMapper.map(book, Book.class))
@@ -113,8 +109,6 @@ public class UserController {
 
     @DeleteMapping("{userId}/books/{bookId}")
     public ResponseEntity<Void> removeBookUserConnection(@PathVariable Long userId, @PathVariable Long bookId) {
-        userValidator.validId(userId);
-        bookValidator.validId(bookId);
         UserEntity user = userService.findUserEntityById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
         BookEntity book = bookService.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
         bookValidator.hasUser(book, user);
