@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import se.iths.librarysystem.entity.TaskEntity;
 
 @Repository
-public interface LoanTaskRepository extends CrudRepository<TaskEntity, Long> {
+public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
 
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import se.iths.librarysystem.dto.Task;
 import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
-import se.iths.librarysystem.repository.LoanTaskRepository;
+import se.iths.librarysystem.repository.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class LoanTaskService {
 
-    private final LoanTaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     private final ModelMapper modelMapper;
 
-    public LoanTaskService(LoanTaskRepository taskRepository, ModelMapper modelMapper) {
+    public LoanTaskService(TaskRepository taskRepository, ModelMapper modelMapper) {
         this.taskRepository = taskRepository;
         this.modelMapper = modelMapper;
     }
