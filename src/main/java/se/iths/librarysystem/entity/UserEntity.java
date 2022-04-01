@@ -126,8 +126,10 @@ public class UserEntity {
     }
 
     public void removeRole() {
-        this.role.removeUser(this);
-        this.role = null;
+        if (role != null) {
+            role.removeUser(this);
+            role = null;
+        }
     }
 
     public RoomEntity getRoom() {
