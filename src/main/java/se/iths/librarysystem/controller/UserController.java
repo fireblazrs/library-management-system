@@ -22,7 +22,6 @@ import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,28 +54,22 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        UserEntity createdEntity = userService.createPerson(userEntity);
-        User createdUser = modelMapper.map(createdEntity, User.class);
+        User createdUser = userService.createUser(user);
         return ResponseEntity
-                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + createdEntity.getId()))
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + createdUser.getId()))
                 .body(createdUser);
     }
 
     @GetMapping()
     public ResponseEntity<List<User>> getAllUsers() {
-        List<UserEntity> userEntities = userService.getAllPersons();
-        List<User> users = userEntities.stream().map(userEntity -> modelMapper.map(userEntity, User.class)).toList();
+        List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<User> findUserById(@PathVariable Long id) {
         userValidator.validId(id);
-
-        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        User user = modelMapper.map(userEntity, User.class);
-
+        User user = userService.findUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -84,18 +77,14 @@ public class UserController {
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
         userValidator.validId(user.getId());
         userValidator.idExists(user.getId());
-
-        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        UserEntity updatedUserEntity = userService.updatePerson(userEntity);
-        User updatedUser = modelMapper.map(updatedUserEntity, User.class);
-
+        User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
         userValidator.validId(id);
-        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         userEntity.removeRole();
         userService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -104,7 +93,7 @@ public class UserController {
     @GetMapping("{id}/role")
     public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
         userValidator.validId(id);
-        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
             .orElseThrow(() -> new ValueNotFoundException("User Id "+ id + " does not have a role.", "/users/" + id + "/role"));
         Role role = modelMapper.map(roleEntity, Role.class);
@@ -114,7 +103,7 @@ public class UserController {
     @GetMapping("{id}/books")
     public ResponseEntity<List<Book>> getAUsersBooks(@PathVariable Long id) {
         userValidator.validId(id);
-        UserEntity userEntity = userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
         List<Book> books = userEntity.getBooks().stream()
                 .map(book -> modelMapper.map(book, Book.class))
                 .toList();
@@ -126,7 +115,7 @@ public class UserController {
     public ResponseEntity<Void> removeBookUserConnection(@PathVariable Long userId, @PathVariable Long bookId) {
         userValidator.validId(userId);
         bookValidator.validId(bookId);
-        UserEntity user = userService.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
+        UserEntity user = userService.findUserEntityById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
         BookEntity book = bookService.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
         bookValidator.hasUser(book, user);
         book.removeBorrower();
@@ -150,10 +139,7 @@ public class UserController {
     public ResponseEntity<UserWithRole> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
         userValidator.validId(userId);
         roleValidator.validId(roleId);
-
-        UserEntity userEntity = userService.addRoleToUser(userId, roleId);
-        UserWithRole user = modelMapper.map(userEntity, UserWithRole.class);
-
+        UserWithRole user = userService.addRoleToUser(userId, roleId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

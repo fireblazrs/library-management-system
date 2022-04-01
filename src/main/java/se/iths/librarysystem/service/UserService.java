@@ -1,7 +1,10 @@
 package se.iths.librarysystem.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.iths.librarysystem.dto.User;
+import se.iths.librarysystem.dto.UserWithRole;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
@@ -15,34 +18,50 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private static final String DEFAULT_ROLE = "ROLE_USER";
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private static final String DEFAULT_ROLE = "ROLE_USER";
+    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository repository, RoleRepository roleRepository) {
+    public UserService(UserRepository repository, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = repository;
         this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public UserEntity createPerson(UserEntity userEntity) {
+    public User createUser(User user) {
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         RoleEntity defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         userEntity.setRole(defaultRole);
-        return userRepository.save(userEntity);
+
+        UserEntity savedEntity = userRepository.save(userEntity);
+        return modelMapper.map(savedEntity, User.class);
     }
 
-    public List<UserEntity> getAllPersons() {
+    public List<User> getAllUsers() {
         Iterable<UserEntity> userEntities = userRepository.findAll();
-        List<UserEntity> userEntityList = new ArrayList<>();
-        userEntities.forEach(userEntityList::add);
-        return userEntityList;
+        List<User> users = new ArrayList<>();
+        userEntities.forEach(user -> users.add(modelMapper.map(user, User.class)));
+        return users;
     }
 
-    public Optional<UserEntity> findById(Long id) {
+    public Optional<UserEntity> findUserEntityById(Long id) {
         return userRepository.findById(id);
     }
 
-    public UserEntity updatePerson(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public User findUserById(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        return modelMapper.map(user, User.class);
+    }
+
+    public User updateUser(User user) {
+        UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        UserEntity updatedUser = userRepository.save(userEntity);
+        return modelMapper.map(updatedUser, User.class);
+    }
+
+    public void updateUserEntity(UserEntity userEntity) {
+        userRepository.save(userEntity);
     }
 
     public void deletePerson(Long id) {
@@ -50,10 +69,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserEntity addRoleToUser(Long userId, Long roleId) {
+    public UserWithRole addRoleToUser(Long userId, Long roleId) {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(() -> new IdNotFoundException("role", roleId));
         user.setRole(role);
-        return user;
+        return modelMapper.map(user, UserWithRole.class);
     }
 }

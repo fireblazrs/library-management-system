@@ -26,10 +26,10 @@ public class ReceiverHandler {
         List<BookEntity> bookList = bookService.getBookEntityByIsbn(loanTask.getIsbn());
         Optional<BookEntity> availableBook =
                 bookList.stream().filter(bookEntity -> bookEntity.getBorrower() == null).findFirst();
-        Optional<UserEntity> user = userService.findById(loanTask.getUserId());
+        Optional<UserEntity> user = userService.findUserEntityById(loanTask.getUserId());
 
         if (availableBook.isEmpty())
-            loanTask.setMessage("Book ISBN " + loanTask.getIsbn() + " is not available");
+            loanTask.setMessage("Book ISBN " + loanTask.getIsbn() + " is currently not available");
         else if (user.isEmpty())
             loanTask.setMessage("User Id " + loanTask.getUserId() + " not found.");
         else {
@@ -43,7 +43,7 @@ public class ReceiverHandler {
     private void updateEntities(TaskEntity loanTask, BookEntity book, UserEntity user) {
         loanTask.setSuccess(true);
         bookService.updateBook(book);
-        userService.updatePerson(user);
+        userService.updateUserEntity(user);
     }
 
     private void addBookToUser(BookEntity book, UserEntity user) {
