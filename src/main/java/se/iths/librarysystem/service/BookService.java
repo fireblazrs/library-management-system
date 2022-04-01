@@ -30,4 +30,8 @@ public class BookService {
     public Optional<BookEntity> findById(Long id) {
         return bookRepository.findById(id);
     }
+
+    public void updateBook(BookEntity book) {
+        bookRepository.save(book);
+    }
 }
