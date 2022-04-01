@@ -11,7 +11,6 @@ import se.iths.librarysystem.service.BookService;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,13 +27,11 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks(@RequestParam(required = false) String isbn) {
-        Iterable<BookEntity> bookEntities = isbn == null
+        List<BookEntity> bookEntities = isbn == null
                 ? bookService.getAllBooks()
                 : bookService.getBooksByIsbn(isbn);
 
-        List<Book> books = new ArrayList<>();
-        bookEntities.forEach(book -> books.add(modelMapper.map(book, Book.class)));
-
+        List<Book> books = bookEntities.stream().map(book -> modelMapper.map(book, Book.class)).toList();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.repository.BookRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,15 +17,18 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Iterable<BookEntity> getAllBooks() {
-        return bookRepository.findAll();
+    public List<BookEntity> getAllBooks() {
+        Iterable<BookEntity> bookEntities = bookRepository.findAll();
+        List<BookEntity> bookEntityList = new ArrayList<>();
+        bookEntities.forEach(bookEntityList::add);
+        return bookEntityList;
     }
 
     public BookEntity createBook(BookEntity bookEntity) {
         return bookRepository.save(bookEntity);
     }
 
-    public Iterable<BookEntity> getBooksByIsbn(String isbn) {
+    public List<BookEntity> getBooksByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
 
