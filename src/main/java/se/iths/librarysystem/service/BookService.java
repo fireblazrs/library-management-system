@@ -1,6 +1,8 @@
 package se.iths.librarysystem.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.repository.BookRepository;
 
@@ -12,23 +14,30 @@ import java.util.Optional;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final ModelMapper modelMapper;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
         this.bookRepository = bookRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public List<BookEntity> getAllBooks() {
+    public List<Book> getAllBooks() {
         Iterable<BookEntity> bookEntities = bookRepository.findAll();
         List<BookEntity> bookEntityList = new ArrayList<>();
         bookEntities.forEach(bookEntityList::add);
-        return bookEntityList;
+        return bookEntityList.stream().map(book -> modelMapper.map(book, Book.class)).toList();
     }
 
-    public BookEntity createBook(BookEntity bookEntity) {
-        return bookRepository.save(bookEntity);
+    public Book createBook(BookEntity bookEntity) {
+        BookEntity savedBook = bookRepository.save(bookEntity);
+        return modelMapper.map(savedBook, Book.class);
     }
 
-    public List<BookEntity> getBooksByIsbn(String isbn) {
+    public List<Book> getBooksByIsbn(String isbn) {
+        List<BookEntity> books = bookRepository.findByIsbn(isbn);
+        return books.stream().map(book -> modelMapper.map(book, Book.class)).toList();
+    }
+    public List<BookEntity> getBookEntityByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
 

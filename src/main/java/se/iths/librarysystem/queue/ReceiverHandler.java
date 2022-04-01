@@ -7,7 +7,6 @@ import se.iths.librarysystem.service.BookService;
 import se.iths.librarysystem.service.TaskService;
 import se.iths.librarysystem.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +23,7 @@ public class ReceiverHandler {
     }
 
     public void loanBook(TaskEntity loanTask) {
-        Iterable<BookEntity> books = bookService.getBooksByIsbn(loanTask.getIsbn());
-        List<BookEntity> bookList = new ArrayList<>();
-        books.forEach(bookList::add);
-
+        List<BookEntity> bookList = bookService.getBookEntityByIsbn(loanTask.getIsbn());
         Optional<BookEntity> availableBook =
                 bookList.stream().filter(bookEntity -> bookEntity.getBorrower() == null).findFirst();
         Optional<UserEntity> user = userService.findById(loanTask.getUserId());

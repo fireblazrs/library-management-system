@@ -27,7 +27,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks(@RequestParam(required = false) String isbn) {
-        List<BookEntity> bookEntities = isbn == null
+        List<Book> bookEntities = isbn == null
                 ? bookService.getAllBooks()
                 : bookService.getBooksByIsbn(isbn);
 
@@ -38,10 +38,9 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
-        BookEntity savedEntity = bookService.createBook(bookEntity);
-        Book savedBook = modelMapper.map(savedEntity, Book.class);
+        Book savedBook = bookService.createBook(bookEntity);
         return ResponseEntity
-                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedEntity.getId()))
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedBook.getId()))
                 .body(savedBook);
     }
 

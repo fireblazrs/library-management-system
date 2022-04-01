@@ -1,5 +1,6 @@
 package se.iths.librarysystem.validatorservice;
 
+import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.Isbn;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.UserEntity;
@@ -39,7 +40,7 @@ public class BookValidator extends LibraryValidator {
     }
 
     public void isbnExists(Isbn isbn) {
-        List<BookEntity> books = bookService.getBooksByIsbn(isbn.getIsbn());
+        List<Book> books = bookService.getBooksByIsbn(isbn.getIsbn());
 
         if(books.isEmpty()) {
             String message = "Book with ISBN " + isbn.getIsbn() + " does not exist.";
