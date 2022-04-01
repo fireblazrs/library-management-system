@@ -28,7 +28,8 @@ public class BookService {
         return bookEntityList.stream().map(book -> modelMapper.map(book, Book.class)).toList();
     }
 
-    public Book createBook(BookEntity bookEntity) {
+    public Book createBook(Book book) {
+        BookEntity bookEntity = modelMapper.map(book, BookEntity.class);
         BookEntity savedBook = bookRepository.save(bookEntity);
         return modelMapper.map(savedBook, Book.class);
     }
