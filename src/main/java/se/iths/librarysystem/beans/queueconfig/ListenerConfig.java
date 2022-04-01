@@ -19,7 +19,6 @@ public class ListenerConfig {
     @RabbitListener(queues = QUEUE_NAME)
     public void listen(LoanTaskEntity loanTask) {
         receiverHandler.loanBook(loanTask);
-        System.out.println("Message from queue: LoanTask " + loanTask.getId() + " handled!");
     }
 
 }
