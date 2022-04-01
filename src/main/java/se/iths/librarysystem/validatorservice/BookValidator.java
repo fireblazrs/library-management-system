@@ -8,6 +8,8 @@ import se.iths.librarysystem.exceptions.InvalidInputException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.service.BookService;
 
+import java.util.List;
+
 public class BookValidator extends LibraryValidator {
 
     BookService bookService;
@@ -37,9 +39,9 @@ public class BookValidator extends LibraryValidator {
     }
 
     public void isbnExists(Isbn isbn) {
-        Iterable<BookEntity> books = bookService.getBooksByIsbn(isbn.getIsbn());
+        List<BookEntity> books = bookService.getBooksByIsbn(isbn.getIsbn());
 
-        if(!books.iterator().hasNext()) {
+        if(books.isEmpty()) {
             String message = "Book with ISBN " + isbn.getIsbn() + " does not exist.";
             String path = "/books?isbn=" + isbn.getIsbn();
             throw new InvalidInputException(message, path);
