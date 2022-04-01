@@ -1,10 +1,12 @@
 package se.iths.librarysystem.service;
 
 import org.springframework.stereotype.Service;
-import se.iths.librarysystem.entity.UserEntity;
+import org.springframework.transaction.annotation.Transactional;
 import se.iths.librarysystem.entity.RoleEntity;
-import se.iths.librarysystem.repository.UserRepository;
+import se.iths.librarysystem.entity.UserEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.RoleRepository;
+import se.iths.librarysystem.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -13,7 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final String DEFAULT_ROLE = "ROLE_USER";
+    private static final String DEFAULT_ROLE = "ROLE_USER";
 
     public UserService(UserRepository repository, RoleRepository roleRepository) {
         this.userRepository = repository;
@@ -42,4 +44,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional
+    public UserEntity addRoleToUser(Long userId, Long roleId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
+        RoleEntity role = roleRepository.findById(roleId).orElseThrow(() -> new IdNotFoundException("role", roleId));
+        user.setRole(role);
+        return user;
+    }
 }

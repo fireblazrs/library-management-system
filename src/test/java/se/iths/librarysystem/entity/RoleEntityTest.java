@@ -31,17 +31,18 @@ class RoleEntityTest {
     void verifyEqualsAndHashCode() {
         RoleEntity user = new RoleEntity("ROLE_USER");
         RoleEntity admin = new RoleEntity("ROLE_ADMIN");
-        UserEntity person1 = new UserEntity("Stacey", "Thomas", "19920523-1234", "stacey@themail.com", "0723456789");
-        UserEntity person2 = new UserEntity("Per", "Olofsson", "19871205-1234", "per@olofsson.com", "0723456789");
-        person1.setRole(user);
-        user.addPerson(person1);
-        person2.setRole(admin);
-        admin.addPerson(person2);
+
+        UserEntity user1 = new UserEntity("Stacey", "Thomas", "19920523-1234", "stacey@themail.com", "0723456789");
+        UserEntity user2 = new UserEntity("Per", "Olofsson", "19871205-1234", "per@olofsson.com", "0723456789");
+        user1.setRole(user);
+        user.addUser(user1);
+        user2.setRole(admin);
+        admin.addUser(user2);
 
 
         EqualsVerifier.forClass(RoleEntity.class)
-                .withPrefabValues(UserEntity.class, person1, person2)
-                .withIgnoredFields("personList")
+                .withPrefabValues(UserEntity.class, user1, user2)
+                .withIgnoredFields("users")
                 .verify();
     }
 

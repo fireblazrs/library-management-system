@@ -126,7 +126,7 @@ public class UserEntity {
     }
 
     public void removeRole() {
-        this.role.removePerson(this);
+        this.role.removeUser(this);
         this.role = null;
     }
 
@@ -149,6 +149,7 @@ public class UserEntity {
     public void removeBook(BookEntity book) {
         books.remove(book);
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -17,6 +17,7 @@ import se.iths.librarysystem.service.BookService;
 import se.iths.librarysystem.service.TaskService;
 import se.iths.librarysystem.service.UserService;
 import se.iths.librarysystem.validatorservice.BookValidator;
+import se.iths.librarysystem.validatorservice.RoleValidator;
 import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
@@ -33,16 +34,20 @@ public class UserController {
     private final ModelMapper modelMapper;
     private final UserValidator userValidator;
     private final BookValidator bookValidator;
+    private final RoleValidator roleValidator;
     private final BookService bookService;
     private final TaskService taskService;
     private final QueueHandler queueHandler;
 
+
     public UserController(UserService userService, ModelMapper modelMapper, UserValidator userValidator,
-                          BookValidator bookValidator, BookService bookService, TaskService taskService, QueueHandler queueHandler) {
+                          BookValidator bookValidator, RoleValidator roleValidator, BookService bookService,
+                          TaskService taskService, QueueHandler queueHandler) {
         this.userService = userService;
         this.modelMapper = modelMapper;
         this.userValidator = userValidator;
         this.bookValidator = bookValidator;
+        this.roleValidator = roleValidator;
         this.bookService = bookService;
         this.taskService = taskService;
         this.queueHandler = queueHandler;
@@ -140,6 +145,17 @@ public class UserController {
         Task task = queueHandler.sendToQueue(savedTask);
 
         return new ResponseEntity<>(task, HttpStatus.ACCEPTED);
+    }
+
+    @PatchMapping("{userId}/role/{roleId}")
+    public ResponseEntity<UserWithRole> updateUserRole(@PathVariable Long userId, @PathVariable Long roleId) {
+        userValidator.validId(userId);
+        roleValidator.validId(roleId);
+
+        UserEntity userEntity = userService.addRoleToUser(userId, roleId);
+        UserWithRole user = modelMapper.map(userEntity, UserWithRole.class);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

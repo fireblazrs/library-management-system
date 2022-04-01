@@ -8,3 +8,4 @@ import se.iths.librarysystem.entity.RoleEntity;
 public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
     RoleEntity findByRole(String role);
 }
+

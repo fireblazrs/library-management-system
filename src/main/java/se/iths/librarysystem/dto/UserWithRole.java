@@ -1,6 +1,6 @@
 package se.iths.librarysystem.dto;
 
-public class User {
+public class UserWithRole {
 
     private Long id;
     private String firstname;
@@ -9,28 +9,34 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
+    private String role;
 
-    public User() {
+    public UserWithRole() {
     }
 
-    public User(String firstname, String lastname, String ssn,
-                String email, String phoneNumber, String address) {
+    public UserWithRole(String firstname, String lastname, String ssn,
+                        String email, String role, String phoneNumber, String address) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.role = role;
     }
 
-    public User(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
-        this(firstname, lastname, ssn, email, phoneNumber, "");
+    public UserWithRole(String firstname, String lastname, String ssn, String email, String role, String  phoneNumber) {
+        this(firstname, lastname, ssn, email, role, phoneNumber, "");
     }
 
-    public User(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email, "", "");
+    public UserWithRole(String firstname, String lastname, String ssn, String email, String role) {
+        this(firstname, lastname, ssn, email, role, "", "");
     }
 
+
+    public UserWithRole(String firstname, String lastname, String ssn, String email) {
+        this(firstname, lastname, ssn, email,"", "", "");
+    }
 
     public Long getId() {
         return id;
@@ -88,4 +94,11 @@ public class User {
         this.address = address;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
