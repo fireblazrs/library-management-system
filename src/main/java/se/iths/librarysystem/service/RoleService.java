@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.repository.RoleRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,8 +21,11 @@ public class RoleService {
         return roleRepository.findById(id);
     }
 
-    public Iterable<RoleEntity> getAllRoles() {
-        return roleRepository.findAll();
+    public List<RoleEntity> getAllRoles() {
+        Iterable<RoleEntity> roleEntities = roleRepository.findAll();
+        List<RoleEntity> roleEntityList = new ArrayList<>();
+        roleEntities.forEach(roleEntityList::add);
+        return roleEntityList;
     }
 
     public Optional<RoleEntity> getRoleById(Long id) {

@@ -59,7 +59,7 @@ class RoleControllerIT {
     @DisplayName("Get all users should return 2 roles")
     void getAllRoles() throws Exception {
         List<Role> roles = List.of(new Role("ROLE_AUTHOR"), new Role("ROLE_USER"));
-        Iterable<RoleEntity> roleEntities = List.of(new RoleEntity("ROLE_AUTHOR"), new RoleEntity("ROLE_USER"));
+        List<RoleEntity> roleEntities = List.of(new RoleEntity("ROLE_AUTHOR"), new RoleEntity("ROLE_USER"));
 
         BDDMockito.given(roleService.getAllRoles()).willReturn((roleEntities));
         when(modelMapper.map(any(RoleEntity.class), eq(Role.class))).thenReturn(new Role("ROLE_AUTHOR"));

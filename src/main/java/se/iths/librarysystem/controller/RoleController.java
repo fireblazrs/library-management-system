@@ -29,9 +29,8 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<List<Role>> getAllRoles() {
-        Iterable<RoleEntity> roleEntities = roleService.getAllRoles();
-        List<Role> roles = new ArrayList<>();
-        roleEntities.forEach(role -> roles.add(modelMapper.map(role, Role.class)));
+        List<RoleEntity> roleEntities = roleService.getAllRoles();
+        List<Role> roles = roleEntities.stream().map(role -> modelMapper.map(role, Role.class)).toList();
 
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
