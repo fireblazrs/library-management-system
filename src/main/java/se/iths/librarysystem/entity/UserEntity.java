@@ -30,6 +30,7 @@ public class UserEntity {
 
     private String phoneNumber;
     private String address;
+    private String password;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private RoleEntity role;
@@ -43,22 +44,23 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String firstname, String lastname, String ssn,
-                      String email, String phoneNumber, String address) {
+    public UserEntity(String firstname, String lastname, String ssn, String email,
+                      String phoneNumber, String address, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.password = password;
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber) {
-        this(firstname, lastname, ssn, email, phoneNumber, "");
+    public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber, String password) {
+        this(firstname, lastname, ssn, email, phoneNumber, "", password);
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email, "", "");
+    public UserEntity(String firstname, String lastname, String ssn, String email, String password) {
+        this(firstname, lastname, ssn, email, "", "", password);
     }
 
     public Long getId() {
@@ -152,6 +154,13 @@ public class UserEntity {
         books.remove(book);
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public boolean equals(Object o) {
