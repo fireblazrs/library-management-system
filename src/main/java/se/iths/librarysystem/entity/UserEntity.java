@@ -3,10 +3,7 @@ package se.iths.librarysystem.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class UserEntity {
@@ -32,8 +29,8 @@ public class UserEntity {
     private String address;
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private RoleEntity role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private RoomEntity room;
@@ -119,19 +116,22 @@ public class UserEntity {
         this.address = address;
     }
 
-    public RoleEntity getRole() {
-        return role;
+    public Set<RoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 
-    public void removeRole() {
-        if (role != null) {
-            role.removeUser(this);
-            role = null;
-        }
+    public void addRole(RoleEntity role) {
+        this.roles.add(role);
+        role.addUser(this);
+    }
+
+    public void removeRole(RoleEntity role) {
+       this.roles.remove(role);
+       role.removeUser(this);
     }
 
     public RoomEntity getRoom() {

@@ -10,7 +10,7 @@ class UserEntityTest {
 
     @Test
     void getIdShouldReturnSetId() {
-        UserEntity userEntity = new UserEntity("Stacey", "Thomas", "19920523-1234", "stacey@themail.com", "0723456789");
+        UserEntity userEntity = new UserEntity();
         userEntity.setId(21L);
 
         Long result = userEntity.getId();
@@ -20,7 +20,7 @@ class UserEntityTest {
 
     @Test
     void getEmailShouldReturnSetEmail() {
-        UserEntity userEntity = new UserEntity("Stacey", "Thomas", "19920523-1234", "stacey@themail.com");
+        UserEntity userEntity = new UserEntity();
         userEntity.setEmail("stacey@themail.com");
 
         String result = userEntity.getEmail();

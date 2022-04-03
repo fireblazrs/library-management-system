@@ -1,17 +1,14 @@
 package se.iths.librarysystem.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.*;
 import se.iths.librarysystem.entity.BookEntity;
-import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.TaskEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
-import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.queue.QueueHandler;
 import se.iths.librarysystem.service.BookService;
 import se.iths.librarysystem.service.TaskService;
@@ -23,14 +20,12 @@ import se.iths.librarysystem.validatorservice.UserValidator;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
 
     private final UserService userService;
-    private final ModelMapper modelMapper;
     private final UserValidator userValidator;
     private final BookValidator bookValidator;
     private final RoleValidator roleValidator;
@@ -39,11 +34,10 @@ public class UserController {
     private final QueueHandler queueHandler;
 
 
-    public UserController(UserService userService, ModelMapper modelMapper, UserValidator userValidator,
+    public UserController(UserService userService, UserValidator userValidator,
                           BookValidator bookValidator, RoleValidator roleValidator, BookService bookService,
                           TaskService taskService, QueueHandler queueHandler) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
         this.userValidator = userValidator;
         this.bookValidator = bookValidator;
         this.roleValidator = roleValidator;
@@ -82,28 +76,19 @@ public class UserController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
-        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        userEntity.removeRole();
         userService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("{id}/role")
-    public ResponseEntity<Role> getUserRole(@PathVariable Long id) {
-        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        RoleEntity roleEntity = Optional.ofNullable(userEntity.getRole())
-            .orElseThrow(() -> new ValueNotFoundException("User Id "+ id + " does not have a role.", "/users/" + id + "/role"));
-        Role role = modelMapper.map(roleEntity, Role.class);
-        return new ResponseEntity<>(role, HttpStatus.OK);
+    public ResponseEntity<List<Role>> getUserRole(@PathVariable Long id) {
+        List<Role> roles = userService.getUserRoles(id);
+        return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
     @GetMapping("{id}/books")
     public ResponseEntity<List<Book>> getAUsersBooks(@PathVariable Long id) {
-        UserEntity userEntity = userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
-        List<Book> books = userEntity.getBooks().stream()
-                .map(book -> modelMapper.map(book, Book.class))
-                .toList();
-
+        List<Book> books = userService.getUserBooks(id);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 

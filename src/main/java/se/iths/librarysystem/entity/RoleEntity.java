@@ -2,14 +2,10 @@ package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class RoleEntity {
@@ -22,8 +18,8 @@ public class RoleEntity {
     @NotBlank(message = "Role is a required field")
     private String role;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private final List<UserEntity> users = new ArrayList<>();
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity() {
     }
@@ -49,8 +45,8 @@ public class RoleEntity {
     }
 
 
-    public List<UserEntity> getUsers() {
-        return Collections.unmodifiableList(users);
+    public Set<UserEntity> getUsers() {
+        return Collections.unmodifiableSet(users);
     }
 
     public void addUser(UserEntity user) {
