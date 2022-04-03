@@ -6,7 +6,7 @@ public class IdNotFoundException extends RuntimeException {
 
     public IdNotFoundException(String entity, Long id) {
         super(entity + " with Id " + id + " not found.");
-        path = "/" + entity + "s/" + id;
+        path = "/api/" + entity + "s/" + id;
     }
 
     public String getPath() {

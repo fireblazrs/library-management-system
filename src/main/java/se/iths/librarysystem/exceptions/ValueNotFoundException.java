@@ -6,7 +6,7 @@ public class ValueNotFoundException extends RuntimeException {
 
     public ValueNotFoundException(String message, String path) {
         super(message);
-        this.path = path;
+        this.path = "/api/" + path;
     }
 
     public String getPath() {

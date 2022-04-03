@@ -12,7 +12,7 @@ import se.iths.librarysystem.service.TaskService;
 import java.util.List;
 
 @RestController
-@RequestMapping("tasks")
+@RequestMapping("api/tasks")
 public class TaskController {
 
     private final TaskService taskService;

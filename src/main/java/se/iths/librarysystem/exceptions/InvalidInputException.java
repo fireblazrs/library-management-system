@@ -6,7 +6,7 @@ public class InvalidInputException extends RuntimeException {
 
     public InvalidInputException(String message, String path) {
         super(message);
-        this.path = path;
+        this.path = "/api/" + path;
     }
 
     public String getPath() {
