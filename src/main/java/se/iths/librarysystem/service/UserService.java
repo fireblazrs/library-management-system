@@ -1,6 +1,7 @@
 package se.iths.librarysystem.service;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.iths.librarysystem.dto.Book;
@@ -24,17 +25,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository, RoleRepository roleRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository repository, RoleRepository roleRepository, ModelMapper modelMapper,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = repository;
         this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User createUser(User user) {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         RoleEntity defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         userEntity.addRole(defaultRole);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         UserEntity savedEntity = userRepository.save(userEntity);
         return modelMapper.map(savedEntity, User.class);
