@@ -4,10 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.iths.librarysystem.dto.Book;
-import se.iths.librarysystem.dto.Role;
-import se.iths.librarysystem.dto.User;
-import se.iths.librarysystem.dto.UserWithRole;
+import se.iths.librarysystem.dto.*;
 import se.iths.librarysystem.entity.RoleEntity;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
@@ -35,11 +32,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser(User user) {
+    public User createUser(NewUser user) {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+
         RoleEntity defaultRole = roleRepository.findByRole(DEFAULT_ROLE);
         userEntity.addRole(defaultRole);
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
         UserEntity savedEntity = userRepository.save(userEntity);
         return modelMapper.map(savedEntity, User.class);

@@ -46,8 +46,8 @@ public class UserController {
         this.queueHandler = queueHandler;
     }
 
-    @PostMapping()
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    @PostMapping("new")
+    public ResponseEntity<User> createUser(@Valid @RequestBody NewUser user) {
         User createdUser = userService.createUser(user);
         return ResponseEntity
                 .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + createdUser.getId()))
