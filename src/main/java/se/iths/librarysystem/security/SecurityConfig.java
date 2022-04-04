@@ -12,6 +12,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final String[] urls = { "/api/roles/**", "/api/tasks/", "/api/tasks", "/api/users/",
+                                    "/api/users", "/api/users/*/role/**" };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -20,12 +23,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
-                .csrf().disable()
+                .csrf().ignoringAntMatchers("/api/**")
+                .and()
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/roles/*").hasRole("ADMIN")
-                .antMatchers("/api/users/new", "/api/users/*", "/", "/home").permitAll()
+                .antMatchers(urls).hasRole("ADMIN")
+                .antMatchers("/api/users/new", "/", "/home").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
