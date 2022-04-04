@@ -12,11 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Man vill oftast ha CSRF skydd på "/home, /admin, /login
-    // men behöver inte CSRF skyddet på apier
-
-    private final String[] urls = {"/api/*", "/logout"};
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -25,8 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
-                .csrf().ignoringAntMatchers(urls)
-                .and()
+                .csrf().disable()
                 .httpBasic()
                 .and()
                 .authorizeRequests()
