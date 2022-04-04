@@ -28,6 +28,7 @@ public class UserEntity {
     private String phoneNumber;
     private String address;
     private String password;
+    private String username;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<RoleEntity> roles = new HashSet<>();
@@ -50,6 +51,7 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.password = password;
+        this.username = firstname + lastname;
     }
 
     public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber, String password) {
@@ -161,6 +163,8 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
