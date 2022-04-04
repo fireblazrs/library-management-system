@@ -13,6 +13,7 @@ public class LibraryUserPrincipal implements UserDetails {
     private final UserEntity userEntity;
 
     public LibraryUserPrincipal(UserEntity userEntity) {
+        super();
         this.userEntity = userEntity;
     }
 
@@ -27,12 +28,12 @@ public class LibraryUserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return userEntity.getPassword();
+        return this.userEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userEntity.getUsername();
+        return this.userEntity.getUsername();
     }
 
     @Override
