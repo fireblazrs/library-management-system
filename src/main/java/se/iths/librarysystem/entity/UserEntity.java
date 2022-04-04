@@ -43,7 +43,7 @@ public class UserEntity {
     }
 
     public UserEntity(String firstname, String lastname, String ssn, String email,
-                      String phoneNumber, String address, String password) {
+                      String phoneNumber, String address, String password, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
@@ -51,15 +51,16 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.password = password;
-        this.username = firstname + lastname;
+        this.username = createUsername(firstname, lastname, username);
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber, String password) {
-        this(firstname, lastname, ssn, email, phoneNumber, "", password);
+    public UserEntity(String firstname, String lastname, String ssn, String email,
+                      String phoneNumber, String password, String username) {
+        this(firstname, lastname, ssn, email, phoneNumber, "", password, username);
     }
 
     public UserEntity(String firstname, String lastname, String ssn, String email, String password) {
-        this(firstname, lastname, ssn, email, "", "", password);
+        this(firstname, lastname, ssn, email, "", "", password, "");
     }
 
     public Long getId() {
@@ -164,6 +165,17 @@ public class UserEntity {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String createUsername(String firstname, String lastname, String username) {
+        return username == null || username.equals("") ? firstname + lastname : username;
+    }
 
 
     @Override
