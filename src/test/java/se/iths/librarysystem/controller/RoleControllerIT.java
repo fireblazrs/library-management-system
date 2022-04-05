@@ -10,11 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import se.iths.librarysystem.dto.Role;
 import se.iths.librarysystem.entity.RoleEntity;
+import se.iths.librarysystem.mocks.WithMockAdmin;
 import se.iths.librarysystem.repository.RoleRepository;
 import se.iths.librarysystem.security.SecurityConfig;
 import se.iths.librarysystem.service.RoleService;
@@ -50,6 +52,7 @@ class RoleControllerIT {
     private ObjectMapper objectMapper;
 
 
+    @WithAnonymousUser
     @Test
     @DisplayName("An unauthenticated user should return 401: UNAUTHORIZED")
     void anUnauthenticatedUserShouldReturnStatus401() throws Exception {
@@ -67,7 +70,7 @@ class RoleControllerIT {
                 .andExpect(status().isForbidden());
     }
 
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockAdmin
     @Test
     @DisplayName("Get all users should return 0 roles")
     void getAllRolesReturnsEmptyList() throws Exception {
@@ -77,7 +80,7 @@ class RoleControllerIT {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockAdmin
     @Test
     @DisplayName("Get all users should return 2 roles")
     void getAllRoles() throws Exception {
@@ -92,7 +95,7 @@ class RoleControllerIT {
                 .andExpect(jsonPath("$[0].role", is("ROLE_ADMIN")));
     }
 
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockAdmin
     @Test
     @DisplayName("Get role by Id should return status OK and expected role")
     void getRoleByIdShouldReturnStatus200() throws Exception {
@@ -110,7 +113,7 @@ class RoleControllerIT {
                 .andExpect(jsonPath("$.role", is("ROLE_ADMIN")));
     }
 
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockAdmin
     @Test
     @DisplayName("Get role by Id should return status NOT_FOUND, an error message and path")
     void getRoleByIdShouldReturnError404() throws Exception {
@@ -124,7 +127,8 @@ class RoleControllerIT {
                 .andExpect(jsonPath("message").value("role with Id " + id + " not found."));
     }
 
-    @WithMockUser(roles={"ADMIN"})
+    //@WithMockUser(roles={"ADMIN"})
+    @WithMockAdmin
     @Test
     @DisplayName("Create valid role should return status 'CREATED' AND role = ROLE_ADMIN")
     void createRoleShouldReturnStatus201() throws Exception {
