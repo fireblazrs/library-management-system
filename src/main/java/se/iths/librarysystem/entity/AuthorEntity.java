@@ -1,10 +1,9 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +15,15 @@ public class AuthorEntity {
     private String firstName;
     @NotBlank(message = "Lastname is a required field")
     private String lastName;
+
+    @ManyToMany
+    @JoinTable(
+            name = "book_enrolled",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+
+    )
+    private List<BookEntity> enrolledBooks = new ArrayList<>();
 
     public AuthorEntity() {
     }

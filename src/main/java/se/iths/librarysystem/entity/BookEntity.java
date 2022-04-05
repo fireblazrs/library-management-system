@@ -1,9 +1,12 @@
 package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
+import javax.security.auth.Subject;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +27,18 @@ public class BookEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity borrower;
+
+    @Transient
+    @ManyToMany(mappedBy = "enrolledBooks" )
+    private List<AuthorEntity> authors = new ArrayList<>();
+
+    @Transient
+    @OneToMany(mappedBy = "bookEntity1")
+    List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
+
+    @Transient
+    @OneToMany(mappedBy = "bookEntity2")
+    List<GenreEntity> genreEntities = new ArrayList<>();
 
 
     public BookEntity() {

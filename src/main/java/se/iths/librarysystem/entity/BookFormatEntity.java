@@ -1,9 +1,6 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
@@ -19,6 +16,9 @@ public class BookFormatEntity {
     private int pageCount;
     private String length;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity bookEntity1;
 
     public BookFormatEntity(){
     }
