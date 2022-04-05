@@ -1,5 +1,7 @@
 package se.iths.librarysystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +19,8 @@ public class BookEntity {
     @NotBlank(message = "Edition is a required field")
     private String edition;
     @NotNull(message = "Print-date is a required field")
-    private String printed;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date printed;
 
     @NotBlank(message = "ISBN is a required field")
     private String isbn;
@@ -29,7 +32,15 @@ public class BookEntity {
     public BookEntity() {
     }
 
-    public BookEntity(String title, String subtitle, String edition, String printed, String isbn) {
+    public Date getPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(Date printed) {
+        this.printed = printed;
+    }
+
+    public BookEntity(String title, String subtitle, String edition, Date printed, String isbn) {
         this.title = title;
         this.subtitle = subtitle;
         this.edition = edition;
@@ -69,13 +80,6 @@ public class BookEntity {
         this.edition = edition;
     }
 
-    public String  getPrinted() {
-        return printed;
-    }
-
-    public void setPrinted(String printed) {
-        this.printed = printed;
-    }
 
     public String getIsbn() {
         return isbn;
