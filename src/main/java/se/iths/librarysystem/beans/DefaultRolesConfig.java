@@ -1,4 +1,4 @@
-package se.iths.librarysystem.beans.defaultdata;
+package se.iths.librarysystem.beans;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

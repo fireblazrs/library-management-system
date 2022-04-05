@@ -37,6 +37,3 @@ logs/
 
 ### Custom Development Properties ###
 src/main/resources/application-dev.properties
-
-### Default Admin Details ###
-DefaultAdminConfig.java
