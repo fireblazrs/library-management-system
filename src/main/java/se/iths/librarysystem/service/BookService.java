@@ -31,12 +31,8 @@ public class BookService {
     public Optional<BookEntity> findBookById(Long id){return bookRepository.findById(id);}
 
     public void deleteBook(Long id){
-        Optional<BookEntity> foundItem = null;
-        try {
-            foundItem = bookRepository.findById(id);
-        } catch (Exception e) {
-           new IdNotFoundException("book",id);
-        }
-        bookRepository.deleteById(foundItem.orElse(null).getId());}
+        Optional<BookEntity> foundItem = Optional.ofNullable(bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id)));
+        bookRepository.deleteById(foundItem.get().getId());
+    }
 
 }
