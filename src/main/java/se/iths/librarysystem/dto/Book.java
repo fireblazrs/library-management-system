@@ -26,48 +26,54 @@ public class Book {
         return id;
     }
 
-    public void setId(Long id) {
+    public Book setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Book setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getSubtitle() {
         return subtitle;
     }
 
-    public void setSubtitle(String subtitle) {
+    public Book setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+        return this;
     }
 
     public String getEdition() {
         return edition;
     }
 
-    public void setEdition(String edition) {
+    public Book setEdition(String edition) {
         this.edition = edition;
+        return this;
     }
 
     public Date getPrinted() {
         return printed;
     }
 
-    public void setPrinted(Date printed) {
+    public Book setPrinted(Date printed) {
         this.printed = printed;
+        return this;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public Book setIsbn(String isbn) {
         this.isbn = isbn;
+        return this;
     }
 
 }

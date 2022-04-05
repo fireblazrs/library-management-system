@@ -41,56 +41,63 @@ public class BookEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public BookEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public BookEntity setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getSubtitle() {
         return subtitle;
     }
 
-    public void setSubtitle(String subtitle) {
+    public BookEntity setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+        return this;
     }
 
     public String getEdition() {
         return edition;
     }
 
-    public void setEdition(String edition) {
+    public BookEntity setEdition(String edition) {
         this.edition = edition;
+        return this;
     }
 
     public Date getPrinted() {
         return printed;
     }
 
-    public void setPrinted(Date printed) {
+    public BookEntity setPrinted(Date printed) {
         this.printed = printed;
+        return this;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public BookEntity setIsbn(String isbn) {
         this.isbn = isbn;
+        return this;
     }
 
     public UserEntity getBorrower() {
         return borrower;
     }
 
-    public void setBorrower(UserEntity borrower) {
+    public BookEntity setBorrower(UserEntity borrower) {
         this.borrower = borrower;
+        return this;
     }
 
     public void removeBorrower() {
