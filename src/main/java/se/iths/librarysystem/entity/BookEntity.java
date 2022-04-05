@@ -4,10 +4,7 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class BookEntity {
@@ -112,6 +109,32 @@ public class BookEntity {
         borrower.removeBook(this);
         borrower = null;
     }
+
+    public List<BookFormatEntity> getBookFormatEntities() {
+        return Collections.unmodifiableList(bookFormatEntities);
+    }
+
+    public void addBookFormatEntity(BookFormatEntity bookFormatEntity) {
+        bookFormatEntities.add(bookFormatEntity);
+    }
+
+    public void removeBookFormatEntity(BookFormatEntity bookFormatEntity) {
+        bookFormatEntities.remove(bookFormatEntity);
+    }
+
+    public List<GenreEntity> getGenreEntities() {
+        return Collections.unmodifiableList(genreEntities);
+    }
+
+    public void addGenreEntity(GenreEntity genreEntity) {
+        genreEntities.add(genreEntity);
+    }
+
+    public void removeGenreEntity(GenreEntity genreEntity) {
+        genreEntities.remove(genreEntity);
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
