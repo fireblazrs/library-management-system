@@ -34,11 +34,11 @@ public class BookEntity {
 
     @Transient
     @OneToMany(mappedBy = "bookEntity1")
-    List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
+    private List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
 
     @Transient
     @OneToMany(mappedBy = "bookEntity2")
-    List<GenreEntity> genreEntities = new ArrayList<>();
+    private List<GenreEntity> genreEntities = new ArrayList<>();
 
 
     public BookEntity() {
