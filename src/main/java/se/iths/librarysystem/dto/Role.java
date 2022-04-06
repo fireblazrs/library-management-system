@@ -16,16 +16,18 @@ public class Role {
         return id;
     }
 
-    public void setId(Long id) {
+    public Role setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public Role setRole(String role) {
         this.role = role;
+        return this;
     }
 
 }
