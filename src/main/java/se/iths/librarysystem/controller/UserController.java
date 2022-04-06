@@ -28,8 +28,9 @@ public class UserController {
     @PostMapping("new")
     public ResponseEntity<User> createUser(@Valid @RequestBody NewUser user) {
         User createdUser = userService.createUser(user);
+        String url = ServletUriComponentsBuilder.fromCurrentRequest().build().toString().replace("new", "");
         return ResponseEntity
-                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + createdUser.getId()))
+                .created(URI.create(url + createdUser.getId()))
                 .body(createdUser);
     }
 
