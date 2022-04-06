@@ -118,6 +118,7 @@ class UserControllerIT {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").value(10))
                 .andExpect(redirectedUrlPattern("**/api/users/" + 10));
+        verify(userRepository).save(any(UserEntity.class));
     }
 
     @WithMockAdmin
@@ -149,6 +150,7 @@ class UserControllerIT {
         mockMvc.perform(put("/api/users").contentType(MediaType.APPLICATION_JSON).content(payload))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(10));
+        verify(userRepository).save(any(UserEntity.class));
     }
 
     @WithMockUser
