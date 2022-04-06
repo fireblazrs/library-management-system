@@ -127,7 +127,6 @@ class RoleControllerIT {
                 .andExpect(jsonPath("message").value("role with Id " + id + " not found."));
     }
 
-    //@WithMockUser(roles={"ADMIN"})
     @WithMockAdmin
     @Test
     @DisplayName("Create valid role should return status 'CREATED' AND role = ROLE_ADMIN")
