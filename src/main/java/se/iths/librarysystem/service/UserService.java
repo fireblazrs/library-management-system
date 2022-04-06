@@ -81,6 +81,8 @@ public class UserService {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IdNotFoundException("user", userId));
         RoleEntity role = roleRepository.findById(roleId).orElseThrow(() -> new IdNotFoundException("role", roleId));
         user.addRole(role);
+        role.addUser(user);
+        userRepository.save(user);
         return modelMapper.map(user, UserWithRole.class);
     }
 
