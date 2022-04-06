@@ -67,64 +67,72 @@ public class UserEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public UserEntity setFirstname(String firstname) {
         this.firstname = firstname;
+        return this;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
+    public UserEntity setLastname(String lastname) {
         this.lastname = lastname;
+        return this;
     }
 
     public String getSsn() {
         return ssn;
     }
 
-    public void setSsn(String dob) {
+    public UserEntity setSsn(String dob) {
         this.ssn = dob;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public UserEntity setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public UserEntity setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public UserEntity setAddress(String address) {
         this.address = address;
+        return this;
     }
 
     public Set<RoleEntity> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleEntity> roles) {
+    public UserEntity setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
+        return this;
     }
 
     public void addRole(RoleEntity role) {
@@ -141,8 +149,9 @@ public class UserEntity {
         return room;
     }
 
-    public void setRoom(RoomEntity room) {
+    public UserEntity setRoom(RoomEntity room) {
         this.room = room;
+        return this;
     }
 
     public List<BookEntity> getBooks() {
@@ -161,16 +170,18 @@ public class UserEntity {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public UserEntity setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     private String createUsername(String firstname, String lastname, String username) {
