@@ -1,28 +1,38 @@
 package se.iths.librarysystem.controller;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.librarysystem.entity.GenreEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import se.iths.librarysystem.dto.Genre;
 import se.iths.librarysystem.service.GenreService;
 
-import java.util.Optional;
-
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/genres")
 public class GenreController {
 
-    GenreService genreService;
+    private final GenreService genreService;
 
-    public GenreController(GenreService genreService){
+    public GenreController(GenreService genreService) {
         this.genreService = genreService;
     }
 
-    @PostMapping()
-    public ResponseEntity<GenreEntity> createGenre(@RequestBody GenreEntity genreEntity){
+    @GetMapping
+    public ResponseEntity<List<Genre>> getAllGenres() {
+        List<Genre> genres = genreService.getAllGenres();
+        return new ResponseEntity<>(genres, HttpStatus.OK);
+    }
 
-        GenreEntity createdGenre = genreService.createGenre(genreEntity);
-        return new ResponseEntity<>(createdGenre, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<Genre> createGenre(@Valid @RequestBody Genre genre) {
+        Genre savedGenre = genreService.createGenre(genre);
+        return ResponseEntity
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedGenre.getId()))
+                .body(savedGenre);
     }
 
     @DeleteMapping("{id}")
@@ -33,15 +43,10 @@ public class GenreController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<GenreEntity>> findGenreById(@PathVariable Long id) {
-        Optional<GenreEntity> foundGenre = genreService.findGenreById(id);
-        return new ResponseEntity<>(foundGenre, HttpStatus.OK);
+    public ResponseEntity<Genre> findGenreByID(@PathVariable Long id) {
 
+        Genre genre = genreService.findGenreById(id);
+        return new ResponseEntity<>(genre, HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity<Iterable<GenreEntity>> findAllGenres() {
-        Iterable<GenreEntity> allGenres = genreService.findAllGenres();
-        return new ResponseEntity<>(allGenres, HttpStatus.OK);
-    }
 }

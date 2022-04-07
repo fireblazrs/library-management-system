@@ -3,27 +3,36 @@ package se.iths.librarysystem.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.librarysystem.entity.AuthorEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import se.iths.librarysystem.dto.Author;
 import se.iths.librarysystem.service.AuthorService;
 
-import java.util.Optional;
-
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/authors")
 public class AuthorController {
 
-    AuthorService authorService;
+    private final AuthorService authorService;
 
-    public AuthorController(AuthorService authorService){
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
-    @PostMapping()
-    public ResponseEntity<AuthorEntity> createAuthor(@RequestBody AuthorEntity authorEntity){
+    @GetMapping
+    public ResponseEntity<List<Author>> getAllAuthors() {
+        List<Author> authors = authorService.getAllAuthors();
+        return new ResponseEntity<>(authors, HttpStatus.OK);
+    }
 
-        AuthorEntity createdAuthor = authorService.createAuthor(authorEntity);
-        return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<Author> createAuthor(@Valid @RequestBody Author author) {
+        Author savedAuthor = authorService.createAuthor(author);
+        return ResponseEntity
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedAuthor.getId()))
+                .body(savedAuthor);
     }
 
     @DeleteMapping("{id}")
@@ -34,15 +43,10 @@ public class AuthorController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<AuthorEntity>> findAuthorById(@PathVariable Long id) {
-        Optional<AuthorEntity> foundAuthor = authorService.findAuthorById(id);
-        return new ResponseEntity<>(foundAuthor, HttpStatus.OK);
+    public ResponseEntity<Author> findAuthorByID(@PathVariable Long id) {
 
+        Author author = authorService.findAuthorById(id);
+        return new ResponseEntity<>(author, HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity<Iterable<AuthorEntity>> findAllAuthors() {
-        Iterable<AuthorEntity> allAuthors = authorService.findAllAuthors();
-        return new ResponseEntity<>(allAuthors, HttpStatus.OK);
-    }
 }

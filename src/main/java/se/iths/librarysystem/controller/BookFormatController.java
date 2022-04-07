@@ -3,28 +3,36 @@ package se.iths.librarysystem.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import se.iths.librarysystem.entity.AuthorEntity;
-import se.iths.librarysystem.entity.BookFormatEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import se.iths.librarysystem.dto.BookFormat;
 import se.iths.librarysystem.service.BookFormatService;
 
-import java.util.Optional;
-
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/bookformats")
 public class BookFormatController {
 
-    BookFormatService bookFormatService;
+    private final BookFormatService bookFormatService;
 
-    public BookFormatController(BookFormatService bookFormatService){
+    public BookFormatController(BookFormatService bookFormatService) {
         this.bookFormatService = bookFormatService;
     }
 
-    @PostMapping()
-    public ResponseEntity<BookFormatEntity> createBookFormat(@RequestBody BookFormatEntity bookFormatEntity){
+    @GetMapping
+    public ResponseEntity<List<BookFormat>> getAllBookFormats() {
+        List<BookFormat> bookFormats = bookFormatService.getAllBookFormats();
+        return new ResponseEntity<>(bookFormats, HttpStatus.OK);
+    }
 
-        BookFormatEntity createdBookFormat = bookFormatService.createBookFormat(bookFormatEntity);
-        return new ResponseEntity<>(createdBookFormat, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<BookFormat> createBookFormat(@Valid @RequestBody BookFormat bookFormat) {
+        BookFormat savedBookFormat = bookFormatService.createBookFormat(bookFormat);
+        return ResponseEntity
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedBookFormat.getId()))
+                .body(savedBookFormat);
     }
 
     @DeleteMapping("{id}")
@@ -35,15 +43,10 @@ public class BookFormatController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<BookFormatEntity>> findBookFormatById(@PathVariable Long id) {
-        Optional<BookFormatEntity> foundBookFormat = bookFormatService.findBookFormatById(id);
-        return new ResponseEntity<>(foundBookFormat, HttpStatus.OK);
+    public ResponseEntity<BookFormat> findBookFormatByID(@PathVariable Long id) {
 
+        BookFormat bookFormat = bookFormatService.findBookFormatById(id);
+        return new ResponseEntity<>(bookFormat, HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity<Iterable<BookFormatEntity>> findAllBookFormats() {
-        Iterable<BookFormatEntity> allBookFormats = bookFormatService.findAllBookFormats();
-        return new ResponseEntity<>(allBookFormats, HttpStatus.OK);
-    }
 }
