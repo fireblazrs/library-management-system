@@ -2,7 +2,10 @@ package se.iths.librarysystem.service;
 
 import org.springframework.stereotype.Service;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.BookRepository;
+
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -24,4 +27,12 @@ public class BookService {
     public Iterable<BookEntity> getBooksByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
     }
+
+    public Optional<BookEntity> findBookById(Long id){return bookRepository.findById(id);}
+
+    public void deleteBook(Long id){
+        BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        bookRepository.deleteById(foundBook.getId());
+    }
+
 }
