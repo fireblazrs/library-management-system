@@ -9,7 +9,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("genres")
+@RequestMapping("api/genres")
 public class GenreController {
 
     GenreService genreService;

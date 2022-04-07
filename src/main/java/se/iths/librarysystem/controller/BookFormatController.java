@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("bookformats")
+@RequestMapping("api/bookformats")
 public class BookFormatController {
 
     BookFormatService bookFormatService;
