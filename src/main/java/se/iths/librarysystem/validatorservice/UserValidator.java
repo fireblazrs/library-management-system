@@ -20,6 +20,6 @@ public class UserValidator extends LibraryValidator {
 
     @Override
     public void idExists(Long id) {
-        userService.findById(id).orElseThrow(() -> new IdNotFoundException("user", id));
+        userService.findUserEntityById(id).orElseThrow(() -> new IdNotFoundException("user", id));
     }
 }

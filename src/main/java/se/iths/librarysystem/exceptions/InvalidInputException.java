@@ -2,18 +2,15 @@ package se.iths.librarysystem.exceptions;
 
 public class InvalidInputException extends RuntimeException {
 
-    private String path;
+    private final String path;
 
     public InvalidInputException(String message, String path) {
         super(message);
-        this.path = path;
+        this.path = "/api/" + path;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
 }
