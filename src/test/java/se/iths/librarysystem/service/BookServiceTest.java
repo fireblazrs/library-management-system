@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 class BookServiceTest {
 
     @Autowired
-    BookService bookService;
+    private BookService bookService;
 
     @MockBean
     private BookRepository bookRepository;
