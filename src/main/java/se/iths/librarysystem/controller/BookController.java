@@ -1,10 +1,13 @@
 package se.iths.librarysystem.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Book;
+import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.BookService;
 
 import javax.validation.Valid;
@@ -16,9 +19,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final ModelMapper modelMapper;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ModelMapper modelMapper) {
         this.bookService = bookService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -36,6 +41,21 @@ public class BookController {
         return ResponseEntity
                 .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedBook.getId()))
                 .body(savedBook);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Book> findBookByID(@PathVariable Long id) {
+        BookEntity foundBook = bookService.findBookById(id).orElseThrow(() -> new IdNotFoundException("books", id));
+
+        Book book = modelMapper.map(foundBook, Book.class);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
 }

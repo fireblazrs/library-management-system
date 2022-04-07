@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.BookRepository;
 
 import java.util.ArrayList;
@@ -49,4 +50,12 @@ public class BookService {
     public void updateBook(BookEntity book) {
         bookRepository.save(book);
     }
+
+    public Optional<BookEntity> findBookById(Long id){return bookRepository.findById(id);}
+
+    public void deleteBook(Long id){
+        BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        bookRepository.deleteById(foundBook.getId());
+    }
+
 }

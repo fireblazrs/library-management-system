@@ -1,5 +1,7 @@
 package se.iths.librarysystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ public class BookEntity {
     @NotBlank(message = "Edition is a required field")
     private String edition;
     @NotNull(message = "Print-date is a required field")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date printed;
 
     @NotBlank(message = "ISBN is a required field")
