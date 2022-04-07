@@ -3,6 +3,7 @@ package se.iths.librarysystem.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Book {
 
@@ -79,4 +80,17 @@ public class Book {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title)
+               && Objects.equals(subtitle, book.subtitle) && Objects.equals(edition, book.edition)
+               && Objects.equals(printed, book.printed) && Objects.equals(isbn, book.isbn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, subtitle, edition, printed, isbn);
+    }
 }
