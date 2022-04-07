@@ -34,9 +34,9 @@ class RoleEntityTest {
 
         UserEntity user1 = new UserEntity("Stacey", "Thomas", "19920523-1234", "stacey@themail.com", "0723456789");
         UserEntity user2 = new UserEntity("Per", "Olofsson", "19871205-1234", "per@olofsson.com", "0723456789");
-        user1.setRole(user);
+        user1.addRole(user);
         user.addUser(user1);
-        user2.setRole(admin);
+        user2.addRole(admin);
         admin.addUser(user2);
 
 

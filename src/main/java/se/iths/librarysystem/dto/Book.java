@@ -1,5 +1,7 @@
 package se.iths.librarysystem.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Book {
@@ -8,6 +10,7 @@ public class Book {
     private String title;
     private String subtitle;
     private String edition;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date printed;
     private String isbn;
 

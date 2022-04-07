@@ -21,3 +21,8 @@ services:
       DB_HOST: mysql
       DB_USER: user
       DB_PASSWORD: password
+  rabbit_queue:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

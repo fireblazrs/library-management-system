@@ -2,6 +2,7 @@ package se.iths.librarysystem.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -37,6 +38,11 @@ public class GlobalExceptionHandler {
         exception.getConstraintViolations().forEach(violation ->
                 errors.put(violation.getPropertyPath().toString(), violation.getMessage()));
         return new ResponseEntity<>(new ApiErrors(HttpStatus.BAD_REQUEST, errors, ""), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({UsernameNotFoundException.class})
+    public ResponseEntity<Object> userNameNotFoundException(UsernameNotFoundException exception) {
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), "users"));
     }
 
 }

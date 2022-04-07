@@ -9,26 +9,29 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
+    private String username;
 
     public User() {
     }
 
-    public User(String firstname, String lastname, String ssn,
-                String email, String phoneNumber, String address) {
+    public User(String firstname, String lastname, String ssn, String email,
+                String phoneNumber, String address, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.username = username;
     }
 
-    public User(String firstname, String lastname, String ssn, String email, String  phoneNumber) {
-        this(firstname, lastname, ssn, email, phoneNumber, "");
+    public User(String firstname, String lastname, String ssn,
+                String email, String  phoneNumber, String username) {
+        this(firstname, lastname, ssn, email, phoneNumber, "", username);
     }
 
-    public User(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email, "", "");
+    public User(String firstname, String lastname, String ssn, String email, String username) {
+        this(firstname, lastname, ssn, email, "", "", username);
     }
 
 
@@ -88,4 +91,11 @@ public class User {
         this.address = address;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

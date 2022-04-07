@@ -3,10 +3,7 @@ package se.iths.librarysystem.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class UserEntity {
@@ -30,35 +27,40 @@ public class UserEntity {
 
     private String phoneNumber;
     private String address;
+    private String password;
+    private String username;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private RoleEntity role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
     private RoomEntity room;
 
-    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<BookEntity> books = new ArrayList<>();
 
     public UserEntity() {
     }
 
-    public UserEntity(String firstname, String lastname, String ssn,
-                      String email, String phoneNumber, String address) {
+    public UserEntity(String firstname, String lastname, String ssn, String email,
+                      String phoneNumber, String address, String password, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.password = password;
+        this.username = createUsername(firstname, lastname, username);
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email, String phoneNumber) {
-        this(firstname, lastname, ssn, email, phoneNumber, "");
+    public UserEntity(String firstname, String lastname, String ssn, String email,
+                      String phoneNumber, String password, String username) {
+        this(firstname, lastname, ssn, email, phoneNumber, "", password, username);
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email, "", "");
+    public UserEntity(String firstname, String lastname, String ssn, String email, String password) {
+        this(firstname, lastname, ssn, email, "", "", password, "");
     }
 
     public Long getId() {
@@ -117,17 +119,22 @@ public class UserEntity {
         this.address = address;
     }
 
-    public RoleEntity getRole() {
-        return role;
+    public Set<RoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 
-    public void removeRole() {
-        this.role.removeUser(this);
-        this.role = null;
+    public void addRole(RoleEntity role) {
+        this.roles.add(role);
+        role.addUser(this);
+    }
+
+    public void removeRole(RoleEntity role) {
+       this.roles.remove(role);
+       role.removeUser(this);
     }
 
     public RoomEntity getRoom() {
@@ -148,6 +155,26 @@ public class UserEntity {
 
     public void removeBook(BookEntity book) {
         books.remove(book);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String createUsername(String firstname, String lastname, String username) {
+        return username == null || username.equals("") ? firstname + lastname : username;
     }
 
 
