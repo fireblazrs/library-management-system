@@ -135,9 +135,10 @@ public class UserEntity {
         return this;
     }
 
-    public void addRole(RoleEntity role) {
+    public UserEntity addRole(RoleEntity role) {
         this.roles.add(role);
         role.addUser(this);
+        return this;
     }
 
     public void removeRole(RoleEntity role) {
@@ -156,6 +157,11 @@ public class UserEntity {
 
     public List<BookEntity> getBooks() {
         return Collections.unmodifiableList(books);
+    }
+
+    public UserEntity addBooks(Set<BookEntity> books) {
+        this.books.addAll(books);
+        return this;
     }
 
     public void addBook(BookEntity book) {
