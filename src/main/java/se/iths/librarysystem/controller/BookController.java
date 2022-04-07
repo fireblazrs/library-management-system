@@ -39,7 +39,7 @@ public class BookController {
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         Book savedBook = bookService.createBook(book);
         return ResponseEntity
-                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedBook.getId()))
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build() + "/" + savedBook.getId()))
                 .body(savedBook);
     }
 
@@ -52,7 +52,7 @@ public class BookController {
 
     @GetMapping("{id}")
     public ResponseEntity<Book> findBookByID(@PathVariable Long id) {
-        BookEntity foundBook = bookService.findById(id).orElseThrow(() -> new IdNotFoundException("books", id));
+        BookEntity foundBook = bookService.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
 
         Book book = modelMapper.map(foundBook, Book.class);
         return new ResponseEntity<>(book, HttpStatus.OK);
