@@ -122,6 +122,19 @@ public class BookEntity {
         bookFormatEntities.remove(bookFormatEntity);
     }
 
+    public List<AuthorEntity> getAuthorEntities() {
+        return Collections.unmodifiableList(authors);
+    }
+
+    public void addAuthorEntity(AuthorEntity authorEntity) {
+        authors.add(authorEntity);
+    }
+
+    public void removeAuthorEntity(AuthorEntity authorEntity) {
+        authors.remove(authorEntity);
+    }
+
+
     public List<GenreEntity> getGenreEntities() {
         return Collections.unmodifiableList(genreEntities);
     }

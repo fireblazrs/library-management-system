@@ -42,6 +42,14 @@ public class BookFormatEntity {
         this.length = length;
     }
 
+    public BookEntity getBookEntity1() {
+        return bookEntity1;
+    }
+
+    public void setBookEntity1(BookEntity bookEntity1) {
+        this.bookEntity1 = bookEntity1;
+    }
+
     public Long getId() {
         return id;
     }

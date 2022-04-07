@@ -3,6 +3,7 @@ package se.iths.librarysystem.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +32,26 @@ public class AuthorEntity {
     public AuthorEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public List<BookEntity> getEnrolledBooks() {
+        return enrolledBooks;
+    }
+
+    public void setEnrolledBooks(List<BookEntity> enrolledBooks) {
+        this.enrolledBooks = enrolledBooks;
+    }
+
+    public List<BookEntity> getBookEntities() {
+        return Collections.unmodifiableList(enrolledBooks);
+    }
+
+    public void addBookEntity(BookEntity bookEntity) {
+        enrolledBooks.add(bookEntity);
+    }
+
+    public void removeBookEntity(BookEntity bookEntity) {
+        enrolledBooks.remove(bookEntity);
     }
 
     public Long getId() {

@@ -16,7 +16,6 @@ public class GenreEntity {
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private BookEntity bookEntity2;
 
-
     public GenreEntity(){
     }
 
@@ -32,6 +31,14 @@ public class GenreEntity {
     public GenreEntity setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public BookEntity getBookEntity2() {
+        return bookEntity2;
+    }
+
+    public void setBookEntity2(BookEntity bookEntity2) {
+        this.bookEntity2 = bookEntity2;
     }
 
     public String getGenreName() {
