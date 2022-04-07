@@ -5,11 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Book;
+
+import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.BookService;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/books")
@@ -38,4 +42,19 @@ public class BookController {
                 .body(savedBook);
     }
 
-}
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id){
+
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Book> findBookByID(@PathVariable Long id) {
+        BookEntity foundBook = bookService.findBookById(id).orElseThrow(() -> new IdNotFoundException("books", id));
+
+        Book book = modelMapper.map(foundBook, Book.class);
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
+    }
