@@ -51,8 +51,6 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public Optional<BookEntity> findBookById(Long id){return bookRepository.findById(id);}
-
     public void deleteBook(Long id){
         BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
         bookRepository.deleteById(foundBook.getId());

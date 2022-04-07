@@ -52,7 +52,7 @@ public class BookController {
 
     @GetMapping("{id}")
     public ResponseEntity<Book> findBookByID(@PathVariable Long id) {
-        BookEntity foundBook = bookService.findBookById(id).orElseThrow(() -> new IdNotFoundException("books", id));
+        BookEntity foundBook = bookService.findById(id).orElseThrow(() -> new IdNotFoundException("books", id));
 
         Book book = modelMapper.map(foundBook, Book.class);
         return new ResponseEntity<>(book, HttpStatus.OK);
