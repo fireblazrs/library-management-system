@@ -8,11 +8,11 @@ import se.iths.librarysystem.dto.User;
 import se.iths.librarysystem.dto.Room;
 import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.entity.RoomEntity;
-import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.service.RoomService;
 import se.iths.librarysystem.validatorservice.RoomValidator;
+import se.iths.librarysystem.validatorservice.UserValidator;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -26,12 +26,15 @@ public class RoomController {
     private final RoomService roomService;
     private final ModelMapper modelMapper;
     private final RoomValidator roomValidator;
+    private final UserValidator userValidator;
+
 
     public RoomController(RoomService roomService, ModelMapper modelMapper,
-                          RoomValidator roomValidator) {
+                          RoomValidator roomValidator, UserValidator userValidator) {
         this.roomService = roomService;
         this.modelMapper = modelMapper;
         this.roomValidator = roomValidator;
+        this.userValidator = userValidator;
     }
 
     @PostMapping()
@@ -91,9 +94,26 @@ public class RoomController {
         return new ResponseEntity<>(rooms, HttpStatus.OK);
     }
 
+    @GetMapping("{id}/user")
+    public ResponseEntity<User> getRoomUser(@PathVariable Long id) {
+        roomValidator.validId(id);
+        RoomEntity roomEntity = roomService.findById(id).orElseThrow(() -> new IdNotFoundException("room", id));
+        UserEntity userEntity = Optional.ofNullable(roomEntity.getUser())
+            .orElseThrow(() -> new ValueNotFoundException("user", "/rooms/" + id + "/user"));
+        User user = modelMapper.map(userEntity, User.class);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
+    @PatchMapping("{roomId}/user/{userId}")
+    public ResponseEntity<Room> updateRoomRoom(@PathVariable Long roomId, @PathVariable Long userId) {
+        roomValidator.validId(roomId);
+        userValidator.validId(userId);
 
+        RoomEntity roomEntity = roomService.addUserToRoom(roomId, userId);
+        Room room = modelMapper.map(roomEntity, Room.class);
 
+        return new ResponseEntity<>(room, HttpStatus.OK);
+    }
 
 
 
