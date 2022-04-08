@@ -1,5 +1,6 @@
 package se.iths.librarysystem.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final ModelMapper modelMapper;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ModelMapper modelMapper) {
         this.bookService = bookService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
