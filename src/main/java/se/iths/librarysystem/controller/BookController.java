@@ -1,5 +1,6 @@
 package se.iths.librarysystem.controller;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +14,17 @@ import se.iths.librarysystem.service.BookService;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/books")
 public class BookController {
 
     private final BookService bookService;
+    private final ModelMapper modelMapper;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ModelMapper modelMapper) {
         this.bookService = bookService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
