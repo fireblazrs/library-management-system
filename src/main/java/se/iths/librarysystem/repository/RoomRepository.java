@@ -4,9 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import se.iths.librarysystem.entity.RoomEntity;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface RoomRepository extends CrudRepository<RoomEntity, Long> {
-    Optional<RoomEntity> findByName(String name);
+    List<RoomEntity> findByName(String name);
 }

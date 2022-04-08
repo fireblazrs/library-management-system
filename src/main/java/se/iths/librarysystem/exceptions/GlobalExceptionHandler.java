@@ -21,6 +21,11 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), exception.getPath()));
     }
 
+    @ExceptionHandler({NameInvalidException.class})
+    public ResponseEntity<Object> nameNotFoundException(NameInvalidException exception) {
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, exception.getMessage(), exception.getPath()));
+    }
+
     @ExceptionHandler({InvalidInputException.class})
     public ResponseEntity<Object> invalidInputException(InvalidInputException exception) {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, exception.getMessage(), exception.getPath()));

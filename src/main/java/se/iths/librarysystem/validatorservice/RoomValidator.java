@@ -2,6 +2,7 @@ package se.iths.librarysystem.validatorservice;
 
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.exceptions.InvalidInputException;
+import se.iths.librarysystem.exceptions.NameInvalidException;
 import se.iths.librarysystem.service.RoomService;
 
 public class RoomValidator extends LibraryValidator {
@@ -21,5 +22,10 @@ public class RoomValidator extends LibraryValidator {
     @Override
     public void idExists(Long id) {
         roomService.findById(id).orElseThrow(() -> new IdNotFoundException("room", id));
+    }
+
+    public void validName(String name) {
+        if(name.isBlank())
+            throw new NameInvalidException("room", name);
     }
 }

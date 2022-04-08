@@ -4,15 +4,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import se.iths.librarysystem.dto.User;
 import se.iths.librarysystem.dto.Room;
+import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.entity.RoomEntity;
+import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
+import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.service.RoomService;
 import se.iths.librarysystem.validatorservice.RoomValidator;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("rooms")
@@ -74,6 +79,24 @@ public class RoomController {
         roomService.deleteRoom(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("getbyname")
+    public ResponseEntity<List<Room>> findRoomsByName(@RequestParam String name){
+        roomValidator.validName(name);
+
+        List<RoomEntity> roomEntities = roomService.findRoomByName(name);
+        List<Room> rooms = new ArrayList<>();
+        roomEntities.forEach(roomEntity -> rooms.add(modelMapper.map(roomEntity, Room.class)));
+
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
 
 
 }
