@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Loppis Webapp</title>
-</head>
-<body>
-<h1>Welcome to the Loppis webapp!</h1>
-<p>Click <a th:href="@{/application}">here</a> to continue to the app.</p>
-<p>Click <a th:href="@{/admin}">here</a> to continue to the admin console.</p>
-</body>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Fire Blazers' Library</title>
+        <link rel="stylesheet" th:href="@{/styles/style.css}">
+    </head>
+    <body>
+        <h1 th:class="heading">Welcome to the Fire Blazers Library!</h1>
+        <p th:class="paragraph">
+            <button><a th:href="@{/login}">Login</a></button>
+            <button><a th:href="@{/application}">Sign Up</a></button>
+        </p>
+    </body>
 </html>
