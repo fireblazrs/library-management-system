@@ -3,6 +3,7 @@ package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -14,9 +15,10 @@ public class RoomEntity {
 
     @NotBlank(message = "Room name is a required field")
     private String name;
-    
     private int groupSize;
     private boolean internetAccess;
+
+    @NotEmpty(message = "Wheel chair access is a required field")
     private boolean wheelchairAccess;
     private boolean hasProjector;
 
