@@ -2,7 +2,6 @@ package se.iths.librarysystem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SiteController {
@@ -12,10 +11,10 @@ public class SiteController {
         return "home";
     }
 
-//    @GetMapping("/")
-//    public String getHome2() {
-//        return "home";
-//    }
+    @GetMapping("home")
+    public String getHome2() {
+        return "home";
+    }
 
     @GetMapping("login")
     public String getLogin() {
