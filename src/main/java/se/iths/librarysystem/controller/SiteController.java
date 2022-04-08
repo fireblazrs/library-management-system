@@ -8,7 +8,11 @@ public class SiteController {
 
     @GetMapping
     public String getHome() {
-//        model.addAttribute("name", name);
-            return "home";
+        return "home";
+    }
+
+    @GetMapping("login")
+    public String getLogin() {
+        return "login";
     }
 }

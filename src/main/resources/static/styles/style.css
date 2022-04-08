@@ -8,7 +8,19 @@ button {
     padding: 1em 2em;
 }
 
+.button {
+    padding: 1em 2em;
+}
+
 .paragraph {
     margin: 2em 5em;
     text-align: center;
+}
+
+form > div, .margin-1 {
+    margin: 1.5em;
+}
+
+.submit {
+    background-color: limegreen;
 }
