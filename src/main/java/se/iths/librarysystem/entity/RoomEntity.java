@@ -17,8 +17,6 @@ public class RoomEntity {
     private String name;
     private int groupSize;
     private boolean internetAccess;
-
-    @NotEmpty(message = "Wheel chair access is a required field")
     private boolean wheelchairAccess;
     private boolean hasProjector;
 
