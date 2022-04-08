@@ -12,8 +12,9 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Room name is a required field")
     private String name;
+    
     private int groupSize;
     private boolean internetAccess;
     private boolean wheelchairAccess;
