@@ -97,4 +97,13 @@ public class UserService {
                 .map(book -> modelMapper.map(book, Book.class))
                 .toList();
     }
+
+    @Transactional
+    public void createDefaultUser(String user, String role) {
+        RoleEntity roleEntity = roleRepository.findByRole(role);
+        UserEntity userEntity = new UserEntity(user, user, "20220408-0001", "user@fireblazers.com", user, user);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        userEntity.addRole(roleEntity);
+        userRepository.save(userEntity);
+    }
 }
