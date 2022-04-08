@@ -24,3 +24,7 @@ form > div, .margin-1 {
 .submit {
     background-color: limegreen;
 }
+
+.error {
+    color: red;
+}
