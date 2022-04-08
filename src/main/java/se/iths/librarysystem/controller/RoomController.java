@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("rooms")
+@RequestMapping("api/rooms")
 public class RoomController {
 
     private final RoomService roomService;
