@@ -42,21 +42,21 @@ docker-compose up --build
    Password: user
  
 
-###Endpoints to use:
+### Endpoints to use:
 
 Default URL for the project: 
 
     http://localhost:8080
 
-Endpoints for Book:
+#### Endpoints for Book:
 
-| HTTP   | URL             | Information             | Authorization      |
-|--------|-----------------|-------------------------|--------------------|
-| GET    | /api/books      | Shows all the books.    | Authenticated user |
-| GET    | /api/books/{id} | Shows a book by the id. | Authenticated user |
-| DELETE | /api/books/{id} | Deletes a book with id. | Authenticated user |
-| PUT    | /api/books/{id} | Updates a book with id. | Authenticated user |
-| POST   | /api/books      | Creates a book.         | Authenticated user |
+| HTTP   | Path             | Information             | Access Level | Status Code | Response Body |
+|--------|-----------------|-------------------------|---------------|-------------|---------------|
+| GET    | /api/books      | Shows all the books.    | User          | 200         | List of books |
+| GET    | /api/books/{id} | Shows a book by the id. | User          | 200 / 404   | Book          |
+| DELETE | /api/books/{id} | Deletes a book with id. | User          | 204         | -             |
+| PUT    | /api/books/{id} | Updates a book with id. | User          | 200 / 404   | Updated book  |
+| POST   | /api/books      | Creates a book.         | User          | 201         | New book      |
 
 POST and PUT require a body, containing a JSON object.
 An example body for POST is shown below:
@@ -71,38 +71,34 @@ An example body for POST is shown below:
     }
 
 
-Endpoints for BookFormat:
+#### Endpoints for BookFormat:
 
-| HTTP   | URL                   | Information                    | Authorization      |
-|--------|-----------------------|--------------------------------|--------------------|
-| GET    | /api/bookformats      | Shows all the book formats.    | Authenticated user |
-| GET    | /api/bookformats/{id} | Shows a book format by the id. | Authenticated user |
-| DELETE | /api/bookformats/{id} | Deletes a book format with id. | Authenticated user |
-| PUT    | /api/bookformats/{id} | Updates a book format with id. | Authenticated user |
-| POST   | /api/bookformats      | Creates a book format.         | Authenticated user |
+| HTTP   | Path                  | Information                    | Access Level | Status Code | Response Body   |
+|--------|-----------------------|--------------------------------|--------------|-------------|-----------------|
+| GET    | /api/bookformats      | Shows all the book formats.    | User         | 200         | List of formats |
+| GET    | /api/bookformats/{id} | Shows a book format by the id. | User         | 200 / 404   | Format          |
+| DELETE | /api/bookformats/{id} | Deletes a book format with id. | User         | 204         | -               |
+| POST   | /api/bookformats      | Creates a book format.         | User         | 201         | New format      |
 
-POST and PUT require a body, containing a JSON object.
-An example body for POST is shown below:
+POST requires a body, as shown by the example below:
 
     {
       "formatName": "Hard copy",
-      "digital": "true/false",
+      "digital": "false",
       "pageCount": 33,
       "length": "5"
     }
 
 
-Endpoints for Author:
+#### Endpoints for Author:
 
-| HTTP   | URL               | Information                | Authorization      |
-|--------|-------------------|----------------------------|--------------------|
-| GET    | /api/authors      | Shows all the authors.     | Authenticated user |
-| GET    | /api/authors/{id} | Shows an author by the id. | Authenticated user |
-| DELETE | /api/authors/{id} | Deletes an author with id. | Authenticated user |
-| PUT    | /api/authors/{id} | Updates an author with id. | Authenticated user |
-| POST   | /api/authors      | Creates an author.         | Authenticated user |
-POST and PUT require a body, containing a JSON object.
-An example body for POST is shown below:
+| HTTP   | Path              | Information                | Access Level | Status Code | Response Body   |
+|--------|-------------------|----------------------------|--------------|-------------|:----------------|
+| GET    | /api/authors      | Shows all the authors.     | User         | 200         | List of authors |
+| GET    | /api/authors/{id} | Shows an author by the id. | User         | 200 / 404   | author          |
+| DELETE | /api/authors/{id} | Deletes an author with id. | User         | 204         | -               |
+| POST   | /api/authors      | Creates an author.         | User         | 201         | author          |
+POST requires a body, as shown by the example below:
 
     {
       "firstName": "Adam",
@@ -110,15 +106,15 @@ An example body for POST is shown below:
     }
 
 
-Endpoints for Genre:
+#### Endpoints for Genre:
 
-| HTTP   | URL              | Information              | Authorization      |
+| HTTP   | Path              | Information              | Access Level      |
 |--------|------------------|--------------------------|--------------------|
-| GET    | /api/genres      | Shows all the genres.    | Authenticated user |
-| GET    | /api/genres/{id} | Shows a genre by the id. | Authenticated user |
-| DELETE | /api/genres/{id} | Deletes a genre with id. | Authenticated user |
-| PUT    | /api/genres/{id} | Updates a genre with id. | Authenticated user |
-| POST   | /api/genres      | Creates a genre.         | Authenticated user |
+| GET    | /api/genres      | Shows all the genres.    | User |
+| GET    | /api/genres/{id} | Shows a genre by the id. | User |
+| DELETE | /api/genres/{id} | Deletes a genre with id. | User |
+| PUT    | /api/genres/{id} | Updates a genre with id. | User |
+| POST   | /api/genres      | Creates a genre.         | User |
 POST and PUT require a body, containing a JSON object.
 An example body for POST is shown below:
 
@@ -126,5 +122,11 @@ An example body for POST is shown below:
       "genreName": "Horror",
       "fiction": "true/false"
     }
+
+"username": "adam",
+"password": "**********",
+"ssn": "YYYYMMDD-XXXX",
+"email": "adamm@mail.com"
+
 ______________________________________________________________________________________________________________________________________________________________________________       
 Contributors: [Toni](https://github.com/ToniKaru), [Ahsan](https://github.com/Ahsanadam), [Joel](https://github.com/joejoh84) & [Vimbayi](https://github.com/Vimbayinashe)
