@@ -6,11 +6,6 @@ This is a Library Management System application that is built with Spring Boot w
 The application allows the user to create/save, update, delete and view books, book properties (genre, format), authors,  users and rooms. It automatically generates tasks which can be queried for status updates when an attempt to borrow a book is made. Admin and user roles have different levels of access in the application.
  
 
-### Start the application
-
-```
-docker-compose up --build
-```
 ### Features Implemented
 - Database relations
 - Dockerfile/Docker compose
@@ -21,32 +16,36 @@ docker-compose up --build
 - Integration Testing
 - MySQL database 
 
+
+### Start the application
+
+```
+docker-compose up --build
+```
 ### Download the Application
 
 1. Download the latest release as a zip file [here](https://github.com/fireblazrs/library-management-system/pkgs/container/library-management-system).
 
 2. Download Docker Image:
-    ```
-    docker pull ghcr.io/fireblazrs/library-management-system:latest
-    ```
+```
+docker pull ghcr.io/fireblazrs/library-management-system:latest
+   ```
 
 ### Default Users
 
-1. Access-level: "ADMIN"     
-   Username: admin   
-   Password: admin    
+1. **Admin**     
+   username: admin   
+   password: admin    
 
 
-2. Access-level: "USER"     
-   Username: user   
-   Password: user
+2. **User**   
+   username: user   
+   password: user
  
 
-### Endpoints to use:
+### Endpoints:
 
-Default URL for the project: 
-
-    http://localhost:8080
+_Default port for the application is **8080**._   
 
 #### Endpoints for Book:
 
@@ -73,21 +72,17 @@ An example body for POST is shown below:
 
 # USER
 
-#### Endpoints for Genre:
-
-| HTTP   | Path             | Information          | Access Level | Status Code | Response Body  |
-|--------|------------------|----------------------|--------------|-------------|----------------|
-| GET    | /api/genres      | Get all genres       | User         | 200         | List of genres |
-| GET    | /api/genres/{id} | Get a genre by id    | User         | 200 / 404   | Genre          |
-| DELETE | /api/genres/{id} | Delete a genre by id | User         | 204         | -              |
-| PUT    | /api/genres/{id} | Update a genre by id | User         | 200 / 404   | Genre          |
-| POST   | /api/genres      | Create a genre       | User         | 201 / 400   |                |
-POST and PUT requests require a body as shown below:
-
     {
-      "genreName": "Horror",
-      "fiction": "false"
+      "firstName": "Adam",
+      "lastName": "Magnusson",
+      "username": "adam",
+      "password": "**********",
+      "ssn": "YYYYMMDD-XXXX",
+      "email": "adamm@mail.com"
     }
+
+
+# ROOM
 
 
 #### Endpoints for Roles:
@@ -104,13 +99,21 @@ POST requires a body, as shown by the example below:
     }
 
 
-#### Endpoints for Tasks:
+#### Endpoints for Genre:
 
-| HTTP | Path            | Information      | Access Level | Status Code | Response Body |
-|------|-----------------|------------------|--------------|-------------|---------------|
-| GET  | /api/tasks      | Get all tasks    | Admin        | 200         | List of tasks |
-| GET  | /api/tasks/{id} | Get a task by id | User         | 200 / 404   | Task          |
+| HTTP   | Path             | Information          | Access Level | Status Code | Response Body  |
+|--------|------------------|----------------------|--------------|-------------|----------------|
+| GET    | /api/genres      | Get all genres       | User         | 200         | List of genres |
+| GET    | /api/genres/{id} | Get a genre by id    | User         | 200 / 404   | Genre          |
+| DELETE | /api/genres/{id} | Delete a genre by id | User         | 204         | -              |
+| PUT    | /api/genres/{id} | Update a genre by id | User         | 200 / 404   | Genre          |
+| POST   | /api/genres      | Create a genre       | User         | 201 / 400   |                |
+POST and PUT requests require a body as shown below:
 
+    {
+      "genreName": "Horror",
+      "fiction": "false"
+    }
 
 
 #### Endpoints for BookFormat:
@@ -148,13 +151,13 @@ POST requires a body, as shown by the example below:
     }
 
 
+#### Endpoints for Tasks:
 
+| HTTP | Path            | Information      | Access Level | Status Code | Response Body |
+|------|-----------------|------------------|--------------|-------------|---------------|
+| GET  | /api/tasks      | Get all tasks    | Admin        | 200         | List of tasks |
+| GET  | /api/tasks/{id} | Get a task by id | User         | 200 / 404   | Task          |
 
-
-"username": "adam",
-"password": "**********",
-"ssn": "YYYYMMDD-XXXX",
-"email": "adamm@mail.com"
 
 ______________________________________________________________________________________________________________________________________________________________________________       
 Contributors: [Toni](https://github.com/ToniKaru), [Ahsan](https://github.com/Ahsanadam), [Joel](https://github.com/joejoh84) & [Vimbayi](https://github.com/Vimbayinashe)
