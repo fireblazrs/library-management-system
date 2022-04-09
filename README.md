@@ -1,7 +1,9 @@
 
 # Library Management System
 
-This is a Spring Boot application that implements books, authors, users, tasks etc. that are gathered in a MySQL database. Each role has a different degree of access to the application.
+This is a Library Management System application that is built with Spring Boot which has a MySQL database and uses RabbitMQ. 
+
+The application allows the user to create/save, update, delete and view books, book properties (genre, format), authors,  users and rooms. It automatically generates tasks which can be queried for status updates when an attempt to borrow a book is made. Admin and user roles have different levels of access in the application.
  
 
 ### How do I start the application?
@@ -17,7 +19,6 @@ docker-compose up --build
 - Spring Boot Security 
 - RabbitMQ and JMS
 - Integration Testing
-- Thymeleaf 
 
 Additional features: 
 MySQL database 
@@ -25,69 +26,18 @@ MySQL database
 ###How do I deploy it ?
 ###Option 1
 
-Clone the repository:
+Download the latest release [here](https://github.com/fireblazrs/library-management-system/pkgs/container/library-management-system)
 
-- Navigate to the folder where you want the application to be saved.
-
-- Use your console to run the following:
-
-   git clone https://github.com/fireblazrs/library-management-system
-
-###Or
-
-Navigate to the latest release: https://github.com/fireblazrs/library-management-system/pkgs/container/library-management-system
-
-Save the compressed file to the location where you want to
-store the application after unzipping it.
 
 ####To run the application:
 1. Install Docker Desktop: https://www.docker.com/products/docker-desktop/
-2. Navigate to the application's folder and run the following 
-command from your console: 
-docker-compose up
 
 ###Option 2 
 
 Download Docker Image:
 
-1. Install Docker Desktop:
-   https://www.docker.com/products/docker-desktop/
-2. Create a docker-compose.yml file as follows:
-   
-         version: "2.1"
-         services:
-           mysql:
-             image: mysql:8.0.28
-             restart: always
-             ports:
-               - "3307:3306"
-             environment:
-               MYSQL_ROOT_HOST: "%"
-               MYSQL_ROOT_PASSWORD: root
-               MYSQL_USER: user
-               MYSQL_PASSWORD: password
-               MYSQL_DATABASE: test
-           server:
-             build: .
-             depends_on:
-               - mysql
-             ports:
-               - "8080:8080"
-             environment:
-               DB_HOST: mysql
-               DB_USER: user
-               DB_PASSWORD: password
-           rabbit_queue:
-             image: rabbitmq:3-management
-             ports:
-               - "5672:5672"
-               - "15672:15672"
+    docker pull ghcr.io/fireblazrs/library-management-system:latest
 
-
-####To run the application:
-1. Navigate to the folder of the docker-compose.yml file and run the following
-   command from your console:
-   docker-compose up
 
 ###How do i reach the application? 
 
