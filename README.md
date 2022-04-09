@@ -55,10 +55,10 @@ _Default port for the application is **8080**._
 | GET    | /api/books?isbn={ISBN} | Get all books filtered by ISBN | User         | 200         | List of books |
 | GET    | /api/books/{id}        | Get a book by the id           | User         | 200 / 404   | Book          |
 | DELETE | /api/books/{id}        | Delete a book by id            | User         | 204         | -             |
-| PUT    | /api/books/{id}        | Update a book by id            | User         | 200 / 404   | Updated book  |
+| PUT    | /api/books/{id}        | Update a book                  | User         | 200 / 404   | Updated book  |
 | POST   | /api/books             | Create a book.                 | User         | 201 / 400   | New book      |
 
-POST and PUT require a request body as shown below:
+POST and PUT requests require a request body as shown below:
 
     {
       "title": "Ahsan, Vimbayi, Toni and Joel´s Book",
@@ -68,14 +68,16 @@ POST and PUT require a request body as shown below:
       "isbn": 123456789
     }
 
+    ** "id" is also required for update (PUT)
+
 #### Endpoints for User:
 
 | HTTP   | Path                       | Request Body | Information               | Access Level | Status Code | Response Body |
 |--------|----------------------------|--------------|---------------------------|--------------|-------------|---------------|
 | GET    | /api/users                 |              | Get all users             | Admin        | 200         | List of users |
-| GET    | /api/users/{id}            |              | Get a user by the id      | User         | 200 / 404   | User          |
+| GET    | /api/users/{id}            |              | Get a user by id          | User         | 200 / 404   | User          |
 | POST   | /api/users/new             | yes          | Create a user.            | Any          | 201 / 400   | New user      |
-| PUT    | /api/users/{id}            | yes          | Update a user by id       | User         | 200 / 404   | Updated user  |
+| PUT    | /api/users/{id}            | yes          | Update a user             | User         | 200 / 404   | Updated user  |
 | DELETE | /api/users/{id}            |              | Delete a user by id       | User         | 204         | -             |
 | GET    | /api/users/{id}/books      |              | Get a user's books        | User         | 200         | User's books  |
 | POST   | /api/users/{id}/books      | yes          | Add a book to a user      | User         | 200         | Queued Task   |
@@ -93,13 +95,39 @@ Create / Update a user require a request body as shown below:
       "ssn": "YYYYMMDD-XXXX",
       "email": "adamm@mail.com"
     }
+
+    ** "id" is also required for update (PUT)
 Add a book to a user (borrow) requires a request body as shown below:
 
     {  
       "isbn": "##########"
     }
 
-# ROOM
+
+#### Endpoints for Room:
+
+| HTTP   | Path                             | Information          | Access Level | Status Code | Response Body |
+|--------|----------------------------------|----------------------|--------------|-------------|---------------|
+| GET    | /api/rooms                       | Get all rooms        | User         | 200         | List of rooms |
+| GET    | /api/rooms/{id}                  | Get a room by id     | User         | 200 / 404   | Room          |
+| POST   | /api/rooms                       | Create a room.       | User         | 201 / 400   | New room      |
+| PUT    | /api/rooms/{id}                  | Update a room        | User         | 200 / 404   | Updated room  |
+| DELETE | /api/rooms/{id}                  | Delete a room by id  | User         | 204         | -             |
+| GET    | /api/rooms/getbyname?name={name} | Get a room by name   | User         | 200         | Room          |
+| GET    | /api/rooms/{id}/user             | Get a room's user    | User         | 200         | Room's user   |
+| PATCH  | /api/rooms/{id}/user/{id}        | Add a user to a room | User         | 204         | Room          |
+
+POST and PUT requests require a body as shown below:
+
+    {
+      "name": "Blue Room",
+      "groupSize": 6,
+      "internetAccess": true,
+      "wheelchairAccess", false,
+      "hasProjector": true
+    }
+
+    ** "id" is also required for update (PUT)
 
 
 #### Endpoints for Roles:
@@ -109,7 +137,7 @@ Add a book to a user (borrow) requires a request body as shown below:
 | GET  | /api/roles      | Get all roles    | Admin        | 200         | List of roles |
 | GET  | /api/roles/{id} | Get a role by id | Admin        | 200 / 404   | Role          |
 | POST | /api/roles      | Create a role    | Admin        | 201 / 400   |               |
-POST requires a body, as shown by the example below:
+POST requests requires a body, as shown by the example below:
 
     {
       "role": "ROLE_LIBRARIAN"
@@ -123,9 +151,8 @@ POST requires a body, as shown by the example below:
 | GET    | /api/genres      | Get all genres       | User         | 200         | List of genres |
 | GET    | /api/genres/{id} | Get a genre by id    | User         | 200 / 404   | Genre          |
 | DELETE | /api/genres/{id} | Delete a genre by id | User         | 204         | -              |
-| PUT    | /api/genres/{id} | Update a genre by id | User         | 200 / 404   | Genre          |
 | POST   | /api/genres      | Create a genre       | User         | 201 / 400   |                |
-POST and PUT requests require a body as shown below:
+POST requests require a body as shown below:
 
     {
       "genreName": "Horror",
@@ -142,7 +169,7 @@ POST and PUT requests require a body as shown below:
 | DELETE | /api/bookformats/{id} | Delete a book format by id | User         | 204         | -               |
 | POST   | /api/bookformats      | Create a book format       | User         | 201 / 400   | New format      |
 
-POST requires a body, as shown by the example below:
+POST requests requires a body, as shown by the example below:
 
     {
       "formatName": "Hard copy",
@@ -160,7 +187,7 @@ POST requires a body, as shown by the example below:
 | GET    | /api/authors/{id} | Get an author by the id | User         | 200 / 404   | Author          |
 | DELETE | /api/authors/{id} | Delete an author by id  | User         | 204         | -               |
 | POST   | /api/authors      | Create an author        | User         | 201 / 400   | Author          |
-POST requires a body, as shown by the example below:
+POST requests requires a body, as shown by the example below:
 
     {
       "firstName": "Adam",
