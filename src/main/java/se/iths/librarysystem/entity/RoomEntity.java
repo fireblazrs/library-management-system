@@ -2,6 +2,8 @@ package se.iths.librarysystem.entity;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +12,8 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "Room name is a required field")
     private String name;
     private int groupSize;
     private boolean internetAccess;
