@@ -58,9 +58,7 @@ _Default port for the application is **8080**._
 | PUT    | /api/books/{id}        | Update a book by id            | User         | 200 / 404   | Updated book  |
 | POST   | /api/books             | Create a book.                 | User         | 201 / 400   | New book      |
 
-POST and PUT require a body, containing a JSON object.
-An example body for POST is shown below:
-
+POST and PUT require a request body as shown below:
 
     {
       "title": "Ahsan, Vimbayi, Toni and Joel´s Book",
@@ -70,7 +68,22 @@ An example body for POST is shown below:
       "isbn": 123456789
     }
 
-# USER
+#### Endpoints for User:
+
+| HTTP   | Path                       | Request Body | Information               | Access Level | Status Code | Response Body |
+|--------|----------------------------|--------------|---------------------------|--------------|-------------|---------------|
+| GET    | /api/users                 |              | Get all users             | Admin        | 200         | List of users |
+| GET    | /api/users/{id}            |              | Get a user by the id      | User         | 200 / 404   | User          |
+| POST   | /api/users/new             | yes          | Create a user.            | Any          | 201 / 400   | New user      |
+| PUT    | /api/users/{id}            | yes          | Update a user by id       | User         | 200 / 404   | Updated user  |
+| DELETE | /api/users/{id}            |              | Delete a user by id       | User         | 204         | -             |
+| GET    | /api/users/{id}/books      |              | Get a user's books        | User         | 200         | User's books  |
+| POST   | /api/users/{id}/books      | yes          | Add a book to a user      | User         | 200         | Queued Task   |
+| DELETE | /api/users/{id}/books/{id} |              | Remove a book from a user | User         | 204         | -             |
+| GET    | /api/users/{id}/role       |              | Get a user's role         | Admin        | 200         | User's role   |
+| PATCH  | /api/users/{id}/role/{id}  |              | Add a role to a user      | Admin        | 200         | Updated User  |
+
+Create / Update a user require a request body as shown below:
 
     {
       "firstName": "Adam",
@@ -80,7 +93,11 @@ An example body for POST is shown below:
       "ssn": "YYYYMMDD-XXXX",
       "email": "adamm@mail.com"
     }
+Add a book to a user (borrow) requires a request body as shown below:
 
+    {  
+      "isbn": "##########"
+    }
 
 # ROOM
 
