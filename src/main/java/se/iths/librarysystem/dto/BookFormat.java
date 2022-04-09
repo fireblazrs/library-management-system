@@ -8,6 +8,9 @@ public class BookFormat {
     private int pageCount;
     private String length;
 
+    public BookFormat() {
+    }
+
     public BookFormat(Long id, String formatName, boolean digital, int pageCount, String length) {
         this.id = id;
         this.formatName = formatName;

@@ -6,6 +6,14 @@ public class Genre {
     private String genreName;
     private boolean fiction;
 
+    public Genre() {
+    }
+
+    public Genre(String genreName, boolean fiction) {
+        this.genreName = genreName;
+        this.fiction = fiction;
+    }
+
     public Long getId() {
         return id;
     }
