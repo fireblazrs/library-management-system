@@ -71,6 +71,47 @@ An example body for POST is shown below:
       "isbn": 123456789
     }
 
+# USER
+
+#### Endpoints for Genre:
+
+| HTTP   | Path             | Information          | Access Level | Status Code | Response Body  |
+|--------|------------------|----------------------|--------------|-------------|----------------|
+| GET    | /api/genres      | Get all genres       | User         | 200         | List of genres |
+| GET    | /api/genres/{id} | Get a genre by id    | User         | 200 / 404   | Genre          |
+| DELETE | /api/genres/{id} | Delete a genre by id | User         | 204         | -              |
+| PUT    | /api/genres/{id} | Update a genre by id | User         | 200 / 404   | Genre          |
+| POST   | /api/genres      | Create a genre       | User         | 201 / 400   |                |
+POST and PUT requests require a body as shown below:
+
+    {
+      "genreName": "Horror",
+      "fiction": "false"
+    }
+
+
+#### Endpoints for Roles:
+
+| HTTP | Path            | Information      | Access Level | Status Code | Response Body |
+|------|-----------------|------------------|--------------|-------------|---------------|
+| GET  | /api/roles      | Get all roles    | Admin        | 200         | List of roles |
+| GET  | /api/roles/{id} | Get a role by id | Admin        | 200 / 404   | Role          |
+| POST | /api/roles      | Create a role    | Admin        | 201 / 400   |               |
+POST requires a body, as shown by the example below:
+
+    {
+      "role": "ROLE_LIBRARIAN"
+    }
+
+
+#### Endpoints for Tasks:
+
+| HTTP | Path            | Information      | Access Level | Status Code | Response Body |
+|------|-----------------|------------------|--------------|-------------|---------------|
+| GET  | /api/tasks      | Get all tasks    | Admin        | 200         | List of tasks |
+| GET  | /api/tasks/{id} | Get a task by id | User         | 200 / 404   | Task          |
+
+
 
 #### Endpoints for BookFormat:
 
@@ -107,35 +148,8 @@ POST requires a body, as shown by the example below:
     }
 
 
-#### Endpoints for Genre:
-
-| HTTP   | Path             | Information          | Access Level | Status Code | Response Body  |
-|--------|------------------|----------------------|--------------|-------------|----------------|
-| GET    | /api/genres      | Get all genres       | User         | 200         | List of genres |
-| GET    | /api/genres/{id} | Get a genre by id    | User         | 200 / 404   | Genre          |
-| DELETE | /api/genres/{id} | Delete a genre by id | User         | 204         | -              |
-| PUT    | /api/genres/{id} | Update a genre by id | User         | 200 / 404   | Genre          |
-| POST   | /api/genres      | Create a genre       | User         | 201 / 400   |                |
-POST and PUT requests require a body as shown below:
-
-    {
-      "genreName": "Horror",
-      "fiction": "false"
-    }
 
 
-#### Endpoints for Roles:
-
-| HTTP | Path            | Information      | Access Level | Status Code | Response Body |
-|------|-----------------|------------------|--------------|-------------|---------------|
-| GET  | /api/roles      | Get all roles    | Admin        | 200         | List of roles |
-| GET  | /api/roles/{id} | Get a role by id | Admin        | 200 / 404   | Role          |
-| POST | /api/roles      | Create a role    | Admin        | 201 / 400   |               |
-POST requires a body, as shown by the example below:
-
-    {
-      "role": "ROLE_LIBRARIAN"
-    }
 
 "username": "adam",
 "password": "**********",
