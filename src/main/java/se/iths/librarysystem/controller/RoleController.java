@@ -38,7 +38,7 @@ public class RoleController {
         Role savedRole = roleService.createRole(role);
         return ResponseEntity
                 .created(URI.create(
-                        ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedRole.getId()))
+                        ServletUriComponentsBuilder.fromCurrentRequest().build() + "/" + savedRole.getId()))
                 .body(savedRole);
     }
 

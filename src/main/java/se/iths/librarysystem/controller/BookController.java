@@ -35,7 +35,7 @@ public class BookController {
     public ResponseEntity<Book> createBook(@Valid @RequestBody Book book) {
         Book savedBook = bookService.createBook(book);
         return ResponseEntity
-                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build().toString() + savedBook.getId()))
+                .created(URI.create(ServletUriComponentsBuilder.fromCurrentRequest().build() + "/" + savedBook.getId()))
                 .body(savedBook);
     }
 

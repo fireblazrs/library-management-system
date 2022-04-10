@@ -41,8 +41,9 @@ public class TaskEntity implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public TaskEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getIsbn() {

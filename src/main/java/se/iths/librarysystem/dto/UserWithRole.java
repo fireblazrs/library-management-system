@@ -1,6 +1,7 @@
 package se.iths.librarysystem.dto;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class UserWithRole {
@@ -121,5 +122,18 @@ public class UserWithRole {
     public UserWithRole removeRole(Role role) {
         roles.remove(role);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserWithRole that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(firstname, that.firstname)
+               && Objects.equals(lastname, that.lastname) && Objects.equals(ssn, that.ssn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, ssn);
     }
 }

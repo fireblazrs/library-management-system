@@ -1,5 +1,7 @@
 package se.iths.librarysystem.dto;
 
+import java.util.Objects;
+
 public class User {
 
     private Long id;
@@ -105,5 +107,18 @@ public class User {
     public User setUsername(String username) {
         this.username = username;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(id, user.id) && Objects.equals(firstname, user.firstname)
+               && Objects.equals(lastname, user.lastname) && Objects.equals(ssn, user.ssn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, ssn);
     }
 }
