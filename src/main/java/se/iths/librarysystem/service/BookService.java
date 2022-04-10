@@ -43,7 +43,6 @@ public class BookService {
         return bookRepository.findByIsbn(isbn);
     }
 
-
     public Optional<BookEntity> findById(Long id) {
         return bookRepository.findById(id);
     }

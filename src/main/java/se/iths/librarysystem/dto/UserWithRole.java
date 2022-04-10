@@ -1,5 +1,8 @@
 package se.iths.librarysystem.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserWithRole {
 
     private Long id;
@@ -9,96 +12,114 @@ public class UserWithRole {
     private String email;
     private String phoneNumber;
     private String address;
-    private String role;
+    private Set<Role> roles = new HashSet<>();
 
     public UserWithRole() {
     }
 
-    public UserWithRole(String firstname, String lastname, String ssn,
-                        String email, String role, String phoneNumber, String address) {
+    public UserWithRole(String firstname, String lastname, String ssn, String email, String phoneNumber,
+                        String address, Set<Role> roles) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.ssn = ssn;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.role = role;
+        this.roles = roles;
     }
 
     public UserWithRole(String firstname, String lastname, String ssn, String email, String role, String  phoneNumber) {
-        this(firstname, lastname, ssn, email, role, phoneNumber, "");
+        this(firstname, lastname, ssn, email, role, phoneNumber, Set.of());
     }
 
     public UserWithRole(String firstname, String lastname, String ssn, String email, String role) {
-        this(firstname, lastname, ssn, email, role, "", "");
+        this(firstname, lastname, ssn, email, role, "", Set.of());
     }
 
 
     public UserWithRole(String firstname, String lastname, String ssn, String email) {
-        this(firstname, lastname, ssn, email,"", "", "");
+        this(firstname, lastname, ssn, email,"", "", Set.of());
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserWithRole setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
+    public UserWithRole setFirstname(String firstname) {
         this.firstname = firstname;
+        return this;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
+    public UserWithRole setLastname(String lastname) {
         this.lastname = lastname;
+        return this;
     }
 
     public String getSsn() {
         return ssn;
     }
 
-    public void setSsn(String dob) {
+    public UserWithRole setSsn(String dob) {
         this.ssn = dob;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public UserWithRole setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public UserWithRole setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public UserWithRole setAddress(String address) {
         this.address = address;
+        return this;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public UserWithRole setRoles(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public UserWithRole addRole(Role role) {
+        roles.add(role);
+        return this;
+    }
+
+    public UserWithRole removeRole(Role role) {
+        roles.remove(role);
+        return this;
     }
 }

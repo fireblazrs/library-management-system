@@ -33,7 +33,7 @@ public class BookValidator extends LibraryValidator {
     public void hasUser(BookEntity book, UserEntity user) {
         if (book.getBorrower() == null || !book.getBorrower().equals(user)) {
             String message = "User Id " + user.getId() + " does not have a book with Id " + book.getId();
-            String path = "/users/" + user.getId() + "/books/" + book.getId();
+            String path = "users/" + user.getId() + "/books/" + book.getId();
             throw new ValueNotFoundException(message, path);
         }
     }
@@ -43,7 +43,7 @@ public class BookValidator extends LibraryValidator {
 
         if(books.isEmpty()) {
             String message = "Book with ISBN " + isbn.getIsbn() + " does not exist.";
-            String path = "/books?isbn=" + isbn.getIsbn();
+            String path = "books?isbn=" + isbn.getIsbn();
             throw new InvalidInputException(message, path);
         }
     }
