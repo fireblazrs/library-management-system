@@ -1,9 +1,8 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,14 +14,20 @@ public class GenreEntity {
     private String genreName;
     private boolean fiction;
 
+    @Transient
+    @OneToMany(mappedBy = "genreEntity")
+    private List<BookEntity> bookEntities = new ArrayList<>();
 
     public GenreEntity(){
     }
 
-    public GenreEntity(String genreName, boolean fiction) {
+
+    public GenreEntity(String genreName, boolean fiction, List<BookEntity> bookEntities) {
         this.genreName = genreName;
         this.fiction = fiction;
+        this.bookEntities = bookEntities;
     }
+
 
     public Long getId() {
         return id;
@@ -31,6 +36,14 @@ public class GenreEntity {
     public GenreEntity setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public List<BookEntity> getBookEntities() {
+        return bookEntities;
+    }
+
+    public void setBookEntities(List<BookEntity> bookEntities) {
+        this.bookEntities = bookEntities;
     }
 
     public String getGenreName() {

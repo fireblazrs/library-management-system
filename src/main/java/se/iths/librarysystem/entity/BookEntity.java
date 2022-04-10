@@ -3,10 +3,10 @@ package se.iths.librarysystem.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.security.auth.Subject;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class BookEntity {
@@ -27,6 +27,18 @@ public class BookEntity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity borrower;
+
+    @Transient
+    @ManyToMany(mappedBy = "enrolledBooks" )
+    private List<AuthorEntity> authors = new ArrayList<>();
+
+    @Transient
+    @ManyToMany(mappedBy = "enrolledBooks1" )
+    private List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    private GenreEntity genreEntity;
 
 
     public BookEntity() {
@@ -107,6 +119,41 @@ public class BookEntity {
         borrower.removeBook(this);
         borrower = null;
     }
+
+    public GenreEntity getGenreEntity() {
+        return genreEntity;
+    }
+
+    public void setGenreEntity(GenreEntity genreEntity) {
+        this.genreEntity = genreEntity;
+    }
+
+    public List<BookFormatEntity> getBookFormatEntities() {
+        return Collections.unmodifiableList(bookFormatEntities);
+    }
+
+    public void addBookFormatEntity(BookFormatEntity bookFormatEntity) {
+        bookFormatEntities.add(bookFormatEntity);
+    }
+
+    public void removeBookFormatEntity(BookFormatEntity bookFormatEntity) {
+        bookFormatEntities.remove(bookFormatEntity);
+    }
+
+    public List<AuthorEntity> getAuthorEntities() {
+        return Collections.unmodifiableList(authors);
+    }
+
+    public void addAuthorEntity(AuthorEntity authorEntity) {
+        authors.add(authorEntity);
+    }
+
+    public void removeAuthorEntity(AuthorEntity authorEntity) {
+        authors.remove(authorEntity);
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {

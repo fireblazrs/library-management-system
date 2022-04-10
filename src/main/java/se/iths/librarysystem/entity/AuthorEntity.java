@@ -1,10 +1,10 @@
 package se.iths.librarysystem.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,12 +17,41 @@ public class AuthorEntity {
     @NotBlank(message = "Lastname is a required field")
     private String lastName;
 
+    @ManyToMany
+    @JoinTable(
+            name = "book_enrolled",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+
+    )
+    private List<BookEntity> enrolledBooks = new ArrayList<>();
+
     public AuthorEntity() {
     }
 
     public AuthorEntity(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public List<BookEntity> getEnrolledBooks() {
+        return enrolledBooks;
+    }
+
+    public void setEnrolledBooks(List<BookEntity> enrolledBooks) {
+        this.enrolledBooks = enrolledBooks;
+    }
+
+    public List<BookEntity> getBookEntities() {
+        return Collections.unmodifiableList(enrolledBooks);
+    }
+
+    public void addBookEntity(BookEntity bookEntity) {
+        enrolledBooks.add(bookEntity);
+    }
+
+    public void removeBookEntity(BookEntity bookEntity) {
+        enrolledBooks.remove(bookEntity);
     }
 
     public Long getId() {
