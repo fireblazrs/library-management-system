@@ -97,7 +97,7 @@ class TaskControllerIT {
 
     @WithMockUser
     @Test
-    void getTaskByIdNotShouldThrowException() throws Exception {
+    void getTaskByIdShouldThrowException() throws Exception {
         when(taskRepository.findById(any(Long.class))).thenThrow(new IdNotFoundException("task", 101L));
 
         mockMvc.perform(get("/api/tasks/{id}", 101))
