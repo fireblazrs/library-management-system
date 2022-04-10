@@ -2,6 +2,8 @@ package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,9 +18,15 @@ public class BookFormatEntity {
     private int pageCount;
     private String length;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private BookEntity bookEntity1;
+    @ManyToMany
+    @JoinTable(
+            name = "book_enrolled_bookFormat",
+            joinColumns = @JoinColumn(name = "bookFormat_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+
+    )
+    private List<BookEntity> enrolledBooks1 = new ArrayList<>();
+
 
     public BookFormatEntity(){
     }
@@ -42,13 +50,6 @@ public class BookFormatEntity {
         this.length = length;
     }
 
-    public BookEntity getBookEntity1() {
-        return bookEntity1;
-    }
-
-    public void setBookEntity1(BookEntity bookEntity1) {
-        this.bookEntity1 = bookEntity1;
-    }
 
     public Long getId() {
         return id;
@@ -92,6 +93,14 @@ public class BookFormatEntity {
     public BookFormatEntity setLength(String length) {
         this.length = length;
         return this;
+    }
+
+    public List<BookEntity> getEnrolledBooks1() {
+        return enrolledBooks1;
+    }
+
+    public void setEnrolledBooks1(BookEntity bookEntity) {
+        enrolledBooks1.add(bookEntity);
     }
 
     @Override

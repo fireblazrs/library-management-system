@@ -30,12 +30,12 @@ public class BookEntity {
     private List<AuthorEntity> authors = new ArrayList<>();
 
     @Transient
-    @OneToMany(mappedBy = "bookEntity1")
+    @ManyToMany(mappedBy = "enrolledBooks1" )
     private List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
 
-    @Transient
-    @OneToMany(mappedBy = "bookEntity2")
-    private List<GenreEntity> genreEntities = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    private GenreEntity genreEntity;
 
 
     public BookEntity() {
@@ -110,6 +110,14 @@ public class BookEntity {
         borrower = null;
     }
 
+    public GenreEntity getGenreEntity() {
+        return genreEntity;
+    }
+
+    public void setGenreEntity(GenreEntity genreEntity) {
+        this.genreEntity = genreEntity;
+    }
+
     public List<BookFormatEntity> getBookFormatEntities() {
         return Collections.unmodifiableList(bookFormatEntities);
     }
@@ -134,18 +142,6 @@ public class BookEntity {
         authors.remove(authorEntity);
     }
 
-
-    public List<GenreEntity> getGenreEntities() {
-        return Collections.unmodifiableList(genreEntities);
-    }
-
-    public void addGenreEntity(GenreEntity genreEntity) {
-        genreEntities.add(genreEntity);
-    }
-
-    public void removeGenreEntity(GenreEntity genreEntity) {
-        genreEntities.remove(genreEntity);
-    }
 
 
 

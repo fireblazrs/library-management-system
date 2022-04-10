@@ -1,6 +1,8 @@
 package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,17 +14,20 @@ public class GenreEntity {
     private String genreName;
     private boolean fiction;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private BookEntity bookEntity2;
+    @Transient
+    @OneToMany(mappedBy = "genreEntity")
+    private List<BookEntity> bookEntities = new ArrayList<>();
 
     public GenreEntity(){
     }
 
-    public GenreEntity(String genreName, boolean fiction) {
+
+    public GenreEntity(String genreName, boolean fiction, List<BookEntity> bookEntities) {
         this.genreName = genreName;
         this.fiction = fiction;
+        this.bookEntities = bookEntities;
     }
+
 
     public Long getId() {
         return id;
@@ -33,12 +38,12 @@ public class GenreEntity {
         return this;
     }
 
-    public BookEntity getBookEntity2() {
-        return bookEntity2;
+    public List<BookEntity> getBookEntities() {
+        return bookEntities;
     }
 
-    public void setBookEntity2(BookEntity bookEntity2) {
-        this.bookEntity2 = bookEntity2;
+    public void setBookEntities(List<BookEntity> bookEntities) {
+        this.bookEntities = bookEntities;
     }
 
     public String getGenreName() {
