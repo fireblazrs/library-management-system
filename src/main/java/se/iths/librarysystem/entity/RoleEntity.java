@@ -18,7 +18,7 @@ public class RoleEntity {
     @NotBlank(message = "Role is a required field")
     private String role;
 
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final Set<UserEntity> users = new HashSet<>();
 
     public RoleEntity() {
