@@ -59,8 +59,12 @@ public class UserEntity {
         this(firstname, lastname, ssn, email, phoneNumber, "", password, username);
     }
 
-    public UserEntity(String firstname, String lastname, String ssn, String email, String password) {
-        this(firstname, lastname, ssn, email, "", "", password, "");
+    public UserEntity(String firstname, String lastname, String ssn, String email, String password, String username) {
+        this(firstname, lastname, ssn, email, "", "", password, username);
+    }
+
+    public UserEntity(String firstname, String lastname, String ssn, String password, String username) {
+        this(firstname, lastname, ssn, "", "", "", password, username);
     }
 
     public Long getId() {

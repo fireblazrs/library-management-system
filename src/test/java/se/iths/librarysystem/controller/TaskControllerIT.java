@@ -97,7 +97,7 @@ class TaskControllerIT {
 
     @WithMockUser
     @Test
-    void getTaskByIdNotShouldThrowException() throws Exception {
+    void getTaskByIdShouldThrowException() throws Exception {
         when(taskRepository.findById(any(Long.class))).thenThrow(new IdNotFoundException("task", 101L));
 
         mockMvc.perform(get("/api/tasks/{id}", 101))
@@ -108,7 +108,7 @@ class TaskControllerIT {
 
     @WithAnonymousUser
     @Test
-    void whenAnonymousUserGetTaskByIdNotShouldReturn401() throws Exception {
+    void whenAnonymousUserGetTaskByIdShouldReturn401() throws Exception {
         mockMvc.perform(get("/api/tasks/{id}", 101))
                 .andExpect(status().isUnauthorized());
     }

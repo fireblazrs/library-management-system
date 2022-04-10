@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Book;
-import se.iths.librarysystem.entity.BookEntity;
-import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.service.BookService;
 
 import javax.validation.Valid;
@@ -19,11 +17,9 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final ModelMapper modelMapper;
 
     public BookController(BookService bookService, ModelMapper modelMapper) {
         this.bookService = bookService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -45,7 +41,6 @@ public class BookController {
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-
         bookService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
