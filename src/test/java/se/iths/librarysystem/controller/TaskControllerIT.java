@@ -108,7 +108,7 @@ class TaskControllerIT {
 
     @WithAnonymousUser
     @Test
-    void whenAnonymousUserGetTaskByIdNotShouldReturn401() throws Exception {
+    void whenAnonymousUserGetTaskByIdShouldReturn401() throws Exception {
         mockMvc.perform(get("/api/tasks/{id}", 101))
                 .andExpect(status().isUnauthorized());
     }
