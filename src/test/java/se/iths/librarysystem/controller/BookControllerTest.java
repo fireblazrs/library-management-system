@@ -97,11 +97,9 @@ class BookControllerTest {
     @WithMockUser
     @Test
     void findBookByIdShouldReturnBook() throws Exception {
-        BookEntity bookEntity = new BookEntity().setIsbn("90009").setId(36L);
         Book book = new Book().setIsbn("90009").setId(36L);
 
-        when(bookService.findById(anyLong())).thenReturn(Optional.ofNullable(bookEntity));
-        when(modelMapper.map(any(BookEntity.class), eq(Book.class))).thenReturn(book);
+        when(bookService.findBookById(anyLong())).thenReturn(book);
 
         mockMvc.perform(get("/api/books/{id}", 75))
                 .andExpect(status().isOk())

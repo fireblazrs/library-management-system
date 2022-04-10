@@ -52,6 +52,11 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    public Book findBookById(Long id){
+        BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        return modelMapper.map(foundBook, Book.class);
+    }
+
     public void deleteBook(Long id){
         BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
         bookRepository.deleteById(foundBook.getId());
