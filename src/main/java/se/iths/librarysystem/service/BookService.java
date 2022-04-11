@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import se.iths.librarysystem.dto.Book;
+import se.iths.librarysystem.dto.BookFormat;
 import se.iths.librarysystem.entity.AuthorEntity;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.BookFormatEntity;
@@ -74,6 +75,13 @@ public class BookService {
         bookRepository.deleteById(foundBook.getId());
     }
 
+    public List<BookFormat> getBookFormats(Long id){
+        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        return bookEntity.getBookFormatEntities().stream()
+            .map(bookFormatEntity -> modelMapper.map(bookFormatEntity, BookFormat.class))
+            .toList();
+    }
+
     @Transactional
     public Book addBookFormatToBook(Long bookId, Long bookFormatId) {
         BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
@@ -106,4 +114,6 @@ public class BookService {
         bookRepository.save(book);
         return modelMapper.map(book,Book.class);
     }
+
+
 }
