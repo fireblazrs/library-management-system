@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Book;
+import se.iths.librarysystem.service.BookFormatService;
 import se.iths.librarysystem.service.BookService;
+import se.iths.librarysystem.validatorservice.BookValidator;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -17,11 +19,14 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final BookFormatService bookFormatService;
+    private final BookValidator bookValidator;
 
 
-
-    public BookController(BookService bookService, ModelMapper modelMapper) {
+    public BookController(BookService bookService, BookFormatService bookFormatService, BookValidator bookValidator) {
         this.bookService = bookService;
+        this.bookFormatService = bookFormatService;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping
@@ -53,4 +58,11 @@ public class BookController {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
+    @PatchMapping("{bookId}/bookformats/{bookFormatId}")
+    public ResponseEntity<Book> addBookFormatToBook(@PathVariable Long bookId, @PathVariable Long bookFormatId) {
+        bookValidator.validId(bookId);
+        Book book = bookService.addBookFormatToBook(bookId, bookFormatId);
+        return new ResponseEntity<>(book, HttpStatus.OK);
+
+    }
 }

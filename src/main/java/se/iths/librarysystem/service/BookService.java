@@ -2,9 +2,14 @@ package se.iths.librarysystem.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.entity.BookFormatEntity;
+import se.iths.librarysystem.entity.RoomEntity;
+import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
+import se.iths.librarysystem.repository.BookFormatRepository;
 import se.iths.librarysystem.repository.BookRepository;
 
 import java.util.ArrayList;
@@ -16,10 +21,12 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
+    private final BookFormatRepository bookFormatRepository;
 
-    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
+    public BookService(BookRepository bookRepository, ModelMapper modelMapper, BookFormatRepository bookFormatRepository) {
         this.bookRepository = bookRepository;
         this.modelMapper = modelMapper;
+        this.bookFormatRepository = bookFormatRepository;
     }
 
     public List<Book> getAllBooks() {
@@ -59,6 +66,14 @@ public class BookService {
     public void deleteBook(Long id){
         BookEntity foundBook = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
         bookRepository.deleteById(foundBook.getId());
+    }
+
+    @Transactional
+    public Book addBookFormatToBook(Long bookId, Long bookFormatId) {
+        BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
+        BookFormatEntity bookFormat =bookFormatRepository.findById(bookFormatId).orElseThrow(() -> new IdNotFoundException("book format", bookFormatId));
+        book.addBookFormatEntity(bookFormat);
+        return modelMapper.map(book,Book.class);
     }
 
 }

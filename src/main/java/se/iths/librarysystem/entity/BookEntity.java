@@ -132,12 +132,12 @@ public class BookEntity {
         return bookFormatEntities;
     }
 
-    public void addBookFormatEntity(BookFormatEntity bookFormatEntity) {
-        bookFormatEntities.add(bookFormatEntity);
-    }
-
     public void removeBookFormatEntity(BookFormatEntity bookFormatEntity) {
         bookFormatEntities.remove(bookFormatEntity);
+    }
+
+    public void addBookFormatEntity(BookFormatEntity bookFormatEntity) {
+        bookFormatEntities.add(bookFormatEntity);
     }
 
     public List<AuthorEntity> getAuthorEntities() {
