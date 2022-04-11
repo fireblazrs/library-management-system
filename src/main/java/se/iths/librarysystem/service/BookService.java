@@ -73,6 +73,8 @@ public class BookService {
         BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
         BookFormatEntity bookFormat =bookFormatRepository.findById(bookFormatId).orElseThrow(() -> new IdNotFoundException("book format", bookFormatId));
         book.addBookFormatEntity(bookFormat);
+        bookFormat.addEnrolledBook(book);
+        bookRepository.save(book);
         return modelMapper.map(book,Book.class);
     }
 
