@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import se.iths.librarysystem.dto.Author;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.BookFormat;
 import se.iths.librarysystem.dto.Genre;
@@ -62,6 +63,20 @@ public class BookController {
         bookValidator.validId(id);
         List<BookFormat> bookFormats = bookService.getBookFormats(id);
         return new ResponseEntity<>(bookFormats, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/genre")
+    public ResponseEntity<Genre> getGenreConnectedToBook(@PathVariable Long id) {
+        bookValidator.validId(id);
+        Genre genre = bookService.getGenre(id);
+        return new ResponseEntity<>(genre, HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/authors")
+    public ResponseEntity<List<Author>> getAuthorsConnectedToBook(@PathVariable Long id) {
+        bookValidator.validId(id);
+        List<Author> authors = bookService.getAuthors(id);
+        return new ResponseEntity<>(authors, HttpStatus.OK);
     }
 
     @PatchMapping("{bookId}/bookformats/{bookFormatId}")

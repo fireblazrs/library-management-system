@@ -3,13 +3,16 @@ package se.iths.librarysystem.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.iths.librarysystem.dto.Author;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.BookFormat;
+import se.iths.librarysystem.dto.Genre;
 import se.iths.librarysystem.entity.AuthorEntity;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.BookFormatEntity;
 import se.iths.librarysystem.entity.GenreEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
+import se.iths.librarysystem.exceptions.ValueNotFoundException;
 import se.iths.librarysystem.repository.AuthorRepository;
 import se.iths.librarysystem.repository.BookFormatRepository;
 import se.iths.librarysystem.repository.BookRepository;
@@ -82,6 +85,20 @@ public class BookService {
             .toList();
     }
 
+    public Genre getGenre(Long id) {
+        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        GenreEntity genreEntity = Optional.ofNullable(bookEntity.getGenreEntity())
+            .orElseThrow(() -> new ValueNotFoundException("genre","/books/" + id + "/genre"));
+        return modelMapper.map(genreEntity, Genre.class);
+    }
+
+    public List<Author> getAuthors(Long id){
+        BookEntity bookEntity = bookRepository.findById(id).orElseThrow(() -> new IdNotFoundException("book", id));
+        return bookEntity.getAuthorEntities().stream()
+            .map(authorEntity -> modelMapper.map(authorEntity, Author.class))
+            .toList();
+    }
+
     @Transactional
     public Book addBookFormatToBook(Long bookId, Long bookFormatId) {
         BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
@@ -114,6 +131,4 @@ public class BookService {
         bookRepository.save(book);
         return modelMapper.map(book,Book.class);
     }
-
-
 }
