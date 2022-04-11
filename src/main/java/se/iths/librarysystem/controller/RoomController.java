@@ -105,7 +105,7 @@ public class RoomController {
     }
 
     @PatchMapping("{roomId}/user/{userId}")
-    public ResponseEntity<Room> updateRoomRoom(@PathVariable Long roomId, @PathVariable Long userId) {
+    public ResponseEntity<Room> updateRoomUser(@PathVariable Long roomId, @PathVariable Long userId) {
         roomValidator.validId(roomId);
         userValidator.validId(userId);
 
