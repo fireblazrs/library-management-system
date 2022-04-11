@@ -10,7 +10,7 @@ import java.util.Objects;
 public class RoomEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Room name is a required field")

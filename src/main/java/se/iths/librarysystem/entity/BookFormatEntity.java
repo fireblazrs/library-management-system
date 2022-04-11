@@ -8,7 +8,7 @@ import java.util.*;
 public class BookFormatEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String formatName;
