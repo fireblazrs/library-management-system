@@ -9,8 +9,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.dto.BookFormat;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.repository.AuthorRepository;
 import se.iths.librarysystem.repository.BookFormatRepository;
 import se.iths.librarysystem.repository.BookRepository;
+import se.iths.librarysystem.repository.GenreRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,12 @@ class BookServiceTest {
 
     @MockBean
     private BookFormatRepository bookFormatRepository;
+
+    @MockBean
+    private GenreRepository genreRepository;
+
+    @MockBean
+    private AuthorRepository authorRepository;
 
     @MockBean
     private ModelMapper modelMapper;

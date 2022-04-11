@@ -123,7 +123,7 @@ POST and PUT requests require a body as shown below:
       "name": "Blue Room",
       "groupSize": 6,
       "internetAccess": true,
-      "wheelchairAccess", false,
+      "wheelchairAccess": false,
       "hasProjector": true
     }
 
@@ -191,7 +191,7 @@ POST requests requires a body, as shown by the example below:
 
     {
       "firstName": "Adam",
-      "lastName": "Magnusson",
+      "lastName": "Magnusson"
     }
 
 
