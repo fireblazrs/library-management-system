@@ -2,6 +2,7 @@ package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,18 +15,16 @@ public class GenreEntity {
     private String genreName;
     private boolean fiction;
 
-    @Transient
-    @OneToMany(mappedBy = "genreEntity")
-    private List<BookEntity> bookEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "genreEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final List<BookEntity> bookEntities = new ArrayList<>();
 
     public GenreEntity(){
     }
 
 
-    public GenreEntity(String genreName, boolean fiction, List<BookEntity> bookEntities) {
+    public GenreEntity(String genreName, boolean fiction) {
         this.genreName = genreName;
         this.fiction = fiction;
-        this.bookEntities = bookEntities;
     }
 
 
@@ -38,12 +37,21 @@ public class GenreEntity {
         return this;
     }
 
-    public List<BookEntity> getBookEntities() {
-        return bookEntities;
+    public List<BookEntity> getBooks() {
+        return Collections.unmodifiableList(bookEntities);
     }
 
-    public void setBookEntities(List<BookEntity> bookEntities) {
-        this.bookEntities = bookEntities;
+    public GenreEntity addBooks(List<BookEntity> books) {
+        this.bookEntities.addAll(books);
+        return this;
+    }
+
+    public void addBook(BookEntity book) {
+        bookEntities.add(book);
+    }
+
+    public void removeBook(BookEntity book) {
+        bookEntities.remove(book);
     }
 
     public String getGenreName() {
@@ -67,8 +75,7 @@ public class GenreEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GenreEntity)) return false;
-        GenreEntity genre = (GenreEntity) o;
+        if (!(o instanceof GenreEntity genre)) return false;
         return fiction == genre.fiction && Objects.equals(genreName, genre.genreName);
     }
 

@@ -2,9 +2,7 @@ package se.iths.librarysystem.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class BookFormatEntity {
@@ -18,14 +16,8 @@ public class BookFormatEntity {
     private int pageCount;
     private String length;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_enrolled_bookFormat",
-            joinColumns = @JoinColumn(name = "bookFormat_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-
-    )
-    private List<BookEntity> enrolledBooks1 = new ArrayList<>();
+    @ManyToMany(mappedBy = "bookFormatEntities", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private final Set<BookEntity> enrolledBooks1 = new HashSet<>();
 
 
     public BookFormatEntity(){
@@ -95,12 +87,17 @@ public class BookFormatEntity {
         return this;
     }
 
-    public List<BookEntity> getEnrolledBooks1() {
+    public Set<BookEntity> getEnrolledBooks() {
         return enrolledBooks1;
     }
 
-    public void setEnrolledBooks1(BookEntity bookEntity) {
+    public void addEnrolledBook(BookEntity bookEntity) {
         enrolledBooks1.add(bookEntity);
+    }
+
+    public BookFormatEntity addEnrolledBooks(Set<BookEntity> bookEntities) {
+        this.enrolledBooks1.addAll(bookEntities);
+        return this;
     }
 
     @Override

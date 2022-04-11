@@ -33,7 +33,16 @@ class GenreEntityTest {
     }
 
     @Test
-    void verifyEqualsAndHashCode(){
-        EqualsVerifier.forClass(GenreEntity.class).verify();
+    void verifyEqualsAndHashCode() {
+        GenreEntity genre = new GenreEntity("Mystery", true);
+        BookEntity book1 = new BookEntity().setId(1L).setTitle("Secrets in the Study").setIsbn("9032344235629");
+        BookEntity book2 = new BookEntity().setId(2L).setTitle("Murder Alley").setIsbn("9432100987234");
+        genre.addBook(book1);
+        genre.addBook(book2);
+
+        EqualsVerifier.forClass(GenreEntity.class)
+            .withPrefabValues(BookEntity.class, book1, book2)
+            .withIgnoredFields("bookEntities")
+            .verify();
     }
 }
