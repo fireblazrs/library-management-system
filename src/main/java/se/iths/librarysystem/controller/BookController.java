@@ -19,13 +19,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final BookFormatService bookFormatService;
     private final BookValidator bookValidator;
 
 
-    public BookController(BookService bookService, BookFormatService bookFormatService, BookValidator bookValidator) {
+    public BookController(BookService bookService, BookValidator bookValidator) {
         this.bookService = bookService;
-        this.bookFormatService = bookFormatService;
         this.bookValidator = bookValidator;
     }
 
@@ -63,6 +61,5 @@ public class BookController {
         bookValidator.validId(bookId);
         Book book = bookService.addBookFormatToBook(bookId, bookFormatId);
         return new ResponseEntity<>(book, HttpStatus.OK);
-
     }
 }

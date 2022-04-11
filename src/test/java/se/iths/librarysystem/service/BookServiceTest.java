@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import se.iths.librarysystem.dto.Book;
+import se.iths.librarysystem.dto.BookFormat;
 import se.iths.librarysystem.entity.BookEntity;
+import se.iths.librarysystem.repository.BookFormatRepository;
 import se.iths.librarysystem.repository.BookRepository;
 
 import java.util.List;
@@ -25,6 +27,9 @@ class BookServiceTest {
 
     @MockBean
     private BookRepository bookRepository;
+
+    @MockBean
+    private BookFormatRepository bookFormatRepository;
 
     @MockBean
     private ModelMapper modelMapper;

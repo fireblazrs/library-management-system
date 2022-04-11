@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.entity.BookFormatEntity;
-import se.iths.librarysystem.entity.RoomEntity;
-import se.iths.librarysystem.entity.UserEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.BookFormatRepository;
 import se.iths.librarysystem.repository.BookRepository;
@@ -71,7 +69,8 @@ public class BookService {
     @Transactional
     public Book addBookFormatToBook(Long bookId, Long bookFormatId) {
         BookEntity book = bookRepository.findById(bookId).orElseThrow(() -> new IdNotFoundException("book", bookId));
-        BookFormatEntity bookFormat =bookFormatRepository.findById(bookFormatId).orElseThrow(() -> new IdNotFoundException("book format", bookFormatId));
+        BookFormatEntity bookFormat = bookFormatRepository.findById(bookFormatId)
+                .orElseThrow(() -> new IdNotFoundException("book format", bookFormatId));
         book.addBookFormatEntity(bookFormat);
         bookFormat.addEnrolledBook(book);
         bookRepository.save(book);
