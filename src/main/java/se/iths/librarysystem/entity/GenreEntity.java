@@ -75,12 +75,12 @@ public class GenreEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GenreEntity that)) return false;
-        return fiction == that.fiction && Objects.equals(id, that.id) && Objects.equals(genreName, that.genreName);
+        if (!(o instanceof GenreEntity genre)) return false;
+        return fiction == genre.fiction && Objects.equals(genreName, genre.genreName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, genreName, fiction);
+        return Objects.hash(genreName, fiction);
     }
 }
