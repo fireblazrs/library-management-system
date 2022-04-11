@@ -3,6 +3,7 @@ package se.iths.librarysystem.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import se.iths.librarysystem.dto.Author;
+import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.entity.AuthorEntity;
 import se.iths.librarysystem.exceptions.IdNotFoundException;
 import se.iths.librarysystem.repository.AuthorRepository;
@@ -41,14 +42,24 @@ public class AuthorService {
     }
 
     public Author findAuthorById(Long id){
-        AuthorEntity foundAuthor = authorRepository.findById(id).orElseThrow(() -> new IdNotFoundException("author", id));
+        AuthorEntity foundAuthor = getAuthorEntity(id);
         return modelMapper.map(foundAuthor, Author.class);
     }
 
     public void deleteAuthor(Long id){
-        AuthorEntity foundAuthor = authorRepository.findById(id).orElseThrow(() -> new IdNotFoundException("author", id));
+        AuthorEntity foundAuthor = getAuthorEntity(id);
         authorRepository.deleteById(foundAuthor.getId());
     }
 
+    public List<Book> getBooks(Long id) {
+        AuthorEntity authorEntity = getAuthorEntity(id);
+        return authorEntity.getBookEntities().stream()
+            .map(bookEntity -> modelMapper.map(bookEntity, Book.class))
+            .toList();
+    }
+
+    private AuthorEntity getAuthorEntity(Long id) {
+        return authorRepository.findById(id).orElseThrow(() -> new IdNotFoundException("author", id));
+    }
 }
 

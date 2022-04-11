@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import se.iths.librarysystem.dto.Author;
+import se.iths.librarysystem.dto.Book;
 import se.iths.librarysystem.service.AuthorService;
 
 import javax.validation.Valid;
@@ -48,5 +49,14 @@ public class AuthorController {
         Author author = authorService.findAuthorById(id);
         return new ResponseEntity<>(author, HttpStatus.OK);
     }
+
+    @GetMapping("{id}/books")
+    public ResponseEntity<List<Book>> getBooksConnectedToAuthor(@PathVariable Long id) {
+
+        List<Book> books = authorService.getBooks(id);
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
+
+
 
 }
