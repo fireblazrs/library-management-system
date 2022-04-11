@@ -27,8 +27,7 @@ public class BookEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity borrower;
 
-    @Transient
-    @ManyToMany(mappedBy = "enrolledBooks" )
+    @ManyToMany(mappedBy = "enrolledBooks", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     private List<AuthorEntity> authors = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -17,13 +17,7 @@ public class AuthorEntity {
     @NotBlank(message = "Lastname is a required field")
     private String lastName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_enrolled",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-
-    )
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BookEntity> enrolledBooks = new ArrayList<>();
 
     public AuthorEntity() {
