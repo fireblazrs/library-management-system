@@ -3,7 +3,6 @@ package se.iths.librarysystem.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import javax.security.auth.Subject;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -32,13 +31,14 @@ public class BookEntity {
     @ManyToMany(mappedBy = "enrolledBooks" )
     private List<AuthorEntity> authors = new ArrayList<>();
 
-    @Transient
-    @ManyToMany(mappedBy = "enrolledBooks1" )
-    private List<BookFormatEntity> bookFormatEntities = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<BookFormatEntity> bookFormatEntities = new HashSet<>();
+
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private GenreEntity genreEntity;
+
+
 
 
     public BookEntity() {
@@ -128,8 +128,8 @@ public class BookEntity {
         this.genreEntity = genreEntity;
     }
 
-    public List<BookFormatEntity> getBookFormatEntities() {
-        return Collections.unmodifiableList(bookFormatEntities);
+    public Set<BookFormatEntity> getBookFormatEntities() {
+        return bookFormatEntities;
     }
 
     public void addBookFormatEntity(BookFormatEntity bookFormatEntity) {
