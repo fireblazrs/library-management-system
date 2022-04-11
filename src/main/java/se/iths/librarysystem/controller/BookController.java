@@ -93,7 +93,7 @@ public class BookController {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PatchMapping("{bookId}/author/{authorId}")
+    @PatchMapping("{bookId}/authors/{authorId}")
     public ResponseEntity<Book> addAuthorToBook(@PathVariable Long bookId, @PathVariable Long authorId) {
         bookValidator.validId(bookId);
         Book book = bookService.addAuthorToBook(bookId, authorId);
