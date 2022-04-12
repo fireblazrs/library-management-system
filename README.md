@@ -57,6 +57,12 @@ _Default port for the application is **8080**._
 | DELETE | /api/books/{id}        | Delete a book by id            | User         | 204         | -             |
 | PUT    | /api/books/{id}        | Update a book                  | User         | 200 / 404   | Updated book  |
 | POST   | /api/books             | Create a book.                 | User         | 201 / 400   | New book      |
+| PATCH   |/api/books/{id}/genre/{genreId}  | Add a genre connected to book.   | Admin         | 200         | Book          |
+| PATCH   |/api/books/{id}/authors/{authorId}  | Add an author connected to book.   | Admin         | 200         | Book      |
+| PATCH   |/api/books/{id}/bookformats/{bookFormatId}  | Add a book format connected to book.   | Admin         | 200         | Book      |
+| GET   |/api/books/{id}/genre | Get genre connected to book.   | User         | 200         | Genre        |
+| GET   |/api/books/{id}/bookformats | Get book formats connected to book.   | User         | 200         | List of book formats          |
+| GET   |/api/books/{id}/authors | Get authors connected to book.   | User         | 200         | List of Authors          |
 
 POST and PUT requests require a request body as shown below:
 
@@ -187,6 +193,7 @@ POST requests requires a body, as shown by the example below:
 | GET    | /api/authors/{id} | Get an author by the id | User         | 200 / 404   | Author          |
 | DELETE | /api/authors/{id} | Delete an author by id  | User         | 204         | -               |
 | POST   | /api/authors      | Create an author        | User         | 201 / 400   | Author          |
+| GET   | /api/authors/{id}/books      | Get books connected to author.        | User         | 200  | Books          |
 POST requests requires a body, as shown by the example below:
 
     {
