@@ -58,7 +58,7 @@ _Default port for the application is **8080**._
 | PUT    | /api/books/{id}        | Update a book                  | User         | 200 / 404   | Updated book  |
 | POST   | /api/books             | Create a book.                 | User         | 201 / 400   | New book      |
 | PATCH   |/api/books/{id}/genre/{genreId}  | Add a genre connected to book.   | Admin         | 200         | Book          |
-| PATCH   |/api/books/{id}/authors/{authorId}  | Add a author connected to book.   | Admin         | 200         | Book      |
+| PATCH   |/api/books/{id}/authors/{authorId}  | Add an author connected to book.   | Admin         | 200         | Book      |
 | PATCH   |/api/books/{id}/bookformats/{bookFormatId}  | Add a book format connected to book.   | Admin         | 200         | Book      |
 | GET   |/api/books/{id}/genre | Get genre connected to book.   | User         | 200         | Genre        |
 | GET   |/api/books/{id}/bookformats | Get book formats connected to book.   | User         | 200         | List of book formats          |
