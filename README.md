@@ -193,6 +193,7 @@ POST requests requires a body, as shown by the example below:
 | GET    | /api/authors/{id} | Get an author by the id | User         | 200 / 404   | Author          |
 | DELETE | /api/authors/{id} | Delete an author by id  | User         | 204         | -               |
 | POST   | /api/authors      | Create an author        | User         | 201 / 400   | Author          |
+| GET   | /api/authors/{id}/books      | Get books connected to author.        | User         | 200  | Books          |
 POST requests requires a body, as shown by the example below:
 
     {
