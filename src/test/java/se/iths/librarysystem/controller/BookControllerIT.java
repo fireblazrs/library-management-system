@@ -16,6 +16,7 @@ import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.repository.BookRepository;
 import se.iths.librarysystem.security.SecurityConfig;
 import se.iths.librarysystem.service.BookService;
+import se.iths.librarysystem.validatorservice.BookValidator;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import({BookService.class, SecurityConfig.class})
+@Import({BookService.class, SecurityConfig.class, BookValidator.class})
 @WebMvcTest(BookController.class)
 @AutoConfigureMockMvc
 class BookControllerIT {

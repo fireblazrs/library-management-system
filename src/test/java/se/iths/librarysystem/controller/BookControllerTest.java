@@ -16,6 +16,7 @@ import se.iths.librarysystem.entity.BookEntity;
 import se.iths.librarysystem.mocks.WithMockAdmin;
 import se.iths.librarysystem.security.SecurityConfig;
 import se.iths.librarysystem.service.BookService;
+import se.iths.librarysystem.validatorservice.BookValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,9 @@ class BookControllerTest {
 
     @MockBean
     private ModelMapper modelMapper;
+
+    @MockBean
+    private BookValidator bookValidator;
 
     @BeforeEach
     void setUp() {
